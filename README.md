@@ -1,6 +1,4 @@
-# Generating Explanations to Understand and Repair
-
-Embedding-based Entity Alignment
+# Generating Explanations to Understand and Repair Embedding-based Entity Alignment
 
 This repository is the official implementation of ExEA, the method proposed in paper ***Generating Explanations to Understand and Repair***
 ***Embedding-based Entity Alignment.***
