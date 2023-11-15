@@ -1,31 +1,9 @@
 from collections import defaultdict
 import numpy as np 
-import matplotlib.pyplot as plt
 import torch
 import math
 from itertools import combinations
 
-
-def circle_graph(labels, sizes, colors, explode):
-    plt.rcParams['font.sans-serif']=['SimHei']
-    plt.figure(figsize=(7.5,5),dpi=80) #调节画布的大小
-    # labels = ['雷雨','能见度','颠簸','积冰','冰雨','雪','低云','风'] #定义各个扇形的面积/标签
-    # sizes = [24.24,17.17,7.7,7.7,8.8,9.9,14.14,14.14] #各个值，影响各个扇形的面积
-    # colors = ['red','yellowgreen','lightskyblue','yellow','purple','pink','peachpuff','orange', 'blue', 'green'] #每块扇形的颜色
-    # explode = (0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01, 0.01,0.01)
-    patches,text1,text2 = plt.pie(sizes,
-                        explode=explode,
-                        labels=labels,
-                        colors=colors,
-                        labeldistance = 1.2,#图例距圆心半径倍距离
-                        autopct = '%3.2f%%', #数值保留固定小数位
-                        shadow = False, #无阴影设置
-                        startangle =90, #逆时针起始角度设置
-                        pctdistance = 0.6) #数值距圆心半径倍数距离
-    #patches饼图的返回值，texts1为饼图外label的文本，texts2为饼图内部文本
-    plt.axis('equal')
-    plt.legend()
-    plt.show()
 
 def neigh_sim():
     tri1 = read_tri('zh-en/triples_1')

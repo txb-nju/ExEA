@@ -1,0 +1,54 @@
+case: 7433, 22433
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Payanam_(film) is same as Payanam:
+set1: (Payanam_(film),producer,Prakash_Raj), (Payanam_(film),starring,Prakash_Raj), (Payanam_(film),starring,Akkineni_Nagarjuna), 
+set2: (Payanam,producer,Prakash Raj), (Payanam,cast member,Akkineni Nagarjuna), (Payanam,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1457, 16457
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Nikola_Jokić is same as Nikola Jokić:
+set1: (Nikola_Jokić,league,National_Basketball_Association), (Nikola_Jokić,birthPlace,Serbia_and_Montenegro), (Nikola_Jokić,team,Denver_Nuggets), (Nikola_Jokić,draftTeam,Denver_Nuggets), 
+set2: (Nikola Jokić,country of citizenship,Serbia), (Nikola Jokić,drafted by,Denver Nuggets), (Nikola Jokić,member of sports team,Denver Nuggets), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7497, 22497
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Trumpet_Summit_Meets_the_Oscar_Peterson_Big_4 is same as The Trumpet Summit Meets the Oscar Peterson Big 4:
+set1: (The_Personal_Touch,subsequentWork,The_Trumpet_Summit_Meets_the_Oscar_Peterson_Big_4), (The_Trumpet_Summit_Meets_the_Oscar_Peterson_Big_4,recordLabel,Pablo_Records), 
+set2: (The Personal Touch,followed by,The Trumpet Summit Meets the Oscar Peterson Big 4), (The Trumpet Summit Meets the Oscar Peterson Big 4,record label,Pablo), (The Trumpet Summit Meets the Oscar Peterson Big 4,follows,The Personal Touch), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4836, 19836
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Teri_Meherbaniyan is same as Teri Meherbaniyan:
+set1: (Teri_Meherbaniyan,starring,Poonam_Dhillon), (Teri_Meherbaniyan,starring,Jackie_Shroff), (Teri_Meherbaniyan,starring,Amrish_Puri), 
+set2: (Teri Meherbaniyan,instance of,film), (Teri Meherbaniyan,cast member,Jackie Shroff), (Teri Meherbaniyan,cast member,Amrish Puri), (Teri Meherbaniyan,cast member,Poonam Dhillon), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6306, 21306
+Please identify the matching triplets in the following two triplet sets as explanation for predicting University_of_Miami is same as University of Miami:
+set1: (José_Félix_Díaz,almaMater,University_of_Miami), (Deborah_Mash,almaMater,University_of_Miami), (University_of_Miami,affiliation,Oak_Ridge_Associated_Universities), (Enrique_Iglesias,almaMater,University_of_Miami), (Sylvester_Stallone,education,University_of_Miami), (Maria_Sachs,almaMater,University_of_Miami), 
+set2: (Deborah Mash,employer,University of Miami), (Jaco Pastorius,educated at,University of Miami), (Enrique Iglesias,educated at,University of Miami), (Jaco Pastorius,employer,University of Miami), (Deborah Mash,educated at,University of Miami), (Sylvester Stallone,educated at,University of Miami), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4767, 19767
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Elizabeth_Allen_(actress) is same as Elizabeth Allen:
+set1: (Elizabeth_Allen_(actress),birthPlace,Jersey_City,_New_Jersey), (Elizabeth_Allen_(actress),deathPlace,New_York), (Donovan's_Reef,starring,Elizabeth_Allen_(actress)), 
+set2: (Cheyenne Autumn,cast member,Elizabeth Allen), (Elizabeth Allen,occupation,model), (Donovan's Reef,cast member,Elizabeth Allen), (Elizabeth Allen,cause of death,kidney failure), (Elizabeth Allen,place of birth,Jersey City), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)

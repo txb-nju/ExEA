@@ -20,8 +20,8 @@ class DBpDataset:
             self.all_2_hop2[cur] = self.one_hop2[cur] | self.two_hop2[cur]
         '''
         self.kgs = set()
-        self.ent_dict, self.id_ent = self.read_dict('../datasets/' + lang + '-en_f/ent_dict')
-        self.r_dict, self.id_r = self.read_dict('../datasets/' + lang + '-en_f/rel_dict')
+        self.ent_dict, self.id_ent = self.read_dict(file_path +  '/ent_dict')
+        self.r_dict, self.id_r = self.read_dict(file_path +  '/rel_dict')
         # self.target_link1, self.target_link2 = read_link(file_path + '/sample_pair_v1')
         self.target_link1, self.target_link2 = read_link(file_path + pair)
         self.gid1 = defaultdict(list)

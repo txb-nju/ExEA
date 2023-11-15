@@ -19,6 +19,12 @@ class DBpDataset:
         elif lang == 'fr':
             self.ent_dict, self.id_ent = self.read_dict('../datasets/dbp_f_e/ent_dict')
             self.r_dict, self.id_r = self.read_dict('../datasets/dbp_f_e/rel_dict')
+        elif lang == 'y':
+            self.ent_dict, self.id_ent = self.read_dict('../datasets/D_Y/ent_dict')
+            self.r_dict, self.id_r = self.read_dict('../datasets/D_Y/rel_dict')
+        elif lang == 'w':
+            self.ent_dict, self.id_ent = self.read_dict('../datasets/D_W/ent_dict')
+            self.r_dict, self.id_r = self.read_dict('../datasets/D_W/rel_dict')
         # self.target_link1, self.target_link2 = read_link(file_path + '/sample_pair_v1')
         
         self.target_link1, self.target_link2 = read_link(file_path + pair)

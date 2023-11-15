@@ -1,0 +1,713 @@
+The matching triplets in the two triplet sets are:
+- (道格拉斯DC-6, developedFrom, 道格拉斯DC-4) and (Douglas_DC-6, developedFrom, Douglas_DC-4)
+- (道格拉斯DC-6, manufacturer, 道格拉斯飞行器公司) and (Douglas_DC-6, manufacturer, Douglas_Aircraft_Company)
+- (道格拉斯DC-4, developedInto, 道格拉斯DC-6) and (Douglas_DC-4, developedInto, Douglas_DC-6)
+Matching triplets in set1 and set2:
+- (穆罕默德二世_(奥斯曼帝国), before, 穆拉德二世) matches with (Mehmed_the_Conqueror, before, Murad_II)
+- (穆罕默德二世_(奥斯曼帝国), after, 巴耶济德二世) matches with (Mehmed_the_Conqueror, successor, Bayezid_II)
+- (穆罕默德二世_(奥斯曼帝国), after, 穆拉德二世) matches with (Murad_II, successor, Mehmed_the_Conqueror)
+- (伊沙克帕夏, monarch, 穆罕默德二世_(奥斯曼帝国)) matches with (Ishak_Pasha, monarch, Mehmed_the_Conqueror)
+- (扎加诺斯帕夏, monarch, 穆罕默德二世_(奥斯曼帝国)) matches with (Zagan_Pasha, monarch, Mehmed_the_Conqueror)
+- (卡拉曼勒·穆罕默德帕夏, monarch, 穆罕默德二世_(奥斯曼帝国)) matches with (Karamani_Mehmet_Pasha, monarch, Mehmed_the_Conqueror)
+- (韦利·马哈茂德帕夏, monarch, 穆罕默德二世_(奥斯曼帝国)) matches with (Mahmud_Pasha_Angelović, monarch, Mehmed_the_Conqueror)
+- (盖迪克·艾哈迈德帕夏, monarch, 穆罕默德二世_(奥斯曼帝国)) matches with (Gedik_Ahmed_Pasha, monarch, Mehmed_the_Conqueror)
+The matching triplets in the two sets are:
+- (尼克拉斯·本特纳, clubs, 阿森纳足球俱乐部) and (Nicklas_Bendtner, clubs, Arsenal_F.C.)
+- (尼克拉斯·本特纳, cityofbirth, 哥本哈根) and (Nicklas_Bendtner, nationalteam, Denmark_national_football_team)
+The matching triplets in the two sets are:
+- (廣野慶子, alongside, 布萊恩·夏茲) and (Mazie_Hirono, alongside, Brian_Schatz)
+- (廣野慶子, party, 民主党_(美国)) and (Mazie_Hirono, party, Democratic_Party_(United_States))
+The matching triplets in the two sets are:
+- (卢克·天行者,family,莉亞公主) and (Princess_Leia,family,Luke_Skywalker)
+- (卢克·天行者,family,韓·蘇羅) and (Luke_Skywalker,relatives,Han_Solo)
+- (帕德梅·艾米达拉,family,卢克·天行者) and (Luke_Skywalker,family,Padmé_Amidala)
+- (卢克·天行者,family,凱羅·忍) and (Luke_Skywalker,relatives,Kylo_Ren)
+The matching triplets in the two sets are:
+
+1. (埃利奥·迪吕波, title, 社会党_(瓦隆)) - (Elio_Di_Rupo, title, Parti_Socialiste_(Belgium))
+2. (埃利奥·迪吕波, party, 社会党_(瓦隆)) - (Elio_Di_Rupo, party, Parti_Socialiste_(Belgium))
+3. (社会党_(瓦隆), leader, 埃利奥·迪吕波) - (Parti_Socialiste_(Belgium), leaderName, Parti_Socialiste_(Belgium))
+4. (社会党_(瓦隆), european, 欧洲社会党) - (Parti_Socialiste_(Belgium), european, Party_of_European_Socialists)
+5. (埃利奥·迪吕波, office, 社会党_(瓦隆)) - (Elio_Di_Rupo, office, Parti_Socialiste_(Belgium))
+The matching triplets in the two sets are:
+- (亚历山大_(奥兰治亲王), placeOfBurial, 代尔夫特) matches with (Alexander,_Prince_of_Orange, placeOfBurial, Delft)
+- (威廉三世_(尼德兰), placeOfBurial, 代尔夫特) matches with (William_III_of_the_Netherlands, placeOfBurial, Delft)
+- (代尔夫特, subdivisionName, 南荷蘭省) matches with (Delft, subdivisionName, South_Holland)
+- (代尔夫特, subdivisionName, 荷兰) matches with (Delft, subdivisionName, Netherlands)
+- (威廉一世_(尼德兰), placeOfBurial, 代尔夫特) matches with (William_I_of_the_Netherlands, placeOfBurial, Delft)
+- (弗雷德里克·亨德里克_(奥兰治亲王), birthPlace, 代尔夫特) matches with (Frederick_Henry,_Prince_of_Orange, birthPlace, Delft)
+The matching triplets in the two sets are:
+- (艾伦·图灵, almaMater, 普林斯顿大学) and (Alan_Turing, almaMater, Princeton_University)
+- (艾伦·图灵, doctoralAdvisor, 阿隆佐·邱奇) and (Alan_Turing, doctoralAdvisor, Alonzo_Church)
+- (艾伦·图灵, workInstitution, 曼彻斯特大学) and (Alan_Turing, workInstitutions, University_of_Manchester)
+- (艾伦·图灵, workInstitution, 剑桥大学) and (Alan_Turing, workInstitutions, University_of_Cambridge)
+- (希拉里·怀特哈尔·普特南, influences, 艾伦·图灵) and (Hilary_Putnam, influences, Alan_Turing)
+The matching triplets in the two sets are:
+- (卡利, subdivisionName, 哥伦比亚) from set1 matches with (Cali, subdivisionName, Colombia) from set2.
+- (埃迪逊·佩雷亚, cityofbirth, 卡利) from set1 matches with (Edixon_Perea, birthPlace, Cali) from set2.
+The matching triplets in the two sets are:
+- (爱德华一世, birthPlace, 英格兰王国) and (Edward_I_of_England, title, Kingdom_of_England)
+- (亨利三世_(英格兰), issue, 爱德华一世) and (Henry_III_of_England, issue, Edward_I_of_England)
+- (亨利三世_(英格兰), successor, 爱德华一世) and (Henry_III_of_England, successor, Edward_I_of_England)
+- (爱德华一世, issue, 爱德华二世_(英格兰)) and (Edward_I_of_England, issue, Edward_II_of_England)
+- (爱德华一世, mother, 普罗旺斯的埃莉诺) and (Edward_I_of_England, mother, Eleanor_of_Provence)
+- (爱德华一世, predecessor, 亨利三世_(英格兰)) and (Edward_I_of_England, predecessor, Henry_III_of_England)
+- (爱德华一世, house, 金雀花王朝) and (Edward_I_of_England, house, House_of_Plantagenet)
+- (爱德华一世, father, 亨利三世_(英格兰)) and (Edward_I_of_England, father, Henry_III_of_England)
+- (爱德华一世, successor, 爱德华二世_(英格兰)) and (Edward_I_of_England, successor, Edward_II_of_England)
+The matching triplets in the two sets are:
+- (Apache软件基金会, method, Apache许可证) and (Apache_Software_Foundation, method, Apache_License)
+- (Apache许可证, author, Apache软件基金会) and (Apache_License, author, Apache_Software_Foundation)
+The matching triplets in the two sets are:
+- (2011年西班牙超級盃, team, 皇家马德里足球俱乐部) and (2011_Supercopa_de_España, team, Real_Madrid_C.F.)
+- (2011年西班牙超級盃, team, 巴塞罗那足球俱乐部) and (2011_Supercopa_de_España, team, FC_Barcelona)
+- (2011年西班牙超級盃, stadium, 马德里) and (2011_Supercopa_de_España, city, Madrid)
+The matching triplets in the two sets are:
+- (赛扬, microarch, Sandy_Bridge微架構) in set1 and (Celeron, microarch, Sandy_Bridge) in set2.
+- (赛扬, microarch, Haswell微架構) in set1 and (Celeron, microarch, Haswell_(microarchitecture)) in set2.
+- (赛扬, microarch, Ivy_Bridge微架構) in set1 and (Celeron, microarch, Ivy_Bridge_(microarchitecture)) in set2.
+- (Skylake微架構, brand, 赛扬) in set1 and (Celeron, microarch, Skylake_(microarchitecture)) in set2.
+- (赛扬, microarch, Broadwell微架構) in set1 and (Celeron, microarch, Broadwell_(microarchitecture)) in set2.
+The matching triplets in the two sets are:
+- (米卡埃尔·朗德罗, clubs, 巴黎圣日耳曼足球俱乐部) and (Mickaël_Landreau, clubs, Paris_Saint-Germain_F.C.)
+- (米卡埃尔·朗德罗, countryofbirth, 法国) and (Mickaël_Landreau, birthPlace, France)
+- (米卡埃尔·朗德罗, nationalteam, 法國國家足球隊) and (Mickaël_Landreau, nationalteam, France_national_football_team)
+- (米卡埃尔·朗德罗, youthclubs, 南特足球俱乐部) and (Mickaël_Landreau, youthclubs, FC_Nantes)
+- (米卡埃尔·朗德罗, clubs, 南特足球俱乐部) and (Mickaël_Landreau, clubs, FC_Nantes)
+- (米卡埃尔·朗德罗, currentclub, 巴斯蒂亞體育會) and (Mickaël_Landreau, clubs, SC_Bastia)
+The matching triplets in the two triplet sets are:
+(汉语, languages, 汉语) in set1 and (Chinese_language, fam, Chinese_language) in set2.
+(汉语, region, 澳門) in set1 and (Macau, officialLanguages, Chinese_language) in set2
+The matching triplets in the two sets are:
+- (印度空軍, garrison, 新德里) and (Indian_Air_Force, garrison, New_Delhi)
+- (新德里, blankInfo, 印地语) and (New_Delhi, demographics1Info, Hindi)
+- (英属印度, capital, 新德里) and (India, capital, New_Delhi)
+- (新德里, subdivisionName, 德里) and (New_Delhi, subdivisionName, Delhi)
+- (新德里, subdivisionType, 印度各邦和中央直辖区) and (New_Delhi, subdivisionType, States_and_union_territories_of_India)
+- (新德里, nativeName, 旁遮普語) and (New_Delhi, demographics1Info, Punjabi_language)
+- (新德里, blankInfo, 乌尔都语) and (New_Delhi, demographics1Info, Urdu)
+The matching triplets in the two sets are:
+- (Google_Play, developer, Google)
+- (Google_Play, operatingSystem, Android)
+- (Nexus_9, service, Google_Play)
+The matching triplets in the two sets are:
+- (达喀尔大学, country, 塞内加尔) and (Cheikh_Anta_Diop_University, country, Senegal)
+- (达喀尔大学, city, 達喀爾) and (Cheikh_Anta_Diop_University, city, Dakar)
+- (达喀尔大学, state, 达喀尔区) and (Cheikh_Anta_Diop_University, state, Dakar_Region)
+The matching triplets in the two sets are:
+- (田尻智, employer, Game_Freak) and (Satoshi_Tajiri, employer, Game_Freak)
+- (田尻智, nationality, 日本) and (Satoshi_Tajiri, birthPlace, Tokyo)
+The matching triplets in the two sets are:
+- (德黑兰大学, city, 德黑兰) and (University_of_Tehran, city, Tehran)
+- (德黑兰大学, country, 伊朗) and (University_of_Tehran, country, Iran)
+- (哈桑·鲁哈尼, almaMater, 德黑兰大学) and (Hassan_Rouhani, almaMater, University_of_Tehran)
+The matching triplets in the two sets are:
+
+1. (強尼·馬爾, associatedActs, The_Pretenders) - (Johnny_Marr, associatedActs, The_Pretenders)
+2. (強尼·馬爾, genre, 独立摇滚) - (Johnny_Marr, genre, Alternative_rock)
+3. (強尼·馬爾, associatedActs, 史密斯_(樂團)) - (Johnny_Marr, associatedActs, The_Smiths)
+4. (強尼·馬爾, associatedActs, The_Cribs) - (Johnny_Marr, associatedActs, The_Cribs)
+5. (強尼·馬爾, associatedActs, 謙遜耗子) - (Johnny_Marr, associatedActs, Modest_Mouse)
+6. (強尼·馬爾, label, 華納兄弟唱片公司) - (Johnny_Marr, label, Warner_Bros._Records)
+7. (強尼·馬爾, genre, 另类摇滚) - (Johnny_Marr, genre, Indie_rock)
+8. (強尼·馬爾, label, Sire_Records) - (Johnny_Marr, label, Sire_Records)
+9. (強尼·馬爾, notableInstruments, Gibson_Les_Paul) - (Johnny_Marr, notableInstruments, Gibson_Les_Paul)
+The matching triplets in the two sets are:
+1. (泰坦4號運載火箭, manufacturer, 洛克希德·马丁) - (Titan_IV, manufacturer, Lockheed_Martin)
+2. (泰坦系列運載火箭, variantsWithTheirOwnArticles, 泰坦4號運載火箭) - (Titan_(rocket_family), variantsWithTheirOwnArticles, Titan_IV)
+3. (泰坦4號運載火箭, payloads, 卡西尼－惠更斯号) - (Titan_IV, payloads, Cassini–Huygens)
+4. (泰坦4號運載火箭, comparable, 擎天神5號運載火箭) - (Titan_IV, comparable, Atlas_V)
+5. (泰坦4號運載火箭, family, 泰坦系列運載火箭) - (Titan_IV, family, Titan_(rocket_family))
+6. (卡西尼－惠更斯号, launchVehicle, 泰坦4號運載火箭) - (Cassini–Huygens, launchRocket, Titan_IV)
+7. (泰坦4號運載火箭, comparable, 三角洲4號運載火箭) - (Titan_IV, comparable, Delta_IV)
+The matching triplets in the two sets are:
+
+- (滨松市,自治體,Hamamatsu)
+- (滨松市,自治體,Hamamatsu)
+- (滨松市,自治體,Hamamatsu)
+- (滨松市,自治體,Hamamatsu)
+The matching triplets in the two sets are:
+1. (HOLIDAYS_IN_THE_SUN, title, To_Mother) and (Holidays_in_the_Sun_(album), title, To_Mother_(song))
+2. (HOLIDAYS_IN_THE_SUN, title, Gloria) and (Holidays_in_the_Sun_(album), title, Gloria_(Yui_song))
+3. (HOLIDAYS_IN_THE_SUN, title, Namidairo) and (Holidays_in_the_Sun_(album), title, Namidairo)
+4. (HOLIDAYS_IN_THE_SUN, title, SUMMER_SONG) and (Holidays_in_the_Sun_(album), title, Summer_Song_(Yui_song))
+5. (HOLIDAYS_IN_THE_SUN, title, Again_(YUI單曲)) and (Holidays_in_the_Sun_(album), title, Again_(Yui_song))
+6. (HOLIDAYS_IN_THE_SUN, title, Never_say_die) and (Holidays_in_the_Sun_(album), title, Never_Say_Die)
+7. (HOLIDAYS_IN_THE_SUN, artist, YUI) and (Holidays_in_the_Sun_(album), artist, Yui_(singer))
+8. (HOLIDAYS_IN_THE_SUN, title, LOVE_&_TRUTH) and (Holidays_in_the_Sun_(album), title, Love_&_Truth)
+9. (HOLIDAYS_IN_THE_SUN, title, Understand) and (Holidays_in_the_Sun_(album), title, Understand)
+The matching triplets in the two sets are:
+- (麥克·洛遜, deathplace, 英国) and (Mark_Robson, deathPlace, United_Kingdom)
+- (麥克·洛遜, deathplace, 英格兰) and (Mark_Robson, deathPlace, England)
+- (麥克·洛遜, deathplace, 伦敦) and (Mark_Robson, deathPlace, London)
+- (麥克·洛遜, location, 加拿大) and (Mark_Robson, birthPlace, Canada)
+The matching triplets in the two sets are:
+
+1. (Chrome_OS, developer, Google)
+2. (Chrome_OS, programmedIn, C++)
+3. (Chrome_OS, supportedPlatforms, ARM_architecture)
+The matching triplets in the two sets are:
+- (皇家安大略博物館, location, 多伦多) and (Royal_Ontario_Museum, location, Toronto)
+- (皇家安大略博物館, location, 加拿大) and (Royal_Ontario_Museum, location, Canada)
+The matching triplets in the two sets are:
+- (梅苏特·厄齐尔, clubs, 阿森纳足球俱乐部) and (Mesut_Özil, clubs, Arsenal_F.C.)
+- (梅苏特·厄齐尔, clubs, 雲達不萊梅體育會) and (Mesut_Özil, clubs, SV_Werder_Bremen)
+- (梅苏特·厄齐尔, clubs, 沙尔克04足球俱乐部) and (Mesut_Özil, youthclubs, FC_Schalke_04)
+- (梅苏特·厄齐尔, clubs, 皇家马德里足球俱乐部) and (Mesut_Özil, clubs, Real_Madrid_C.F.)
+- (梅苏特·厄齐尔, currentclub, 阿森纳足球俱乐部) and (Mesut_Özil, currentclub, Arsenal_F.C.)
+- (梅苏特·厄齐尔, nationalteam, 德國國家足球隊) and (Mesut_Özil, nationalteam, Germany_national_football_team)
+- (梅苏特·厄齐尔, nationalteam, 德國21歲以下國家足球隊) and (Mesut_Özil, nationalteam, Germany_national_under-21_football_team)
+- (梅苏特·厄齐尔, youthclubs, 红白埃森足球俱乐部) and (Mesut_Özil, youthclubs, Rot-Weiss_Essen)
+The matching triplets in the two sets are:
+1. (貝尼格諾·阿基諾三世, almaMater, 馬尼拉雅典耀大學) - (Benigno_Aquino_III, almaMater, Ateneo_de_Manila_University)
+2. (貝尼格諾·阿基諾三世, party, 菲律賓自由黨) - (Benigno_Aquino_III, party, Liberal_Party_(Philippines))
+3. (格洛丽亚·马卡帕加尔-阿罗约, successor, 貝尼格諾·阿基諾三世) - (Gloria_Macapagal_Arroyo, successor, Benigno_Aquino_III)
+The matching triplets in the two sets are:
+- (東尼·保士達, countryofbirth, 奥地利) and (Toni_Polster, birthPlace, Austria)
+- (東尼·保士達, clubs, 塞維利亞足球俱樂部) and (Toni_Polster, clubs, Sevilla_FC)
+- (東尼·保士達, clubs, 奧地利維也納足球會) and (Toni_Polster, clubs, FK_Austria_Wien)
+- (東尼·保士達, clubs, 薩爾斯堡紅牛足球俱樂部) and (Toni_Polster, clubs, FC_Red_Bull_Salzburg)
+- (東尼·保士達, managerclubs, 林茨體育會) and (Toni_Polster, managerclubs, LASK_Linz)
+- (東尼·保士達, youthclubs, 奧地利維也納足球會) and (Toni_Polster, youthclubs, FK_Austria_Wien)
+The matching triplets in the two sets are:
+- (洪永城, 經紀公司, 電視廣播有限公司) and (Tony_Hung, placeOfBirth, New_York_City)
+- (愛我請留言, 主演, 洪永城) and (Swipe_Tap_Love, starring, Tony_Hung)
+- (載得有情人, 主演, 洪永城) and (Rear_Mirror, starring, Tony_Hung)
+- (單戀雙城, 主演, 洪永城) and (Outbound_Love, starring, Tony_Hung)
+- (天眼_(無綫電視劇), 主演, 洪永城) and (Eye_In_the_Sky_(TV_series), starring, Tony_Hung)
+The matching triplets in the two triplet sets are:
+- (皇家韋斯達路足球會, league, 比利時足球甲級聯賽) and (K.V.C._Westerlo, league, Belgian_Pro_League)
+- (皮特·乌塔卡, clubs, 皇家韋斯達路足球會) and (Peter_Utaka, clubs, K.V.C._Westerlo)
+The matching triplets in the two sets are:
+
+1. (尼古拉·莱罗塔列, youthclubs, 巴里体育俱乐部) - (Nicola_Legrottaglie, youthclubs, F.C._Bari_1908)
+2. (安東尼奧·卡斯辛奴, youthclubs, 巴里体育俱乐部) - (Antonio_Cassano, youthclubs, F.C._Bari_1908)
+3. (戴维·普拉特, clubs, 巴里体育俱乐部) - (David_Platt_(footballer), clubs, F.C._Bari_1908)
+4. (西蒙尼·佩罗塔, clubs, 巴里体育俱乐部) - (Simone_Perrotta, clubs, F.C._Bari_1908)
+5. (马库斯·奥尔巴克, clubs, 巴里体育俱乐部) - (Marcus_Allbäck, clubs, F.C._Bari_1908)
+6. (詹卢卡·赞布罗塔, clubs, 巴里体育俱乐部) - (Gianluca_Zambrotta, clubs, F.C._Bari_1908)
+7. (莱昂纳多·博努奇, clubs, 巴里体育俱乐部) - (Leonardo_Bonucci, clubs, F.C._Bari_1908)
+The matching triplets in the two sets are:
+- (李健华,clubs,深圳市足球俱乐部) and (Li_Jianhua_(footballer),clubs,Shenzhen_F.C.)
+- (李健华,clubs,广州恒大淘宝足球俱乐部) and (Li_Jianhua_(footballer),clubs,Guangzhou_Evergrande_Taobao_F.C.)
+- (李健华,clubs,广州富力足球俱乐部) and (Li_Jianhua_(footballer),clubs,Guangzhou_R&F_F.C.)
+The matching triplets in the two sets are:
+- (盧均宜, youthclubs, 香港流浪足球會) and (Lo_Kwan_Yee, youthclubs, Hong_Kong_Rangers_FC)
+- (盧均宜, nationalteam, 香港足球代表隊) and (Lo_Kwan_Yee, nationalteam, Hong_Kong_national_football_team)
+- (盧均宜, nationalteam, 香港奧運足球代表隊) and (Lo_Kwan_Yee, nationalteam, Hong_Kong_national_under-23_football_team)
+- (盧均宜, clubs, 香港流浪足球會) and (Lo_Kwan_Yee, clubs, Hong_Kong_Rangers_FC)
+- (盧均宜, currentclub, 傑志體育會) and (Lo_Kwan_Yee, currentclub, Kitchee_SC)
+- (盧均宜, after, 羅沙度) and (Lo_Kwan_Yee, after, Roberto_Losada)
+- (羅沙度, before, 盧均宜) and (Roberto_Losada, before, Lo_Kwan_Yee)
+The matching triplets in the two sets are:
+
+- (菅沼駿哉, clubs, 磐田喜悅) and (磐田喜悅, name, 菅沼駿哉)
+- (菅沼駿哉, currentclub, 磐田喜悅) and (Shunya_Suganuma, currentclub, Kyoto_Sanga_F.C.)
+Matching triplets in the two sets:
+- (馬里國家足球隊, nationalteam, Mali_national_football_team)
+- (穆罕穆德·迪亚拉, nationalteam, Mali_national_football_team)
+Matching triplets in the two sets:
+- (宋美齡, allegiance, 國民革命軍) and (Soong_Mei-ling, almaMater, Wellesley_College)
+- (宋美齡, successor, 劉期純) and (Soong_Mei-ling, successor, Liu_Chi-chun)
+- (宋美齡, spouse, 蔣中正) and (Soong_Mei-ling, spouse, Chiang_Kai-shek)
+The matching triplets in the two sets are:
+- (邦板牙語, fam, 马来－波利尼西亚语族) and (Kapampangan_language, fam, Malayo-Polynesian_languages)
+- (邦板牙語, states, 菲律宾) and (Kapampangan_language, states, Philippines)
+The matching triplets in the two sets are:
+- (卡尔·林奈, almaMater, 隆德大学) and (Carl_Linnaeus, almaMater, Lund_University)
+- (夾竹桃, genusAuthority, 卡尔·林奈) and (Nerium, genusAuthority, Carl_Linnaeus)
+- (朱槿, binomialAuthority, 卡尔·林奈) and (Hibiscus_rosa-sinensis, binomialAuthority, Carl_Linnaeus)
+- (动物, regnumAuthority, 卡尔·林奈) and (Animal, authority, Carl_Linnaeus)
+- (向日葵, binomialAuthority, 卡尔·林奈) and (Helianthus_annuus, binomialAuthority, Carl_Linnaeus)
+- (红嘴鸥, binomialAuthority, 卡尔·林奈) and (Common_gull, binomialAuthority, Carl_Linnaeus)
+- (马, trinomialAuthority, 卡尔·林奈) and (Horse, trinomialAuthority, Carl_Linnaeus)
+- (松屬, genusAuthority, 卡尔·林奈) and (Pine, genusAuthority, Carl_Linnaeus)
+- (山茶花, binomialAuthority, 卡尔·林奈) and (Camellia_japonica, binomialAuthority, Carl_Linnaeus)
+- (鈴蘭, binomialAuthority, 卡尔·林奈) and (Lily_of_the_valley, authority, Carl_Linnaeus)
+- (家燕, binomialAuthority, 卡尔·林奈) and (Wagtail, genusAuthority, Carl_Linnaeus)
+- (河狸, genusAuthority, 卡尔·林奈) and (Beaver, genusAuthority, Carl_Linnaeus)
+- (菊科, typeGenusAuthority, 卡尔·林奈) and (Asteraceae, typeGenusAuthority, Carl_Linnaeus)
+- (鹡鸰属, genusAuthor, 卡尔·林奈) and (Wagtail, genusAuthority, Carl_Linnaeus)
+- (山茶属, genusAuthority, 卡尔·林奈) and (Camellia, genusAuthority, Carl_Linnaeus)
+- (栎属, genusAuthority, 卡尔·林奈) and (Oak, genusAuthority, Carl_Linnaeus)
+- (郁金香, genusAuthority, 卡尔·林奈) and (Tulip, genusAuthority, Carl_Linnaeus)
+- (鸟, classisAuthority, 卡尔·林奈) and (Bird, authority, Carl_Linnaeus)
+- (荷花玉兰, binomialAuthority, 卡尔·林奈) and (Magnolia_grandiflora, binomialAuthority, Carl_Linnaeus)
+- (枫属, genusAuthority, 卡尔·林奈) and (Maple, genusAuthority, Carl_Linnaeus)
+- (菊属, typeSpeciesAuthority, 卡尔·林奈) and (Chrysanthemum, typeSpeciesAuthority, Carl_Linnaeus)
+- (海鸥, binomialAuthority, 卡尔·林奈) and (Great_tit, binomialAuthority, Carl_Linnaeus)
+- (白鹡鸰, binomialAuthority, 卡尔·林奈) and (White_wagtail, binomialAuthority, Carl_Linnaeus)
+- (金雕, binomialAuthority, 卡尔·林奈) and (Great_tit, binomialAuthority, Carl_Linnaeus)
+- (银杏, binomialAuthority, 卡尔·林奈) and (Ginkgo_biloba, binomialAuthority, Carl_Linnaeus)
+- (大山雀, binomialAuthority, 卡尔·林奈) and (Great_tit, binomialAuthority, Carl_Linnaeus)
+- (菊属, genusAuthority, 卡尔·林奈) and (Chrysanthemum, genusAuthority, Carl_Linnaeus)
+- (鸢尾属, genusAuthority, 卡尔·林奈) and (Iris_(plant), genusAuthority, Carl_Linnaeus)
+- (鸡, trinomialAuthority, 卡尔·林奈) and (Horse, trinomialAuthority, Carl_Linnaeus)
+- (木蘭屬, genusAuthority, 卡尔·林奈) and (Magnolia, genusAuthority, Carl_Linnaeus)
+The matching triplets in the two sets are:
+- (通俗拉丁语, fam, 拉丁语) and (Vulgar_Latin, fam, Latin)
+- (通俗拉丁语, states, 罗马共和国) and (Vulgar_Latin, states, Roman_Republic)
+The matching triplets in the two sets are:
+- (贝内迪克特·阿诺德, branch, 英國陸軍) and (Benedict_Arnold, branch, British_Army)
+- (贝内迪克特·阿诺德, commander, 薩拉托加戰役) and (Benedict_Arnold, commander, Saratoga_campaign)
+Matching triplets in the two sets are:
+- (2015年中国足协杯, location, 广州市) and (2015_Chinese_FA_Cup, stadium, Guangzhou)
+- (2015年中国足协杯, location, 武汉市) and (2015_Chinese_FA_Cup, stadium, Wuhan)
+- (2015年中国足协杯, location, 天津市) and (2015_Chinese_FA_Cup, stadium, Tianjin)
+- (2015年中国足协杯, team, 上海绿地申花足球俱乐部) and (2015_Chinese_FA_Cup, team, Shanghai_Greenland_Shenhua_F.C.)
+- (2015年中国足协杯, location, 杭州市) and (2015_Chinese_FA_Cup, stadium, Hangzhou)
+- (2015年中国足协杯, location, 北京市) and (2015_Chinese_FA_Cup, stadium, Beijing)
+- (2015年中国足协杯, location, 南京市) and (2015_Chinese_FA_Cup, stadium, Nanjing)
+The matching triplets in the two sets are:
+
+1. (超WONDERFUL!⑥, artist, ℃-ute) and (Chō_Wonderful!_6, artist, Cute_(Japanese_idol_group))
+2. (超WONDERFUL!⑥, producer, 淳君) and (Chō_Wonderful!_6, producer, Tsunku)
+3. (超WONDERFUL!⑥, album, 第七章「太美了真抱歉」) and (Chō_Wonderful!_6, album, Campus_Life_(Umarete_Kite_Yokatta))
+The matching triplets in the two sets are:
+
+- (柬埔寨日占时期, event, 日本投降) matches with (Japanese_occupation_of_Cambodia, event, Surrender_of_Japan)
+- (柬埔寨日占时期, titleLeader, 柬埔寨君主列表) matches with (Japanese_occupation_of_Cambodia, titleLeader, List_of_monarchs_of_Cambodia)
+The matching triplets in the two sets are:
+- (拉美利斯, clubs, 切尔西足球俱乐部) and (Ramires, clubs, Chelsea_F.C.)
+- (拉美利斯, nationalteam, 巴西國家足球隊) and (Ramires, nationalteam, Brazil_national_football_team)
+- (拉美利斯, youthclubs, 若因维利竞技俱乐部) and (Ramires, youthclubs, Joinville_Esporte_Clube)
+The matching triplets in the two sets are:
+- (弘益大學, city, 首爾) and (Hongik_University, city, Seoul)
+- (金基熙, youthclubs, 弘益大學) and (Kim_Kee-hee, youthclubs, Hongik_University)
+The matching triplets in the two sets are:
+1. (阿卜杜拉·萨尼, head, 努里·阿布·赛赫民) and (Abdullah_al-Thani, president, Aguila_Saleh_Issa)
+2. (阿里·扎伊丹, successor, 阿卜杜拉·萨尼) and (Ali_Zeidan, successor, Abdullah_al-Thani)
+3. (阿卜杜拉·萨尼, predecessor, 阿里·扎伊丹) and (Abdullah_al-Thani, predecessor, Ali_Zeidan)
+The matching triplets in the two sets are:
+
+1. (安杰伊·杜达, primeminister, 雅罗斯瓦夫·卡钦斯基) matches with (Andrzej_Duda, primeminister, Beata_Szydło)
+2. (安杰伊·杜达, predecessor, 布羅尼斯瓦夫·科莫羅夫斯基) matches with (Andrzej_Duda, predecessor, Bronisław_Komorowski)
+3. (安杰伊·杜达, almaMater, 亞捷隆大學) matches with (Andrzej_Duda, almaMater, Jagiellonian_University)
+The matching triplets in the two sets are:
+- (古斯塔夫·施特雷澤曼, title, 德国总理) and (Gustav_Stresemann, title, Chancellor_of_Germany)
+- (納粹德國, titleDeputy, 德国总理) and (Weimar_Republic, titleDeputy, Chancellor_of_Germany)
+- (德意志帝國, titleDeputy, 德国总理) and (Prince_Maximilian_of_Baden, title, Chancellor_of_Germany)
+- (德国, leaderTitle, 德国总理) and (Chancellor_of_Germany, seat, Germany)
+- (德国基督教民主联盟, leader, 德国总理) and (Angela_Merkel, incumbent, Chancellor_of_Germany)
+- (魯茨·格拉夫·什未林·馮·科洛希克, successor, 德国总理) and (Gerhard_Schröder, office, Chancellor_of_Germany)
+- (威廉·马克思, title, 德国总理) and (Wilhelm_Marx, title, Chancellor_of_Germany)
+- (汉斯·路德, order, 德国总理) and (Hans_Luther, order, Chancellor_of_Germany)
+- (汉斯·路德, title, 德国总理) and (Hans_Luther, title, Chancellor_of_Germany)
+- (約瑟夫·戈培爾, order, 德国总理) and (Joseph_Goebbels, order, Chancellor_of_Germany)
+- (魯茨·格拉夫·什未林·馮·科洛希克, predecessor, 德国总理) and (Lutz_Graf_Schwerin_von_Krosigk, title, Chancellor_of_Germany)
+- (奥托·冯·俾斯麦, office, 德国总理) and (Otto_von_Bismarck, title, Chancellor_of_Germany)
+- (古斯塔夫·施特雷澤曼, order, 德国总理) and (Gustav_Stresemann, order, Chancellor_of_Germany)
+- (德国总理, incumbent, 安格拉·默克爾) and (Angela_Merkel, office, Chancellor_of_Germany)
+- (安格拉·默克爾, office, 德国总理) and (Angela_Merkel, office, Chancellor_of_Germany)
+- (乔治·冯·赫特林, title, 德国总理) and (Georg_von_Hertling, title, Chancellor_of_Germany)
+- (阿道夫·希特勒, office, 德国总理) and (Adolf_Hitler, office, Chancellor_of_Germany)
+- (魯茨·格拉夫·什未林·馮·科洛希克, title, 德国总理) and (Lutz_Graf_Schwerin_von_Krosigk, title, Chancellor_of_Germany)
+- (西德, titleDeputy, 德国总理) and (Helmut_Kohl, office, Chancellor_of_Germany)
+- (赫尔穆特·科尔, office, 德国总理) and (Helmut_Kohl, office, Chancellor_of_Germany)
+The matching triplets in the two sets are:
+- (达伦·弗莱彻, currentclub, 西布罗姆维奇足球俱乐部) and (Darren_Fletcher, currentclub, West_Bromwich_Albion_F.C.)
+- (稻本润一, clubs, 西布罗姆维奇足球俱乐部) and (Jason_Davidson, clubs, West_Bromwich_Albion_F.C.)
+- (帕斯卡·蘇巴保拿, clubs, 西布罗姆维奇足球俱乐部) and (Pascal_Zuberbühler, clubs, West_Bromwich_Albion_F.C.)
+- (英格蘭足球代表隊, club, 西布罗姆维奇足球俱乐部) and (England_national_football_team, club, West_Bromwich_Albion_F.C.)
+- (柏度·比利, clubs, 西布罗姆维奇足球俱乐部) and (Peter_Odemwingie, clubs, West_Bromwich_Albion_F.C.)
+- (马尔顿·富洛普, clubs, 西布罗姆维奇足球俱乐部) and (Márton_Fülöp, clubs, West_Bromwich_Albion_F.C.)
+- (希臘國家足球隊, club, 西布罗姆维奇足球俱乐部) and (Greece_national_football_team, club, West_Bromwich_Albion_F.C.)
+- (占士·摩利遜, currentclub, 西布罗姆维奇足球俱乐部) and (James_Morrison_(footballer), currentclub, West_Bromwich_Albion_F.C.)
+- (格拉·佐尔坦, clubs, 西布罗姆维奇足球俱乐部) and (Zoltán_Gera, clubs, West_Bromwich_Albion_F.C.)
+- (迭戈·卢加诺, clubs, 西布罗姆维奇足球俱乐部) and (Diego_Lugano, clubs, West_Bromwich_Albion_F.C.)
+- (賓·科士打_(足球運動員), currentclub, 西布罗姆维奇足球俱乐部) and (Ben_Foster_(footballer), currentclub, West_Bromwich_Albion_F.C.)
+- (羅拔·高倫, clubs, 西布罗姆维奇足球俱乐部) and (Rob_Hulse, clubs, West_Bromwich_Albion_F.C.)
+- (斯洛文尼亞國家足球隊, club, 西布罗姆维奇足球俱乐部) and (Slovenia_national_football_team, club, West_Bromwich_Albion_F.C.)
+- (傑森·戴維森, clubs, 西布罗姆维奇足球俱乐部) and (Craig_Dawson, clubs, West_Bromwich_Albion_F.C.)
+- (占士·摩利遜, clubs, 西布罗姆维奇足球俱乐部) and (James_Morrison_(footballer), clubs, West_Bromwich_Albion_F.C.)
+- (佐治奧斯·森馬拉斯, clubs, 西布罗姆维奇足球俱乐部) and (Georgios_Samaras, clubs, West_Bromwich_Albion_F.C.)
+- (佛得角國家足球隊, club, 西布罗姆维奇足球俱乐部) and (Cape_Verde_national_football_team, club, West_Bromwich_Albion_F.C.)
+- (伊德耶·艾德·布朗, clubs, 西布罗姆维奇足球俱乐部) and (Craig_Dawson, clubs, West_Bromwich_Albion_F.C.)
+- (西布罗姆维奇足球俱乐部, league, 英格兰足球超级联赛) and (West_Bromwich_Albion_F.C., chrtitle, Premier_League)
+- (凯文·菲利普斯, clubs, 西布罗姆维奇足球俱乐部) and (Kevin_Phillips_(footballer), clubs, West_Bromwich_Albion_F.C.)
+- (伊德耶·艾德·布朗, currentclub, 西布罗姆维奇足球俱乐部) and (Craig_Dawson, currentclub, West_Bromwich_Albion_F.C.)
+- (傑森·戴維森, currentclub, 西布罗姆维奇足球俱乐部) and (Craig_Dawson, currentclub, West_Bromwich_Albion_F.C.)
+- (德雷克·麦克因斯, clubs, 西布罗姆维奇足球俱乐部) and (Derek_McInnes, clubs, West_Bromwich_Albion_F.C.)
+- (克雷格·道森, clubs, 西布罗姆维奇足球俱乐部) and (Craig_Dawson, clubs, West_Bromwich_Albion_F.C.)
+- (罗伊·霍奇森, managerclubs, 西布罗姆维奇足球俱乐部) and (Roy_Hodgson, managerclubs, West_Bromwich_Albion_F.C.)
+- (克雷格·道森, currentclub, 西布罗姆维奇足球俱乐部) and (Craig_Dawson, currentclub, West_Bromwich_Albion_F.C.)
+- (艾殊利·威廉斯, youthclubs, 西布罗姆维奇足球俱乐部) and (Ashley_Williams_(footballer), youthclubs, West_Bromwich_Albion_F.C.)
+- (澳洲國家足球隊, club, 西布罗姆维奇足球俱乐部) and (Australia_national_soccer_team, club, West_Bromwich_Albion_F.C.)
+- (彼得·奧丹維治, clubs, 西布罗姆维奇足球俱乐部) and (Peter_Odemwingie, clubs, West_Bromwich_Albion_F.C.)
+- (英国奥林匹克足球队, club, 西布罗姆维奇足球俱乐部) and (Great_Britain_Olympic_football_team, club, West_Bromwich_Albion_F.C.)
+- (尼古拉·阿内尔卡, clubs, 西布罗姆维奇足球俱乐部) and (Nicolas_Anelka, clubs, West_Bromwich_Albion_F.C.)
+- (西布罗姆维奇足球俱乐部, ground, 山楂球场) and (West_Bromwich_Albion_F.C., ground, The_Hawthorns)
+- (恩万科沃·卡努, clubs, 西布罗姆维
+The matching triplets in the two sets are:
+- (科普特字母, fam, 圣书体) and (Coptic_alphabet, fam, Egyptian_hieroglyphs)
+- (早期西里尔字母, fam, 圣书体) and (Early_Cyrillic_alphabet, fam, Egyptian_hieroglyphs)
+- (西里尔字母, fam, 圣书体) and (Cyrillic_script, fam, Egyptian_hieroglyphs)
+- (希腊字母, fam, 圣书体) and (Greek_alphabet, fam, Egyptian_hieroglyphs)
+- (圣书体, children, 世俗體) and (Egyptian_hieroglyphs, children, Demotic_(Egyptian))
+- (圣书体, children, 僧侶體) and (Egyptian_hieroglyphs, children, Hieratic)
+The matching triplets in the two sets are:
+
+1. (費爾哈特·阿巴斯, successor, 本·优素福·本·赫达) - (Ferhat_Abbas, successor, Ahmed_Ben_Bella)
+2. (費爾哈特·阿巴斯, title, 阿尔及利亚总统) - (Ferhat_Abbas, title, President_of_Algeria)
+3. (艾哈邁德·本·貝拉, predecessor, 費爾哈特·阿巴斯) - (Ahmed_Ben_Bella, before, Ferhat_Abbas)
+4. (Benyoucef_Benkhedda, predecessor, Ferhat_Abbas) - (Benyoucef_Benkhedda, before, Ferhat_Abbas)
+5. (阿尔及利亚战争, commander, 費爾哈特·阿巴斯) - (Algerian_War, commander, Ferhat_Abbas)
+6. (費爾哈特·阿巴斯, after, Benyoucef_Benkhedda) - (Ferhat_Abbas, after, Benyoucef_Benkhedda)
+7. (費爾哈特·阿巴斯, birthPlace, Algeria) - (Ferhat_Abbas, birthPlace, Algeria)
+The matching triplets in the two sets are:
+- (马克·冈萨雷斯, nationalteam, 智利國家足球隊) and (Mark_González, nationalteam, Chile_national_football_team)
+- (马克·冈萨雷斯, clubs, 利物浦足球俱乐部) and (Mark_González, clubs, Liverpool_F.C.)
+- (马克·冈萨雷斯, clubs, 莫斯科中央陆军足球俱乐部) and (Mark_González, clubs, PFC_CSKA_Moscow)
+- (马克·冈萨雷斯, clubs, 皇家贝蒂斯足球俱乐部) and (Mark_González, clubs, Real_Betis)
+- (马克·冈萨雷斯, clubs, 天主教大学竞技俱乐部) and (Mark_González, clubs, Club_Deportivo_Universidad_Católica)
+The matching triplets in the two sets are:
+
+1. (枝野幸男, predecessor, Yukio_Edano)
+2. (枝野幸男, primeminister, Yukio_Hatoyama)
+3. (枝野幸男, primeminister, Naoto_Kan)
+4. (枝野幸男, successor, Renhō)
+5. (民主党_(日本), leader3Name, Yukio_Edano)
+6. (枝野幸男, predecessor, Seiji_Maehara)
+7. (枝野幸男, predecessor, Yoshito_Sengoku)
+8. (枝野幸男, predecessor, Sumio_Mabuchi)
+9. (枝野幸男, almaMater, Tohoku_University)
+10. (枝野幸男, successor, Osamu_Fujimura)
+11. (枝野幸男, title, Chief_Cabinet_Secretary)
+12. (枝野幸男, primeminister, Yoshihiko_Noda)
+13. (枝野幸男, successor, Takeaki_Matsumoto)
+14. (枝野幸男, office, Chief_Cabinet_Secretary)
+15. (枝野幸男, successor, Toshimitsu_Motegi)
+16. (枝野幸男, before, Yoshito_Sengoku)
+17. (Yoshito_Sengoku, successor, Yukio_Edano)
+The matching triplets in the two sets are:
+
+1. (咸普頓公園球場, owner, 女王公园足球俱乐部) - (Hampden Park, owner, Queen's Park F.C.)
+2. (咸普頓公園球場, tenants, 蘇格蘭足球代表隊) - (Hampden Park, tenants, Scotland national football team)
+3. (阿奇巴尔·雷奇, significantProjects, 咸普頓公園球場) - (Archibald Leitch, significantProjects, Hampden Park)
+4. (1975–76年歐洲冠軍盃, stadium, 咸普頓公園球場) - (1975–76 European Cup, stadium, Hampden Park)
+5. (咸普頓公園球場, tenants, 女王公园足球俱乐部) - (Hampden Park, tenants, Queen's Park F.C.)
+6. (女王公园足球俱乐部, ground, 咸普頓公園球場) - (Queen's Park F.C., ground, Hampden Park)
+7. (1965–66年歐洲盃賽冠軍盃, stadium, 咸普頓公園球場) - (1965–66 European Cup Winners' Cup, stadium, Hampden Park)
+8. (蘇格蘭足球代表隊, homeStadium, 咸普頓公園球場) - (Scotland national football team, homeStadium, Hampden Park)
+9. (老特拉福德球场, before, 咸普頓公園球場) - (Old Trafford, before, Hampden Park)
+The matching triplets in the two sets are:
+
+1. (工黨_(香港),政治派系,泛民主派) - (Labour_Party_(Hong_Kong),affiliation,Pan-democracy_camp)
+2. (工黨_(香港),姓名,李卓人) - (Lee_Cheuk-yan,party,Labour_Party_(Hong_Kong))
+3. (工黨_(香港),姓名,張國柱_(立法會議員)) - (Labour_Party_(Hong_Kong),leader1Name,Lee_Cheuk-yan)
+The matching triplets in the two sets are:
+- (温家宝,successor,曾培炎) and (Wen_Jiabao,successor,Zeng_Qinghong)
+- (温家宝,successor,李克强) and (Wen_Jiabao,successor,Li_Keqiang)
+- (温家宝,successor,黄菊) and (Wen_Jiabao,successor,Hui_Liangyu)
+- (温家宝,successor,曾庆红) and (Wen_Jiabao,successor,Zhu_Rongji)
+- (温家宝,predecessor,李岚清) and (Wen_Jiabao,alongside,Li_Lanqing)
+- (温家宝,predecessor,朱镕基) and (Wen_Jiabao,predecessor,Zhu_Rongji)
+- (温家宝,predecessor,吴邦国) and (Wen_Jiabao,predecessor,Wang_Zhaoguo)
+- (温家宝,predecessor,王兆国) and (Wen_Jiabao,predecessor,Wang_Zhaoguo)
+- (温家宝,alongside,吴邦国) and (Wen_Jiabao,alongside,Wu_Bangguo)
+- (温家宝,alongside,李岚清) and (Wen_Jiabao,alongside,Li_Lanqing)
+- (温家宝,almaMater,天津市南开中学) and (Wen_Jiabao,almaMater,China_University_of_Geosciences)
+The matching triplets in the two sets are:
+- (謝菲·布馬, clubs, 切尔西足球俱乐部) and (Jeffrey_Bruma, clubs, Chelsea_F.C.)
+- (謝菲·布馬, youthclubs, 飛燕諾) and (Jeffrey_Bruma, youthclubs, Feyenoord)
+- (謝菲·布馬, currentclub, PSV燕豪芬) and (Jeffrey_Bruma, currentclub, PSV_Eindhoven)
+- (謝菲·布馬, nationalteam, 荷蘭國家足球隊) and (Jeffrey_Bruma, nationalteam, Netherlands_national_football_team)
+The matching triplets in the two sets are:
+- (約翰·巴科斯, knownFor, Fortran) and (John_Backus, knownFor, Fortran)
+- (ALGOL, designer, 約翰·巴科斯) and (ALGOL, designer, John_Backus)
+- (ALGOL_60, designer, 約翰·巴科斯) and (ALGOL_60, designer, John_Backus)
+
+The matching triplets in the two sets are:
+1. (阿里·本·侯賽因王子, mother, 阿麗亞·埃·侯賽因) - (Prince_Ali_bin_Hussein, mother, Alia_al-Hussein)
+2. (阿里·本·侯賽因王子, spouse, 莉姆·阿里王妃) - (Prince_Ali_bin_Hussein, spouse, Princess_Rym_al-Ali)
+3. (阿里·本·侯賽因王子, house, 哈希姆家族) - (Prince_Ali_bin_Hussein, house, Hashemites)
+The matching triplets in the two sets are:
+- (卡洛斯_(帕爾馬),heir,海梅_(巴爾迪伯爵)) and (Carlos,_Duke_of_Parma,heir,Prince_Jaime,_Count_of_Bardi)
+- (海梅_(巴爾迪伯爵),after,西克斯圖斯·亨利王子_(波旁-帕爾馬)) and (Prince_Jaime,_Count_of_Bardi,after,Prince_Sixtus_Henry_of_Bourbon-Parma)
+- (卡洛斯·烏戈_(帕爾馬),issue,海梅_(巴爾迪伯爵)) and (Carlos_Hugo,_Duke_of_Parma,issue,Prince_Jaime,_Count_of_Bardi)
+- (海梅_(巴爾迪伯爵),title,帕爾馬公國) and (Prince_Jaime,_Count_of_Bardi,birthPlace,Nijmegen)
+The matching triplets in the two sets are:
+
+1. (ECMAScript, implementations, V8_(JavaScript引擎))
+2. (JScript_.NET, influencedBy, ECMAScript)
+3. (ECMAScript, influencedBy, C语言)
+4. (ECMAScript, influencedBy, Java)
+5. (ECMAScript, designer, 布蘭登·艾克)
+6. (ECMAScript, influencedBy, Python)
+7. (ECMAScript, influencedBy, Awk)
+8. (ECMAScript, influencedBy, Scheme)
+9. (ECMAScript, influencedBy, Perl)
+10. (ECMAScript, implementations, ActionScript)
+11. (ECMAScript, implementations, SpiderMonkey)
+The matching triplets in the two sets are:
+- (黎可漂, successor, 農德孟) and (Lê_Khả_Phiêu, successor, Nông_Đức_Mạnh)
+- (黎可漂, party, 越南共产党) and (Lê_Khả_Phiêu, party, Communist_Party_of_Vietnam)
+- (黎可漂, predecessor, 農德孟) and (Lê_Khả_Phiêu, predecessor, Nông_Đức_Mạnh)
+The matching triplets in the two sets are:
+- (勞達航空, alliance, 星空聯盟) and (Lauda_Air, alliance, Star_Alliance)
+- (勞達航空, hubs, 維也納國際機場) and (Lauda_Air, bases, Vienna_International_Airport)
+The matching triplets in the two sets are:
+- (朴藝珍,配偶,朴喜洵) and (Park_Ye-jin,spouse,Park_Hee-soon)
+- (朴藝珍,語言,英语) and (Park_Ye-jin,placeOfBirth,Seoul)
+The matching triplets in the two sets are:
+
+1. (法国总理, incumbent, 曼纽尔·瓦尔斯) - (Prime_Minister_of_France, incumbent, Manuel_Valls)
+2. (乔治·克列孟梭, order, 法国总理) - (Louis-Eugène_Cavaignac, order, Prime_Minister_of_France)
+3. (让-马克·埃罗, office, 法国总理) - (Raymond_Poincaré, office, Prime_Minister_of_France)
+4. (路易-欧仁·卡芬雅克, title, 法国总理) - (Pierre_Bérégovoy, title, Prime_Minister_of_France)
+5. (法国总理, appointer, 法国总统) - (Prime_Minister_of_France, appointer, President_of_France)
+6. (让·卡西米尔-佩里埃, office, 法国总理) - (Jean_Casimir-Perier, office, Prime_Minister_of_France)
+7. (阿道夫·梯也爾, office, 法国总理) - (Adolphe_Thiers, office, Prime_Minister_of_France)
+8. (茹费理, title, 法国总理) - (Jules_Ferry, title, Prime_Minister_of_France)
+9. (夏爾·戴高樂, order, 法国总理) - (Charles_de_Gaulle, order, Prime_Minister_of_France)
+10. (維希法國, titleDeputy, 法国总理) - (Vichy_France, titleDeputy, Prime_Minister_of_France)
+11. (阿道夫·梯也爾, title, 法国总理) - (Philippe_Pétain, title, Prime_Minister_of_France)
+12. (曼纽尔·瓦尔斯, title, 法国总理) - (Manuel_Valls, title, Prime_Minister_of_France)
+The matching triplets in the two sets are:
+- (馬克·弗內·莫內, party, 安道爾自由黨) and (Marc_Forné_Molné, party, Liberal_Party_of_Andorra)
+- (馬克·弗內·莫內, monarch, 弗朗索瓦·密特朗) and (Marc_Forné_Molné, monarch, François_Mitterrand)
+- (馬克·弗內·莫內, monarch, 雅克·希拉克) and (Marc_Forné_Molné, monarch, Jacques_Chirac)
+The matching triplets in the two sets are:
+1. (Daryl_Janmaat, clubs, Newcastle_United_F.C.) in set2 matches with (Daryl_Janmaat, clubs, Newcastle_United_F.C.) in set1.
+2. (Jonjo_Shelvey, currentclub, Newcastle_United_F.C.) in set2 matches with (Jonjo_Shelvey, currentclub, Newcastle_United_F.C.) in set1.
+3. (Fabricio_Coloccini, currentclub, Newcastle_United_F.C.) in set2 matches with (Fabricio_Coloccini, currentclub, Newcastle_United_F.C.) in set1.
+The matching triplets in the two sets are:
+
+1. (聯合艦隊, notableCommanders, 山本五十六) - (Combined_Fleet, notableCommanders, Isoroku_Yamamoto)
+2. (聯合艦隊, battles, 日俄战争) - (Combined_Fleet, battles, Russo-Japanese_War)
+The matching triplets in the two triplet sets are:
+
+1. (恰蒂斯加尔邦, blank1InfoSec, 印地语) - (Chhattisgarh, blank1InfoSec, Hindi)
+2. (印地语, fam, 梵语) - (Hindi, fam, Hindustani_language)
+3. (印地语, fam, 印欧语系) - (Hindi, fam, Indo-Aryan_languages)
+4. (印度北部, data, 印地语) - (North_India, data, Hindi)
+5. (勒克瑙, officialLanguages, 印地语) - (Kanpur, demographics1Info, Hindi)
+6. (LINE_(應用程式), language, 印地语) - (Line_(application), language, Hindi)
+7. (印度西部, data, 印地语) - (Aurangabad,_Maharashtra, demographics1Info, Hindi)
+8. (天城文, languages, 印地语) - (Hindi, script, Devanagari)
+9. (印地语, script, 天城文) - (Hindi, script, Devanagari)
+10. (中央邦, blank2InfoSec, 印地语) - (Madhya_Pradesh, blank2InfoSec, Hindi)
+11. (印地语, fam, 印度斯坦语) - (Hindi, fam, Hindustani_language)
+12. (印地语, fam, 印度-伊朗语族) - (Hindi, fam, Indo-Iranian_languages)
+13. (查谟-克什米尔邦, blank1InfoSec, 印地语) - (Jammu_and_Kashmir, blank2InfoSec, Hindi)
+14. (坎普尔, officialLanguages, 印地语) - (Kanpur, demographics1Info, Hindi)
+15. (新德里, nativeName, 印地语) - (New_Delhi, demographics1Info, Hindi)
+16. (北方邦, blank1InfoSec, 印地语) - (Uttar_Pradesh, blank1InfoSec, Hindi)
+17. (德里, blank2Info, 印地语) - (Delhi, demographics1Info, Hindi)
+18. (印地语, fam, 印度-雅利安语支) - (Hindi, fam, Indo-Aryan_languages)
+19. (印度东部, data, 印地语) - (East_India, blankInfoSec, Hindi)
+20. (瓦拉納西, demographics1Info, 印地语) - (Varanasi, demographics1Info, Hindi)
+21. (巴特那, officialLanguages, 印地语) - (Hoshiarpur, demographics1Info, Hindi)
+22. (年度最佳學生, language, 印地语) - (Student_of_the_Year, language, Hindi)
+23. (比哈尔邦, blank1InfoSec, 印地语) - (Bihar, blank1InfoSec, Hindi)
+24. (贾坎德邦, blank1InfoSec, 印地语) - (Jharkhand, blank1InfoSec, Hindi)
+25. (可汗學院, language, 印地语) - (Bitbucket, language, Hindi)
+26. (昌迪加尔, officialLanguages, 印地语) - (Chandigarh, demographics1Info, Hindi)
+27. (哈里亚纳邦, blankInfoSec, 印地语) - (Haryana, demographics1Info, Hindi)
+28. (新德里, blankInfo, 印地语) - (New_Delhi, demographics1Info, Hindi)
+29. (喬寶寶, 語言, 印地语) - (Student_of_the_Year, language, Hindi)
+30. (賴布爾, demographics1Info, 印地语) - (Raipur, demographics1Info, Hindi)
+31. (喜马偕尔邦, blank1InfoSec, 印地语) - (Himachal_Pradesh, demographics1Info, Hindi)
+32. (印度, 官方語言, 印地语) - (India, officialLanguages, Hindi)
+33. (印度斯坦语, nation, 印地语) - (Hindi, nation, India)
+The matching triplets in the two sets are:
+- (金在成, currentclub, 浦項製鐵足球俱樂部) and (Kim_Jae-sung, currentclub, Seoul_E-Land_FC)
+- (浦項製鐵足球俱樂部, name, 金在成) and (Seoul_E-Land_FC, name, Kim_Jae-sung)
+The matching triplets in the two sets are:
+
+(D-18T, nationalOrigin, 乌克兰) and (Progress_D-18T, nationalOrigin, Ukraine)
+
+(D-18T, majorApplications, 安托諾夫An-124) and (Progress_D-18T, majorApplications, Antonov_An-124_Ruslan)
+
+(D-18T, majorApplications, 安托諾夫An-225運輸機) and (Progress_D-18T, majorApplications, Antonov_An-225_Mriya)
+
+(D-18T, nationalOrigin, 苏联) and (Progress_D-18T, nationalOrigin, Soviet_Union)
+The matching triplets in the two sets are:
+
+1. (塔吉克语, states, 塔吉克斯坦) - (Tajik_language, states, Tajikistan)
+2. (塔吉克语, fam, 波斯语) - (Tajik_language, fam, Persian_language)
+3. (塔吉克语, states, 伊朗) - (Tajik_language, states, Iran)
+4. (塔吉克语, states, 乌兹别克斯坦) - (Tajik_language, states, Uzbekistan)
+5. (塔吉克语, states, 土库曼斯坦) - (Tajik_language, states, Turkmenistan)
+6. (塔吉克语, fam, 印度-伊朗语族) - (Tajik_language, fam, Indo-Iranian_languages)
+7. (塔吉克斯坦, 官方語言, 塔吉克语) - (Tajikistan, officialLanguages, Tajik_language)
+8. (塔吉克语, states, 乌克兰) - (Tajik_language, states, Ukraine)
+9. (塔吉克语, script, 拉丁字母) - (Tajik_language, script, Latin_script)
+10. (塔吉克语, script, 西里尔字母) - (Tajik_language, script, Cyrillic_script)
+11. (塔吉克语, fam, 伊朗语支) - (Tajik_language, fam, Iranian_languages)
+12. (塔吉克语, states, 吉尔吉斯斯坦) - (Tajik_language, states, Kyrgyzstan)
+13. (塔吉克语, fam, 印欧语系) - (Tajik_language, fam, Indo-European_languages)
+14. (塔吉克语, states, 阿富汗) - (Tajik_language, states, Afghanistan)
+15. (波斯语, dialects, 塔吉克语) - (Persian_language, dialects, Tajik_language)
+The matching triplets in the two sets are:
+
+1. (阿拉米字母, children, 敘利亞字母) - (Aramaic_alphabet, children, Syriac_alphabet)
+2. (阿拉米字母, languages, 亞拉姆語) - (Aramaic_alphabet, languages, Aramaic_language)
+3. (阿拉米字母, children, 佉卢文) - (Aramaic_alphabet, children, Balinese_alphabet)
+4. (阿拉米字母, languages, 希伯来语) - (Aramaic_alphabet, languages, Hebrew_language)
+5. (阿拉米字母, children, 納巴泰字母) - (Aramaic_alphabet, children, Nabataean_alphabet)
+6. (阿拉米字母, fam, 腓尼基字母) - (Aramaic_alphabet, fam, Phoenician_alphabet)
+7. (阿拉米字母, fam, 阿拉米字母) - (Aramaic_alphabet, fam, Aramaic_alphabet)
+8. (阿拉米字母, languages, 敘利亞語) - (Aramaic_alphabet, languages, Syriac_language)
+9. (阿拉米字母, children, 希伯来字母) - (Aramaic_alphabet, children, Hebrew_alphabet)
+10. (阿拉米字母, fam, 阿禮嘎禮字母) - (Aramaic_alphabet, fam, Manichaean_alphabet)
+11. (阿拉米字母, fam, 高棉文) - (Aramaic_alphabet, fam, Khmer_alphabet)
+12. (阿拉米字母, fam, 孟加拉文) - (Aramaic_alphabet, fam, Burmese_alphabet)
+13. (阿拉米字母, fam, 婆罗米文) - (Aramaic_alphabet, fam, Balinese_alphabet)
+14. (阿拉米字母, fam, 巴厘字母) - (Aramaic_alphabet, fam, Balinese_alphabet)
+15. (阿拉米字母, fam, 天城文) - (Aramaic_alphabet, fam, Siddhaṃ_script)
+16. (阿拉米字母, fam, 传统蒙古文) - (Aramaic_alphabet, fam, Traditional_Mongolian_alphabet)
+The matching triplets in the two sets are:
+- (查谟-克什米尔邦, blank1InfoSec, 克什米爾語) and (Jammu_and_Kashmir, blank2InfoSec, Ladakhi_language)
+- (查谟-克什米尔邦, blank1InfoSec, 印地语) and (Jammu_and_Kashmir, blank1InfoSec, Urdu)
+- (查谟-克什米尔邦, blankInfoSec, 英语) and (Jammu_and_Kashmir, blank2InfoSec, Hindi)
+- (查谟-克什米尔邦, blankInfoSec, 乌尔都语) and (Jammu_and_Kashmir, blank1InfoSec, Urdu)
+- (查谟-克什米尔邦, seat, 斯利那加) and (Jammu_and_Kashmir, subdivisionName, North_India)
+The matching triplets in the two sets are:
+- (韩家沱长江大桥, crosses, 长江) and (Hanjiatuo_Yangtze_River_Bridge, crosses, Yangtze)
+- (韩家沱长江大桥, upstream, 石板沟长江大桥) and (Hanjiatuo_Yangtze_River_Bridge, upstream, Shiban'gou_Yangtze_River_Bridge)
+- (韩家沱长江大桥, carries, 渝利铁路) and (Hanjiatuo_Yangtze_River_Bridge, carries, Chongqing−Lichuan_Railway)
+- (石板沟长江大桥, downstream, 韩家沱长江大桥) and (Shiban'gou_Yangtze_River_Bridge, downstream, Hanjiatuo_Yangtze_River_Bridge)
+The matching triplets in the two sets are:
+
+1. (桑珠孜区, subdivisionName, 日喀则市) - (Samzhubzê_District, subdivisionName, Shigatse)
+2. (桑珠孜区, subdivisionName, 西藏自治区) - (Samzhubzê_District, subdivisionName, Tibet_Autonomous_Region)
+The matching triplets in the two sets are:
+- (伊丽莎白一世_(英格兰),successor,詹姆斯六世及一世) and (Elizabeth_I_of_England,successor,James_VI_and_I)
+- (伊丽莎白一世_(英格兰),father,亨利八世) and (Elizabeth_I_of_England,father,Henry_VIII_of_England)
+- (伊丽莎白一世_(英格兰),predecessor,玛丽一世_(英格兰)) and (Elizabeth_I_of_England,successor,Mary_I_of_England)
+- (伊丽莎白一世_(英格兰),house,都铎王朝) and (Elizabeth_I_of_England,house,House_of_Tudor)
+The matching triplets in the two sets are:
+
+- (金色琴弦,使用平台,PlayStation_2) and (La_Corda_d'Oro,platforms,PlayStation_2)
+- (金色琴弦,使用平台,PlayStation_Portable) and (La_Corda_d'Oro,platforms,PlayStation_Portable)
+- (金色琴弦,使用平台,Microsoft_Windows) and (La_Corda_d'Oro,platforms,Microsoft_Windows)
+- (金色琴弦,放送局,東京電視網) and (La_Corda_d'Oro,network,TV_Tokyo)
+Matching triplets in set1 and set2:
+- (加拿大勋章, honorificSuffix, Order_of_Canada)
+- (约翰·图佐·威尔逊, prizes, Order_of_Canada)
+- (加拿大總督, postNominals, Order_of_Canada)
+The matching triplets in the two sets are:
+- (斯皮罗·阿格纽, party, 共和黨_(美國)) and (Spiro_Agnew, party, Republican_Party_(United_States))
+- (斯皮罗·阿格纽, successor, 杰拉尔德·福特) and (Spiro_Agnew, successor, Gerald_Ford)
+- (斯皮罗·阿格纽, president, 理查德·尼克松) and (Spiro_Agnew, president, Richard_Nixon)
+- (理查德·尼克松, vicepresident, 斯皮罗·阿格纽) and (Richard_Nixon, vicepresident, Spiro_Agnew)
+The matching triplets in the two sets are:
+
+1. (爱丽丝公主_(英国), father, 阿尔伯特配亲王) - (Alexandra_of_Denmark, last, Albert,_Prince_Consort)
+2. (阿尔伯特配亲王, spouse, 维多利亚_(英国君主)) - (Albert,_Prince_Consort, spouse, Queen_Victoria)
+3. (阿尔伯特配亲王, father, 恩斯特一世_(萨克森-科堡-哥达)) - (Albert,_Prince_Consort, father, Ernest_I,_Duke_of_Saxe-Coburg_and_Gotha)
+The matching triplets in the two sets are:
+1. (C-47運輸機, moreUsers, 英國皇家空軍) - (Douglas_C-47_Skytrain, moreUsers, Royal_Air_Force)
+2. (英國皇家空軍, aircraftAttack, MQ-9收割者偵察機) - (Royal_Air_Force, aircraftAttack, General_Atomics_MQ-9_Reaper)
+3. (英國皇家空軍, aircraftTransport, 空中客车A330) - (Royal_Air_Force, aircraftTransport, Lockheed_C-130_Hercules)
+4. (英國皇家空軍, aircraftAttack, F-35閃電II戰鬥機) - (Royal_Air_Force, aircraftAttack, Lockheed_Martin_F-35_Lightning_II)
+5. (弗里曼·戴森, workInstitutions, 英國皇家空軍) - (Freeman_Dyson, workInstitutions, Royal_Air_Force)
+6. (英國皇家空軍, allegiance, 伊丽莎白二世) - (Royal_Air_Force, allegiance, Elizabeth_II)
+The matching triplets in the two sets are:
+- (內姆·奧奴夏, currentclub, 女王公园巡游者足球俱乐部) and (Nedum_Onuoha, currentclub, Queens_Park_Rangers_F.C.)
+- (內姆·奧奴夏, clubs, 曼彻斯特城足球俱乐部) and (Nedum_Onuoha, clubs, Manchester_City_F.C.)
+- (內姆·奧奴夏, nationalteam, 英格蘭21歲以下足球代表隊) and (Nedum_Onuoha, nationalteam, England_national_under-21_football_team)
+The matching triplets in the two sets are:
+- (北洋水師, country, 清朝) matches with (Beiyang_Fleet, allegiance, Qing_dynasty)
+- (北洋水師, battles, 甲午战争) matches with (Beiyang_Fleet, battles, First_Sino-Japanese_War)
+- (北洋水師, notableCommanders, 李鴻章) matches with (Beiyang_Fleet, notableCommanders, Li_Hongzhang)
+The matching triplets in the two sets are:
+- (丹特_(足球运动员),clubs,沃尔夫斯堡足球俱乐部) and (VfL_Wolfsburg,name,Dante_(footballer))
+- (丹特_(足球运动员),clubs,皇家沙勒罗瓦体育俱乐部) and (Dante_(footballer),clubs,R._Charleroi_S.C.)
+- (丹特_(足球运动员),clubs,里爾奧林匹克體育會) and (Dante_(footballer),clubs,Lille_OSC)
+- (丹特_(足球运动员),clubs,皇家標準列治) and (Dante_(footballer),clubs,Standard_Liège)
+- (丹特_(足球运动员),currentclub,沃尔夫斯堡足球俱乐部) and (Dante_(footballer),currentclub,VfL_Wolfsburg)
+- (丹特_(足球运动员),clubs,拜仁慕尼黑足球俱乐部) and (Dante_(footballer),clubs,FC_Bayern_Munich)
+- (丹特_(足球运动员),nationalteam,巴西國家足球隊) and (Dante_(footballer),nationalteam,Brazil_national_football_team)
+The matching triplets in the two sets are:
+- (王上源,clubs,广州恒大淘宝足球俱乐部) and (Wang_Shangyuan,currentclub,Guangzhou_Evergrande_Taobao_F.C.)
+- (皇家布魯日足球會,name,王上源) and (Club_Brugge_KV,Wang_Shangyuan,clubs)
+The matching triplets in the two sets are:
+- (約翰·博納, predecessor, 蘭希·佩洛西) and (蘭希·佩洛西, successor, 約翰·博納)
+- (約翰·博納, predecessor, 保羅·萊恩) and (保羅·萊恩, successor, 約翰·博納)
+- (約翰·博納, president, 贝拉克·奥巴马) and (John_Boehner, president, Barack_Obama)
+- (約翰·博納, party, 共和黨_(美國)) and (John_Boehner, party, Republican_Party_(United_States))
+The matching triplets in the two sets are:
+1. (奧地利國家足球隊, club, 斯托克城足球俱乐部) - (Austria_national_football_team, club, Stoke_City_F.C.)
+2. (東尼·保士達, nationalteam, 奧地利國家足球隊) - (Toni_Polster, nationalteam, Austria_national_football_team)
+3. (安德雷斯·赫尔佐格, nationalteam, 奧地利國家足球隊) - (Andi_Herzog, nationalteam, Austria_national_football_team)
+4. (奧地利國家足球隊, name, 大衛·阿拉巴) - (Austria_national_football_team, name, David_Alaba)
+5. (馬克·揚科, nationalteam, 奧地利國家足球隊) - (Marc_Janko, nationalteam, Austria_national_football_team)
+6. (奧地利國家足球隊, association, 奧地利足球協會) - (Austria_national_football_team, confederation, UEFA)
+7. (奧地利國家足球隊, club, 悉尼足球俱乐部) - (Austria_national_football_team, club, Sydney_F.C.)
+The matching triplets in the two sets are:
+- (After_School, artist, After_School_(band))
+- (After_School, 唱片公司, Avex_trax)
+- (After_School, 唱片公司, LOEN娛樂)
+- (After_School_(band), label, Avex_Trax)
+- (After_School_(band), associatedActs, Orange_Caramel)
+- (After_School_(band), associatedActs, After_School_(band))
+- (After_School_(band), artist, After_School_(band))
+The matching triplets in the two sets are:
+- (利博尔·西昂科, clubs, 布拉格斯巴达足球俱乐部) and (Libor_Sionko, clubs, AC_Sparta_Prague)
+- (利博尔·西昂科, clubs, 布拉格斯巴达足球俱乐部) and (Libor_Sionko, clubs, F.C._Copenhagen)
+- (利博尔·西昂科, clubs, 奥斯特拉瓦巴尼克足球俱乐部) and (Libor_Sionko, clubs, FC_Baník_Ostrava)
+- (利博尔·西昂科, currentclub, 布拉格斯巴达足球俱乐部) and (Libor_Sionko, clubs, AC_Sparta_Prague)
+- (利博尔·西昂科, currentclub, 布拉格斯巴达足球俱乐部) and (Libor_Sionko, clubs, F.C._Copenhagen)
+The matching triplets in the two sets are:
+- (新疆广汇飞虎篮球俱乐部, location, Xinjiang_Flying_Tigers)
+- (新疆广汇飞虎篮球俱乐部, leagues, Chinese_Basketball_Association)
+- (孟克·巴特尔, team, Xinjiang_Flying_Tigers)
+The matching triplets in the two sets are:
+
+1. (元正天皇,父親,草壁皇子) matches with (Empress_Genshō,father,Prince_Kusakabe)
+2. (元正天皇,前任,元明天皇) matches with (Empress_Genshō,predecessor,Empress_Genmei)
+3. (草壁皇子,女,元正天皇) matches with (Prince_Kusakabe,issue,Empress_Genshō)
+4. (元正天皇,繼任,圣武天皇) matches with (Empress_Genshō,successor,Emperor_Shōmu)
+5. (圣武天皇,前任,元正天皇) matches with (Emperor_Shōmu,predecessor,Empress_Genshō)
+6. (元正天皇,母親,元明天皇) matches with (Empress_Genshō,mother,Empress_Genmei)
+The matching triplets in the two sets are:
+- (杜宪, spouse, 陈道明) and (Chen_Daoming, spouse, Du_Xian_(news_anchor))
+- (杜宪, almaMater, 中国传媒大学) and (Du_Xian_(news_anchor), almaMater, Communication_University_of_China)
+- (杜宪, knownFor, 中国中央电视台) and (Du_Xian_(news_anchor), television, Phoenix_Television)
+- (杜宪, residence, 北京市) and (Du_Xian_(news_anchor), placeOfBirth, Beijing)
+The matching triplets in the two sets are:
+1. (威廉·埃夫里尔·哈里曼, successor, 托马斯·杜威) - (Thomas_E._Dewey, successor, W._Averell_Harriman)
+2. (威廉·埃夫里尔·哈里曼, predecessor, 托马斯·杜威) - (W._Averell_Harriman, predecessor, Thomas_E._Dewey)
+3. (威廉·埃夫里尔·哈里曼, spouse, 帕梅拉·哈里曼) - (W._Averell_Harriman, spouse, Pamela_Harriman)
+4. (威廉·埃夫里尔·哈里曼, president, 哈里·S·杜鲁门) - (W._Averell_Harriman, president, Harry_S._Truman)
+5. (威廉·埃夫里尔·哈里曼, almaMater, 耶鲁大学) - (W._Averell_Harriman, almaMater, Yale_University)
+The matching triplets in the two sets are:
+1. (阿卜杜勒·凯卜,almaMater,南加州大学) and (Abdurrahim_El-Keib,almaMater,University_of_Southern_California)
+2. (阿卜杜勒·凯卜,successor,穆斯塔法·阿布·沙古尔) and (Abdurrahim_El-Keib,successor,Ali_Zeidan)
+3. (阿卜杜勒·凯卜,president,穆斯塔法·阿卜杜勒·贾利勒) and (Abdurrahim_El-Keib,president,Mustafa_Abdul_Jalil)
+4. (利比亚全国过渡委员会,leaderName,阿卜杜勒·凯卜) and (National_Transitional_Council,leaderName,Abdurrahim_El-Keib)
+The matching triplets in the two triplet sets are:
+- (何杨, clubs, 天津泰达足球俱乐部) and (He_Yang, clubs, Tianjin_Teda_F.C.)
+- (何杨, currentclub, 青岛中能足球俱乐部) and (He_Yang, currentclub, Qingdao_Jonoon_F.C.)
+- (何杨, cityofbirth, 天津市) and (He_Yang, birthPlace, Tianjin)
+The matching triplets in the two sets are:
+
+1. (俄罗斯苏维埃联邦社会主义共和国, deputy, 弗拉基米尔·伊里奇·列宁) - (Government_of_the_Russian_Soviet_Federative_Socialist_Republic, governmentHead, Vladimir_Lenin)
+2. (弗拉基米尔·伊里奇·列宁, nationality, 俄罗斯帝国) - (Vladimir_Lenin, nationality, Soviet_Union)
+3. (卡尔·马克思, 施影響於, 弗拉基米尔·伊里奇·列宁) - (György_Lukács, influences, Vladimir_Lenin)
+4. (第三国际, founder, 弗拉基米尔·伊里奇·列宁) - (Communist_International, founder, Vladimir_Lenin)
+5. (列夫·达维多维奇·托洛茨基, premier, 弗拉基米尔·伊里奇·列宁) - (Leon_Trotsky, premier, Vladimir_Lenin)
+6. (协约国武装干涉俄国内战, commander, 弗拉基米尔·伊里奇·列宁) - (Russian_Provisional_Government, successor, Vladimir_Lenin)
+7. (苏联共产党, founder, 弗拉基米尔·伊里奇·列宁) - (Communist_Party_of_the_Soviet_Union, founder, Vladimir_Lenin)
+8. (俄罗斯苏维埃联邦社会主义共和国人民委员会, chief1Name, 弗拉基米尔·伊里奇·列宁) - (Government_of_the_Russian_Soviet_Federative_Socialist_Republic, governmentHead, Vladimir_Lenin)
+9. (列夫·鲍里索维奇·加米涅夫, premier, 弗拉基米尔·伊里奇·列宁) - (Nikolay_Krestinsky, premier, Vladimir_Lenin)
+10. (弗拉基米尔·伊里奇·列宁, party, 苏联共产党) - (Vladimir_Lenin, party, Communist_Party_of_the_Soviet_Union)
+11. (俄國臨時政府, successor, 弗拉基米尔·伊里奇·列宁) - (Russian_Provisional_Government, successor, Vladimir_Lenin)
+12. (卢卡奇·捷尔吉, influences, 弗拉基米尔·伊里奇·列宁) - (Slavoj_Žižek, influences, Vladimir_Lenin)
+13. (弗拉基米尔·伊里奇·列宁, office, 俄罗斯苏维埃联邦社会主义共和国人民委员会) - (Vladimir_Lenin, office, Government_of_the_Russian_Soviet_Federative_Socialist_Republic)
+14. (苏联部长会议主席, firstOfficeholder, 弗拉基米尔·伊里奇·列宁) - (Premier_of_the_Soviet_Union, first, Vladimir_Lenin)
+15. (弗拉基米尔·伊里奇·列宁, office, 苏联部长会议主席) - (Vladimir_Lenin, office, Premier_of_the_Soviet_Union)
+16. (维亚切斯拉夫·缅任斯基, premier, 弗拉基米尔·伊里奇·列宁) - (Vyacheslav_Menzhinsky, premier, Vladimir_Lenin)
+17. (尼古拉·尼古拉耶维奇·克列斯京斯基, premier, 弗拉基米尔·伊里奇·列宁) - (Nikolay_Krestinsky, premier, Vladimir_Lenin)
+18. (亚历山大·费奥多罗维奇·克伦斯基, successor, 弗拉基米尔·伊里奇·列宁) - (Russian_Provisional_Government, successor, Vladimir_Lenin)
+19. (弗拉基米尔·伊里奇·列宁, successor, 阿列克谢·伊万诺维奇·李可夫) - (Vladimir_Lenin, successor, Alexei_Rykov)
+20. (斯拉沃熱·齊澤克, influences, 弗拉基米尔·伊里奇·列宁) - (Slavoj_Žižek, influences, Vladimir_Lenin)
+21. (阿列克谢·伊万诺维奇·李可夫, before, 弗拉基米尔·伊里奇·列宁) - (Alexei_Rykov, before, Vladimir_Lenin)
+22. (阿列克谢·伊万诺维奇·李可夫, premier, 弗拉基米尔·伊里奇·列宁) - (Alexei_Rykov, premier, Vladimir_Lenin)
+The matching triplets in the two sets are:
+- (耶路撒冷希伯來大學, city, 耶路撒冷) and (Hebrew_University_of_Jerusalem, country, Israel)
+- (鲁文·里夫林, almaMater, 耶路撒冷希伯來大學) and (Reuven_Rivlin, almaMater, Hebrew_University_of_Jerusalem)
+
+

@@ -1,0 +1,27 @@
+The matching triplets in the two sets are:
+
+1. (施巴斯坦·拿臣, countryofbirth, 瑞典) - (Sebastian_Larsson, nationalteam, Sweden_national_football_team)
+2. (施巴斯坦·拿臣, clubs, 阿森纳足球俱乐部) - (Sebastian_Larsson, clubs, Arsenal_F.C.)
+3. (施巴斯坦·拿臣, youthclubs, 阿森纳足球俱乐部) - (Sebastian_Larsson, youthclubs, Arsenal_F.C.)
+4. (施巴斯坦·拿臣, clubs, 桑德兰足球俱乐部) - (Sebastian_Larsson, clubs, Sunderland_A.F.C.)
+5. (施巴斯坦·拿臣, clubs, 伯明翰足球會) - (Sebastian_Larsson, clubs, Birmingham_City_F.C.)
+6. (施巴斯坦·拿臣, nationalteam, 瑞典國家足球隊) - (Sebastian_Larsson, nationalteam, Sweden_national_football_team)
+7. (施巴斯坦·拿臣, currentclub, 桑德兰足球俱乐部) - (Sebastian_Larsson, currentclub, Sunderland_A.F.C.)
+8. (施巴斯坦·拿臣, nationalteam, 瑞典21歲以下國家足球隊) - (Sebastian_Larsson, nationalteam, Sweden_national_under-21_football_team)
+9. (瑞典國家足球隊, name, 施巴斯坦·拿臣) - (Sweden_national_football_team, name, Sebastian_Larsson)
+The matching triplets in the two sets are:
+
+1. (吕丽萍, 配偶, 张丰毅) matches with (Lü_Liping, spouse, Zhang_Fengyi)
+2. (吕丽萍, 籍貫, 北京市) matches with (Lü_Liping, placeOfBirth, Beijing)
+3. (吕丽萍, 配偶, 陶伟_(1966年出生)) matches with (Lü_Liping, spouse, Tao_Wei_(footballer,_born_1966))
+4. (吕丽萍, 教育程度, 中央戏剧学院) matches with (Lü_Liping, almaMater, Central_Academy_of_Drama)
+5. (孙海英, 配偶, 吕丽萍) matches with (Sun_Haiying, spouse, Lü_Liping)
+6. (张丰毅, 配偶, 吕丽萍) matches with (Zhang_Fengyi, spouse, Lü_Liping)
+7. (吕丽萍, 配偶, 孙海英) matches with (Lü_Liping, spouse, Sun_Haiying)
+
+Therefore, the prediction that 吕丽萍 is the same as Lü_Liping is supported by the matching triplets in the two sets.
+The matching triplets in the two triplet sets are:
+
+(门洛帕克_(加利福尼亚州), subdivisionName, 加利福尼亚州) matches with (Menlo_Park,_California, settlementType, California)
+
+This is because both triplets indicate that "门洛帕克_(加利福尼亚州)" and "Menlo_Park,_California" are subdivisions or locations within the state of California.

@@ -1,0 +1,900 @@
+case: 10305, 25305
+Please identify the matching triplets in the following two triplet sets as explanation for predicting L'amore_difficile is same as L'amore difficile:
+set1: (L'amore_difficile,starring,Nino_Manfredi), (L'amore_difficile,director,Nino_Manfredi), (L'amore_difficile,starring,Vittorio_Gassman), (L'amore_difficile,musicComposer,Piero_Umiliani), 
+set2: (L'amore difficile,director,Nino Manfredi), (L'amore difficile,original language of film or TV show,Italian), (L'amore difficile,composer,Piero Umiliani), (L'amore difficile,cast member,Vittorio Gassman), (L'amore difficile,cast member,Nino Manfredi), (L'amore difficile,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5820, 20820
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Stone_Cold_(1991_film) is same as Stone Cold:
+set1: (Stone_Cold_(1991_film),cinematography,Alexander_Gruszynski), (Stone_Cold_(1991_film),distributor,Columbia_Pictures), (Stone_Cold_(1991_film),starring,William_Forsythe_(actor)), 
+set2: (Stone Cold,genre,thriller), (Stone Cold,distributed by,Columbia Pictures), (Stone Cold,production company,Columbia Pictures), (Stone Cold,director of photography,Alexander Gruszynski), (Stone Cold,instance of,film), (Stone Cold,cast member,William Forsythe), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7175, 22175
+Please identify the matching triplets in the following two triplet sets as explanation for predicting History_of_the_World,_Part_I is same as History of the World, Part I:
+set1: (History_of_the_World,_Part_I,director,Mel_Brooks), (History_of_the_World,_Part_I,starring,Mel_Brooks), (History_of_the_World,_Part_I,narrator,Orson_Welles), (History_of_the_World,_Part_I,writer,Mel_Brooks), (History_of_the_World,_Part_I,producer,Mel_Brooks), 
+set2: (History of the World, Part I,instance of,film), (History of the World, Part I,producer,Mel Brooks), (History of the World, Part I,screenwriter,Mel Brooks), (History of the World, Part I,director,Mel Brooks), (History of the World, Part I,cast member,John Hurt), (History of the World, Part I,cast member,Mel Brooks), (History of the World, Part I,narrator,Orson Welles), (History of the World, Part I,cast member,Orson Welles), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2030, 17030
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Unbelievable_(Craig_David_song) is same as Unbelievable:
+set1: (Unbelievable_(Craig_David_song),previousWork,Don't_Love_You_No_More_(I'm_Sorry)), (Unbelievable_(Craig_David_song),writer,Craig_David), (Don't_Love_You_No_More_(I'm_Sorry),subsequentWork,Unbelievable_(Craig_David_song)), (Unbelievable_(Craig_David_song),recordLabel,Edel_AG), (Unbelievable_(Craig_David_song),musicalBand,Craig_David), (Unbelievable_(Craig_David_song),musicalArtist,Craig_David), 
+set2: (Don't Love You No More (I'm Sorry),followed by,Unbelievable), (Unbelievable,record label,Edel Records), (Unbelievable,performer,Craig David), (Unbelievable,follows,Don't Love You No More (I'm Sorry)), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5189, 20189
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Beatles_Anthology_(documentary) is same as The Beatles Anthology:
+set1: (The_Beatles_Anthology_(documentary),distributor,Apple_Records), (The_Beatles_Anthology_(documentary),starring,Ringo_Starr), (The_Beatles_Anthology_(documentary),distributor,EMI), (The_Beatles_Anthology_(documentary),starring,George_Harrison), (The_Beatles_Anthology_(documentary),genre,Music), (The_Beatles_Anthology_(documentary),composer,The_Beatles), (The_Beatles_Anthology_(documentary),starring,Paul_McCartney), (The_Beatles_Anthology_(documentary),starring,John_Lennon), 
+set2: (The Beatles Anthology,instance of,film), (The Beatles Anthology,country of origin,United Kingdom), (The Beatles Anthology,distributed by,EMI), (The Beatles Anthology,composer,John Lennon), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1162, 16162
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Belly_of_the_Beast is same as Belly of the Beast:
+set1: (Belly_of_the_Beast,starring,Steven_Seagal), (Belly_of_the_Beast,producer,Steven_Seagal), 
+set2: (Belly of the Beast,producer,Steven Seagal), (Belly of the Beast,instance of,film), (Belly of the Beast,screenwriter,Steven Seagal), (Belly of the Beast,cast member,Steven Seagal), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5061, 20061
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Velvet_Touch is same as The Velvet Touch:
+set1: (The_Velvet_Touch,starring,Rosalind_Russell), (The_Velvet_Touch,musicComposer,Leigh_Harline), (The_Velvet_Touch,cinematography,Joseph_Walker_(cinematographer)), (The_Velvet_Touch,starring,Claire_Trevor), 
+set2: (The Velvet Touch,composer,Leigh Harline), (The Velvet Touch,director of photography,Joseph Walker), (The Velvet Touch,instance of,film), (The Velvet Touch,cast member,Claire Trevor), (The Velvet Touch,cast member,Rosalind Russell), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 244, 15244
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Star_Cinema is same as Star Cinema:
+set1: (Puso_ng_Pasko,distributor,Star_Cinema), (Dekada_'70_(film),distributor,Star_Cinema), (Here_Comes_the_Bride_(2010_film),distributor,Star_Cinema), (My_Cactus_Heart,distributor,Star_Cinema), (Mr._Suave,distributor,Star_Cinema), (Ang_Tanging_Ina,distributor,Star_Cinema), (Star_Cinema,industry,Filmmaking), (One_More_Try_(film),distributor,Star_Cinema), (Forever_and_a_Day_(2011_film),distributor,Star_Cinema), (Pacquiao:_The_Movie,distributor,Star_Cinema), (Here_Comes_the_Bride_(2010_film),producer,Star_Cinema), 
+set2: (Ang Tanging Ina,production company,Star Cinema), (One More Try,distributed by,Star Cinema), (My Cactus Heart,distributed by,Star Cinema), (One More Try,production company,Star Cinema), (Mr. Suave,distributed by,Star Cinema), (Dekada '70,distributed by,Star Cinema), (Gimik,distributed by,Star Cinema), (Forever and a Day,production company,Star Cinema), (Puso ng Pasko,production company,Star Cinema), (Pacquiao: The Movie,distributed by,Star Cinema), (Here Comes the Bride,distributed by,Star Cinema), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 199, 15199
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Julie_Bowen is same as Julie Bowen:
+set1: (Crazy_on_the_Outside,starring,Julie_Bowen), (Joe_Somebody,starring,Julie_Bowen), (The_Simpsons_Guy,guest,Julie_Bowen), (Three_(TV_series),starring,Julie_Bowen), 
+set2: (Crazy on the Outside,cast member,Julie Bowen), (Three,cast member,Julie Bowen), (Joe Somebody,cast member,Julie Bowen), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3612, 18612
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Blanche_Sewell is same as Blanche Sewell:
+set1: (Born_to_Dance,editing,Blanche_Sewell), (Broadway_Melody_of_1936,editing,Blanche_Sewell), (Boom_Town_(film),editing,Blanche_Sewell), (Lights_of_Old_Broadway,editing,Blanche_Sewell), (Listen,_Darling,editing,Blanche_Sewell), (Easy_to_Wed,editing,Blanche_Sewell), (Red-Headed_Woman,editing,Blanche_Sewell), (The_Secret_of_Madame_Blanche,editing,Blanche_Sewell), (Queen_Christina_(film),editing,Blanche_Sewell), (Rose_Marie_(1936_film),editing,Blanche_Sewell), (Take_Me_Out_to_the_Ball_Game_(film),editing,Blanche_Sewell), (The_Valley_of_Decision,editing,Blanche_Sewell), (Grand_Hotel_(film),editing,Blanche_Sewell), 
+set2: (The Secret of Madame Blanche,film editor,Blanche Sewell), (The Valley of Decision,film editor,Blanche Sewell), (Broadway Melody of 1936,film editor,Blanche Sewell), (Grand Hotel,film editor,Blanche Sewell), (Take Me Out to the Ball Game,film editor,Blanche Sewell), (Queen Christina,film editor,Blanche Sewell), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 10208, 25208
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Siouxsie_and_the_Banshees is same as Siouxsie and the Banshees:
+set1: (Siouxsie_and_the_Banshees,genre,Alternative_rock), (The_Staircase_(Mystery),musicalBand,Siouxsie_and_the_Banshees), (Hong_Kong_Garden_(song),musicalArtist,Siouxsie_and_the_Banshees), (The_Cure,associatedBand,Siouxsie_and_the_Banshees), (Jubilee_(1978_film),musicComposer,Siouxsie_and_the_Banshees), (Hong_Kong_Garden_(song),musicalBand,Siouxsie_and_the_Banshees), (Siouxsie_and_the_Banshees,associatedMusicalArtist,The_Cure), (Robert_Smith_(musician),associatedMusicalArtist,Siouxsie_and_the_Banshees), (Siouxsie_and_the_Banshees,recordLabel,Geffen_Records), (The_Cure,associatedMusicalArtist,Siouxsie_and_the_Banshees), (Siouxsie_and_the_Banshees,formerBandMember,Robert_Smith_(musician)), (The_Staircase_(Mystery),musicalArtist,Siouxsie_and_the_Banshees), (Siouxsie_and_the_Banshees,associatedBand,The_Cure), (Robert_Smith_(musician),associatedBand,Siouxsie_and_the_Banshees), 
+set2: (Siouxsie and the Banshees,genre,alternative rock), (Hong Kong Garden,performer,Siouxsie and the Banshees), (Siouxsie and the Banshees,location of formation,London), (The Staircase,performer,Siouxsie and the Banshees), (Siouxsie and the Banshees,country of origin,United Kingdom), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3200, 18200
+Please identify the matching triplets in the following two triplet sets as explanation for predicting U2 is same as U2:
+set1: (The_Ballad_of_Ronnie_Drew,musicalBand,U2), (One_(U2_song),musicalBand,U2), (U2,genre,Alternative_rock), (Wide_Awake_in_America,artist,U2), (The_Ballad_of_Ronnie_Drew,musicalArtist,U2), (Mothers_of_the_Disappeared,artist,U2), (Song_for_Someone,musicalBand,U2), (Song_for_Someone,musicalArtist,U2), (Daniel_Lanois,associatedBand,U2), (Wide_Awake_in_America,producer,U2), (One_(U2_song),musicalArtist,U2), (Working_Class_Hero,previousWork,U2), (Daniel_Lanois,associatedMusicalArtist,U2), 
+set2: (One,performer,U2), (U2,genre,alternative rock), (Wide Awake in America,performer,U2), (The Ballad of Ronnie Drew,performer,U2), (Mothers of the Disappeared,performer,U2), (Song for Someone,performer,U2), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3638, 18638
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Herbert_Reinecker is same as Herbert Reinecker:
+set1: (Spy_for_Germany,writer,Herbert_Reinecker), (Canaris_(film),writer,Herbert_Reinecker), (The_Trapp_Family_in_America,writer,Herbert_Reinecker), (Children,_Mother,_and_the_General,writer,Herbert_Reinecker), (Neues_vom_Hexer,writer,Herbert_Reinecker), (Herbert_Reinecker,birthPlace,German_Empire), 
+set2: (Spy for Germany,screenwriter,Herbert Reinecker), (Neues vom Hexer,screenwriter,Herbert Reinecker), (Canaris,screenwriter,Herbert Reinecker), (Children, Mother, and the General,screenwriter,Herbert Reinecker), (The Trapp Family in America,screenwriter,Herbert Reinecker), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2771, 17771
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Lady_in_the_Dark_(film) is same as Lady in the Dark:
+set1: (Lady_in_the_Dark_(film),cinematography,Ray_Rennahan), (Lady_in_the_Dark_(film),distributor,Paramount_Pictures), (Lady_in_the_Dark_(film),starring,Ginger_Rogers), (Lady_in_the_Dark_(film),writer,Frances_Goodrich), 
+set2: (Lady in the Dark,director of photography,Ray Rennahan), (Lady in the Dark,production company,Paramount Pictures), (Lady in the Dark,instance of,film), (Lady in the Dark,cast member,Ginger Rogers), (Lady in the Dark,screenwriter,Frances Goodrich), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5770, 20770
+Please identify the matching triplets in the following two triplet sets as explanation for predicting If_You_Don't_Want_Me_to_Destroy_You is same as If You Don't Want Me to Destroy You:
+set1: (If_You_Don't_Want_Me_to_Destroy_You,recordLabel,Creation_Records), (Something_4_the_Weekend,subsequentWork,If_You_Don't_Want_Me_to_Destroy_You), (If_You_Don't_Want_Me_to_Destroy_You,previousWork,Something_4_the_Weekend), (If_You_Don't_Want_Me_to_Destroy_You,genre,Alternative_rock), 
+set2: (If You Don't Want Me to Destroy You,record label,Creation Records), (Something 4 the Weekend,followed by,If You Don't Want Me to Destroy You), (If You Don't Want Me to Destroy You,follows,Something 4 the Weekend), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1877, 16877
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Parma is same as Parma:
+set1: (Giovanni_Battista_Borghesi,deathPlace,Parma), (Lino_Ventura,birthPlace,Parma), (Giovanni_Battista_Borghesi,birthPlace,Parma), (Franco_Nero,birthPlace,Parma), 
+set2: (Parma,twinned administrative body,Cluj-Napoca), (Giovanni Battista Borghesi,place of birth,Parma), (Giovanni Battista Borghesi,place of death,Parma), (Parma,twinned administrative body,Worms), (Worms,twinned administrative body,Parma), (Franco Nero,place of birth,Parma), (Lino Ventura,place of birth,Parma), (Cluj-Napoca,twinned administrative body,Parma), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2036, 17036
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Susan_E._Morse is same as Susan E. Morse:
+set1: (Mighty_Aphrodite,editing,Susan_E._Morse), (Manhattan_Murder_Mystery,editing,Susan_E._Morse), (New_York_Stories,editing,Susan_E._Morse), (September_(1987_film),editing,Susan_E._Morse), (Hannah_and_Her_Sisters,editing,Susan_E._Morse), (Everyone_Says_I_Love_You,editing,Susan_E._Morse), (Stardust_Memories,editing,Susan_E._Morse), (Bullets_over_Broadway,editing,Susan_E._Morse), (Husbands_and_Wives,editing,Susan_E._Morse), (Zelig,editing,Susan_E._Morse), (Did_You_Hear_About_the_Morgans%3F,editing,Susan_E._Morse), (The_Purple_Rose_of_Cairo,editing,Susan_E._Morse), (Shadows_and_Fog,editing,Susan_E._Morse), (Celebrity_(film),editing,Susan_E._Morse), 
+set2: (Manhattan Murder Mystery,film editor,Susan E. Morse), (Husbands and Wives,film editor,Susan E. Morse), (Mighty Aphrodite,film editor,Susan E. Morse), (Noel,film editor,Susan E. Morse), (Susan E. Morse,educated at,Yale University), (Hannah and Her Sisters,film editor,Susan E. Morse), (Stardust Memories,film editor,Susan E. Morse), (Everyone Says I Love You,film editor,Susan E. Morse), (September,film editor,Susan E. Morse), (Bullets Over Broadway,film editor,Susan E. Morse), (Zelig,film editor,Susan E. Morse), (Celebrity,film editor,Susan E. Morse), (Did You Hear About the Morgans?,film editor,Susan E. Morse), (Shadows and Fog,film editor,Susan E. Morse), (The Purple Rose of Cairo,film editor,Susan E. Morse), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4190, 19190
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Elmer_Bernstein is same as Elmer Bernstein:
+set1: (The_Young_Doctors_(film),musicComposer,Elmer_Bernstein), (Thoroughly_Modern_Millie,musicComposer,Elmer_Bernstein), (Keeping_the_Faith,musicComposer,Elmer_Bernstein), (The_Great_Escape_(film),musicComposer,Elmer_Bernstein), (Boots_Malone,musicComposer,Elmer_Bernstein), (The_Good_Son_(film),musicComposer,Elmer_Bernstein), (Elmer_Bernstein,birthPlace,New_York), (Stripes_(film),musicComposer,Elmer_Bernstein), (McQ,musicComposer,Elmer_Bernstein), (The_Scalphunters,musicComposer,Elmer_Bernstein), (Class_(film),musicComposer,Elmer_Bernstein), (Kings_Go_Forth,musicComposer,Elmer_Bernstein), (Twilight_(1998_film),musicComposer,Elmer_Bernstein), (The_Bridge_at_Remagen,musicComposer,Elmer_Bernstein), (Birdman_of_Alcatraz_(film),musicComposer,Elmer_Bernstein), (Return_of_the_Seven,musicComposer,Elmer_Bernstein), (Gold_(1974_film),musicComposer,Elmer_Bernstein), (Meatballs_(film),musicComposer,Elmer_Bernstein), (The_Chosen_(1981_film),musicComposer,Elmer_Bernstein), (The_Cemetery_Club,musicComposer,Elmer_Bernstein), (The_Caretakers,musicComposer,Elmer_Bernstein), (Airplane!,musicComposer,Elmer_Bernstein), (Mister_Quilp,musicComposer,Elmer_Bernstein), (The_Comancheros_(film),musicComposer,Elmer_Bernstein), (Airplane_II:_The_Sequel,musicComposer,Elmer_Bernstein), (Mad_Dog_and_Glory,musicComposer,Elmer_Bernstein), (Leonard_Part_6,musicComposer,Elmer_Bernstein), (Cape_Fear_(1991_film),musicComposer,Elmer_Bernstein), (Baby_the_Rain_Must_Fall,musicComposer,Elmer_Bernstein), (The_Blues_Brothers_(film),musicComposer,Elmer_Bernstein), (By_Love_Possessed_(film),musicComposer,Elmer_Bernstein), (The_Age_of_Innocence_(1993_film),musicComposer,Elmer_Bernstein), 
+set2: (The Caretakers,composer,Elmer Bernstein), (By Love Possessed,composer,Elmer Bernstein), (The Cemetery Club,composer,Elmer Bernstein), (Elmer Bernstein,occupation,pianist), (The Young Doctors,composer,Elmer Bernstein), (Baby the Rain Must Fall,composer,Elmer Bernstein), (The Bridge at Remagen,composer,Elmer Bernstein), (The Comancheros,composer,Elmer Bernstein), (The Good Son,composer,Elmer Bernstein), (Meatballs,composer,Elmer Bernstein), (Return of the Seven,composer,Elmer Bernstein), (Mad Dog and Glory,composer,Elmer Bernstein), (Class,composer,Elmer Bernstein), (Keeping the Faith,composer,Elmer Bernstein), (Birdman of Alcatraz,composer,Elmer Bernstein), (Boots Malone,composer,Elmer Bernstein), (The Scalphunters,composer,Elmer Bernstein), (Airplane!,composer,Elmer Bernstein), (McQ,composer,Elmer Bernstein), (Kings Go Forth,composer,Elmer Bernstein), (Airplane II: The Sequel,composer,Elmer Bernstein), (Twilight,composer,Elmer Bernstein), (Thoroughly Modern Millie,composer,Elmer Bernstein), (Mister Quilp,composer,Elmer Bernstein), (The Chosen,composer,Elmer Bernstein), (Mad Dog and Glory,performer,Elmer Bernstein), (Gold,composer,Elmer Bernstein), (Cape Fear,composer,Elmer Bernstein), (The Age of Innocence,composer,Elmer Bernstein), (Leonard Part 6,composer,Elmer Bernstein), (Stripes,composer,Elmer Bernstein), (The Great Escape,composer,Elmer Bernstein), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4928, 19928
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Giacomo_Gentilomo is same as Giacomo Gentilomo:
+set1: (The_Blind_Woman_of_Sorrento_(1934_film),editing,Giacomo_Gentilomo), (Short_Circuit_(1943_film),director,Giacomo_Gentilomo), (Short_Circuit_(1943_film),writer,Giacomo_Gentilomo), 
+set2: (Short Circuit,screenwriter,Giacomo Gentilomo), (Giacomo Gentilomo,languages spoken, written or signed,Italian), (Short Circuit,director,Giacomo Gentilomo), (Giacomo Gentilomo,place of birth,Trieste), (The Blind Woman of Sorrento,film editor,Giacomo Gentilomo), (Giacomo Gentilomo,occupation,film director), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2890, 17890
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Sultan_Al_Kuwari is same as Sultan Al Kuwari:
+set1: (Sultan_Al_Kuwari,team,Al-Rayan_SC), (Sultan_Al_Kuwari,birthPlace,Qatar), (Sultan_Al_Kuwari,birthPlace,Doha), 
+set2: (Sultan Al Kuwari,place of birth,Doha), (Sultan Al Kuwari,country of citizenship,Qatar), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6109, 21109
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Liar_Liar is same as Liar Liar:
+set1: (Liar_Liar,musicComposer,John_Debney), (Liar_Liar,musicComposer,James_Newton_Howard), (Liar_Liar,starring,Cary_Elwes), 
+set2: (Liar Liar,composer,John Debney), (Liar Liar,cast member,Cary Elwes), (Liar Liar,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6647, 21647
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Come_Back_to_Me_(Janet_Jackson_song) is same as Come Back to Me:
+set1: (Come_Back_to_Me_(Janet_Jackson_song),musicalBand,Janet_Jackson), (Come_Back_to_Me_(Janet_Jackson_song),musicalArtist,Janet_Jackson), (Come_Back_to_Me_(Janet_Jackson_song),recordedIn,Minnesota), 
+set2: (Come Back to Me,performer,Janet Jackson), (Come Back to Me,lyrics by,Janet Jackson), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 9844, 24844
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Monsieur_Beaucaire_(1924_film) is same as Monsieur Beaucaire:
+set1: (Monsieur_Beaucaire_(1924_film),distributor,Paramount_Pictures), (Monsieur_Beaucaire_(1924_film),starring,Lois_Wilson_(actress)), 
+set2: (Monsieur Beaucaire,cast member,Lois Wilson), (Monsieur Beaucaire,distributed by,Paramount Pictures), (Monsieur Beaucaire,production company,Paramount Pictures), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8803, 23803
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Golshifteh_Farahani is same as Golshifteh Farahani:
+set1: (Golshifteh_Farahani,nationality,France), (The_Pear_Tree,starring,Golshifteh_Farahani), (Golshifteh_Farahani,stateOfOrigin,Iran), (Golshifteh_Farahani,birthPlace,Tehran), (Golshifteh_Farahani,birthPlace,Iran), (About_Elly,starring,Golshifteh_Farahani), (Golshifteh_Farahani,nationality,Iran), (Eden_(2014_French_film),starring,Golshifteh_Farahani), (Golshifteh_Farahani,stateOfOrigin,France), 
+set2: (The Pear Tree,cast member,Golshifteh Farahani), (About Elly,cast member,Golshifteh Farahani), (Golshifteh Farahani,country of citizenship,Iran), (Eden,cast member,Golshifteh Farahani), (Golshifteh Farahani,country of citizenship,France), (Golshifteh Farahani,place of birth,Tehran), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6156, 21156
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Carlos_Tello_Macías is same as Carlos Tello Macías:
+set1: (Carlos_Tello_Macías,birthPlace,Geneva), (Carlos_Tello_Macías,almaMater,Georgetown_University), (Carlos_Tello_Macías,party,Institutional_Revolutionary_Party), 
+set2: (Carlos Tello Macías,member of political party,Institutional Revolutionary Party), (Carlos Tello Macías,educated at,Georgetown University), (Carlos Tello Macías,place of birth,Geneva), (Carlos Tello Macías,languages spoken, written or signed,Spanish), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 9340, 24340
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Suicide_Kings is same as Suicide Kings:
+set1: (Suicide_Kings,starring,Christopher_Walken), (Suicide_Kings,musicComposer,Graeme_Revell), 
+set2: (Suicide Kings,cast member,Brad Garrett), (Suicide Kings,cast member,Christopher Walken), (Suicide Kings,instance of,film), (Suicide Kings,composer,Graeme Revell), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 501, 15501
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Little_Rascals_(animated_TV_series) is same as The Little Rascals:
+set1: (The_Little_Rascals_(animated_TV_series),composer,Hoyt_Curtin), (The_Little_Rascals_(animated_TV_series),network,American_Broadcasting_Company), (The_Little_Rascals_(animated_TV_series),genre,Animation), (The_Little_Rascals_(animated_TV_series),voice,B._J._Ward_(actress)), (The_Little_Rascals_(animated_TV_series),company,Hanna-Barbera), (The_Little_Rascals_(animated_TV_series),executiveProducer,William_Hanna), (The_Little_Rascals_(animated_TV_series),genre,Comedy), 
+set2: (The Little Rascals,original broadcaster,American Broadcasting Company), (The Little Rascals,executive producer,William Hanna), (The Little Rascals,composer,Hoyt Curtin), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5290, 20290
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Love_Affair_(1939_film) is same as Love Affair:
+set1: (Love_Affair_(1939_film),director,Leo_McCarey), (Love_Affair_(1939_film),musicComposer,Roy_Webb), (Love_Affair_(1994_film),basedOn,Love_Affair_(1939_film)), (Love_Affair_(1939_film),producer,Leo_McCarey), (Love_Affair_(1939_film),cinematography,Rudolph_Maté), (Love_Affair_(1939_film),writer,Delmer_Daves), 
+set2: (Love Affair,screenwriter,Delmer Daves), (Love Affair,director of photography,Rudolph Maté), (Love Affair,composer,Roy Webb), (Love Affair,based on,Love Affair), (Love Affair,director,Leo McCarey), (Love Affair,producer,Leo McCarey), (Love Affair,screenwriter,Leo McCarey), (Love Affair,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8988, 23988
+Please identify the matching triplets in the following two triplet sets as explanation for predicting David_Guetta is same as David Guetta:
+set1: (The_E.N.D,producer,David_Guetta), (What_I_Did_for_Love_(David_Guetta_song),writer,David_Guetta), (Sexy_Bitch,writer,David_Guetta), (Sexy_Bitch,musicalBand,David_Guetta), (What_I_Did_for_Love_(David_Guetta_song),musicalArtist,David_Guetta), (The_Black_Eyed_Peas,associatedBand,David_Guetta), (The_Black_Eyed_Peas,associatedMusicalArtist,David_Guetta), (Bang_My_Head,musicalBand,David_Guetta), (Doggumentary,producer,David_Guetta), (Everytime_We_Touch_(David_Guetta_song),musicalBand,David_Guetta), (I_Gotta_Feeling,writer,David_Guetta), (Hey_Mama_(David_Guetta_song),writer,David_Guetta), (David_Guetta,genre,Electro_house), (David_Guetta,associatedMusicalArtist,Avicii), (Where_Them_Girls_At,musicalBand,David_Guetta), (Money_(David_Guetta_song),musicalBand,David_Guetta), (David_Guetta,recordLabel,Parlophone), (Everytime_We_Touch_(David_Guetta_song),musicalArtist,David_Guetta), (Wavin'_Flag,musicalBand,David_Guetta), (David_Guetta,birthPlace,France), (Sexy_Bitch,producer,David_Guetta), (I_Gotta_Feeling,producer,David_Guetta), (David_Guetta,recordLabel,Warner_Music_Group), (David_Guetta,associatedBand,Avicii), (Wavin'_Flag,musicalArtist,David_Guetta), (Money_(David_Guetta_song),producer,David_Guetta), (Avicii,associatedMusicalArtist,David_Guetta), (Hey_Mama_(David_Guetta_song),musicalBand,David_Guetta), (Sexy_Bitch,musicalArtist,David_Guetta), (What_I_Did_for_Love_(David_Guetta_song),musicalBand,David_Guetta), (Avicii,associatedBand,David_Guetta), (Bang_My_Head,writer,David_Guetta), (David_Guetta,associatedBand,Chris_Brown), (David_Guetta,associatedMusicalArtist,Chris_Brown), (Give_Me_Something_(David_Guetta_song),musicalBand,David_Guetta), (Little_Bad_Girl,musicalArtist,David_Guetta), (Bang_My_Head,musicalArtist,David_Guetta), (Little_Bad_Girl,writer,David_Guetta), (Give_Me_Something_(David_Guetta_song),musicalArtist,David_Guetta), (Everytime_We_Touch_(David_Guetta_song),writer,David_Guetta), (Where_Them_Girls_At,musicalArtist,David_Guetta), (Money_(David_Guetta_song),musicalArtist,David_Guetta), (Where_Them_Girls_At,writer,David_Guetta), (Money_(David_Guetta_song),writer,David_Guetta), (Little_Bad_Girl,musicalBand,David_Guetta), (Wavin'_Flag,producer,David_Guetta), (Give_Me_Something_(David_Guetta_song),producer,David_Guetta), (Bang_My_Head,producer,David_Guetta), (Everytime_We_Touch_(David_Guetta_song),producer,David_Guetta), (Little_Bad_Girl,producer,David_Guetta), (Hey_Mama_(David_Guetta_song),musicalArtist,David_Guetta), (The_Beginning_(The_Black_Eyed_Peas_album),producer,David_Guetta), (Give_Me_Something_(David_Guetta_song),writer,David_Guetta), 
+set2: (Give Me Something,performer,David Guetta), (Bang My Head,composer,David Guetta), (Hey Mama,performer,David Guetta), (Sexy Bitch,composer,David Guetta), (Where Them Girls At,lyrics by,David Guetta), (Everytime We Touch,lyrics by,David Guetta), (I Gotta Feeling,lyrics by,David Guetta), (Everytime We Touch,performer,David Guetta), (Where Them Girls At,performer,David Guetta), (David Guetta,country of citizenship,France), (Little Bad Girl,lyrics by,David Guetta), (Sexy Bitch,performer,David Guetta), (Money,performer,David Guetta), (Little Bad Girl,performer,David Guetta), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7911, 22911
+Please identify the matching triplets in the following two triplet sets as explanation for predicting National_Basketball_Association is same as National Basketball Association:
+set1: (Isaiah_Thomas_(basketball),league,National_Basketball_Association), (Will_Barton,league,National_Basketball_Association), (Mike_Miller_(basketball_player),league,National_Basketball_Association), (Shawn_Respert,league,National_Basketball_Association), (Wayne_Ellington,league,National_Basketball_Association), (Larry_Drew,league,National_Basketball_Association), (Caron_Butler,league,National_Basketball_Association), (Drew_Gooden,league,National_Basketball_Association), (Richaun_Holmes,league,National_Basketball_Association), (Nikola_Jokić,league,National_Basketball_Association), (Devin_Harris,league,National_Basketball_Association), (Wilson_Chandler,league,National_Basketball_Association), (Elfrid_Payton_(basketball),league,National_Basketball_Association), (Chandler_Parsons,league,National_Basketball_Association), (Mark_Madsen,league,National_Basketball_Association), (Greg_Foster_(basketball),league,National_Basketball_Association), (André_Roberson,league,National_Basketball_Association), (James_Posey,league,National_Basketball_Association), (Hassan_Whiteside,league,National_Basketball_Association), (Patrick_Beverley,league,National_Basketball_Association), (Darrun_Hilliard,league,National_Basketball_Association), (Amir_Johnson,league,National_Basketball_Association), (Thaddeus_Young,league,National_Basketball_Association), (Sean_Marks,league,National_Basketball_Association), (Brian_Roberts_(basketball),league,National_Basketball_Association), (Maurice_Harkless,league,National_Basketball_Association), (Andrew_Nicholson_(basketball),league,National_Basketball_Association), (Derrick_Williams_(basketball),league,National_Basketball_Association), (Kentavious_Caldwell-Pope,league,National_Basketball_Association), (Julius_Randle,league,National_Basketball_Association), (Greg_Monroe,league,National_Basketball_Association), 
+set2: (Memphis Grizzlies,league,National Basketball Association), (Toronto Raptors,league,National Basketball Association), (Sacramento Kings,league,National Basketball Association), (Los Angeles Lakers,league,National Basketball Association), (Houston Rockets,league,National Basketball Association), (Dallas Mavericks,league,National Basketball Association), (Miami Heat,league,National Basketball Association), (Milwaukee Bucks,league,National Basketball Association), (Orlando Magic,league,National Basketball Association), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 32, 15032
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Things_to_Do_in_Denver_When_You're_Dead is same as Things to Do in Denver When You're Dead:
+set1: (Things_to_Do_in_Denver_When_You're_Dead,starring,William_Forsythe_(actor)), (Things_to_Do_in_Denver_When_You're_Dead,starring,Christopher_Walken), (Things_to_Do_in_Denver_When_You're_Dead,editing,Richard_Marks), (Things_to_Do_in_Denver_When_You're_Dead,starring,Christopher_Lloyd), 
+set2: (Things to Do in Denver When You're Dead,cast member,Christopher Walken), (Things to Do in Denver When You're Dead,cast member,William Forsythe), (Things to Do in Denver When You're Dead,instance of,film), (Things to Do in Denver When You're Dead,cast member,Christopher Lloyd), (Things to Do in Denver When You're Dead,film editor,Richard Marks), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6412, 21412
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Diminished_Capacity is same as Diminished Capacity:
+set1: (Diminished_Capacity,starring,Matthew_Broderick), 
+set2: (Diminished Capacity,cast member,Matthew Broderick), (Diminished Capacity,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2401, 17401
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Associated_British_Picture_Corporation is same as Associated British Picture Corporation:
+set1: (The_Dam_Busters_(film),distributor,Associated_British_Picture_Corporation), (The_Ring_(1927_film),distributor,Associated_British_Picture_Corporation), (Kathleen_Mavourneen_(1937_film),distributor,Associated_British_Picture_Corporation), (Now_and_Forever_(1956_film),distributor,Associated_British_Picture_Corporation), (The_Blackguard,distributor,Associated_British_Picture_Corporation), (Jew_Süss_(1934_film),distributor,Associated_British_Picture_Corporation), (Number_Seventeen,distributor,Associated_British_Picture_Corporation), (The_Yellow_Mask,distributor,Associated_British_Picture_Corporation), (Let's_Love_and_Laugh,distributor,Associated_British_Picture_Corporation), (Rasputin_the_Mad_Monk,distributor,Associated_British_Picture_Corporation), (Champagne_(1928_film),distributor,Associated_British_Picture_Corporation), (Suspense_(1930_film),distributor,Associated_British_Picture_Corporation), (The_Middle_Watch_(1930_film),distributor,Associated_British_Picture_Corporation), (Woman_in_a_Dressing_Gown,distributor,Associated_British_Picture_Corporation), (Too_Hot_to_Handle_(1960_film),distributor,Associated_British_Picture_Corporation), (Underneath_the_Arches_(film),distributor,Associated_British_Picture_Corporation), (The_Manxman,distributor,Associated_British_Picture_Corporation), (The_Harassed_Hero,distributor,Associated_British_Picture_Corporation), 
+set2: (The Ring,production company,Associated British Picture Corporation), (Too Hot to Handle,distributed by,Associated British Picture Corporation), (Suspense,distributed by,Associated British Picture Corporation), (Underneath the Arches,distributed by,Associated British Picture Corporation), (The Dam Busters,production company,Associated British Picture Corporation), (Let's Love and Laugh,distributed by,Associated British Picture Corporation), (The Manxman,production company,Associated British Picture Corporation), (Too Hot to Handle,production company,Associated British Picture Corporation), (The Dam Busters,distributed by,Associated British Picture Corporation), (Champagne,production company,Associated British Picture Corporation), (Now and Forever,distributed by,Associated British Picture Corporation), (Rasputin, the Mad Monk,distributed by,Associated British Picture Corporation), (The Middle Watch,production company,Associated British Picture Corporation), (The Yellow Mask,distributed by,Associated British Picture Corporation), (The Harassed Hero,distributed by,Associated British Picture Corporation), (Woman in a Dressing Gown,distributed by,Associated British Picture Corporation), (The Middle Watch,distributed by,Associated British Picture Corporation), (Suspense,production company,Associated British Picture Corporation), (Kathleen Mavourneen,distributed by,Associated British Picture Corporation), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8666, 23666
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Gennady_Lebedev is same as Gennady Lebedev:
+set1: (Gennady_Lebedev,deathPlace,Turkey), (Gennady_Lebedev,almaMater,Moscow_State_University), (Gennady_Lebedev,field,Political_science), 
+set2: (Gennady Lebedev,educated at,Moscow State University), (Gennady Lebedev,occupation,politician), (Gennady Lebedev,country of citizenship,Russia), (Gennady Lebedev,place of death,Turkey), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 890, 15890
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Lego_The_Hobbit_(video_game) is same as Lego The Hobbit:
+set1: (Lego_The_Hobbit_(video_game),computingPlatform,Nintendo_3DS), (Lego_The_Hobbit_(video_game),rdf-schema#seeAlso,The_Hobbit:_An_Unexpected_Journey), (Lego_The_Hobbit_(video_game),computingPlatform,PlayStation_Vita), (Lego_The_Hobbit_(video_game),publisher,Warner_Bros._Interactive_Entertainment), (Lego_The_Hobbit_(video_game),composer,Howard_Shore), (Lego_The_Hobbit_(video_game),computingPlatform,PlayStation_4), 
+set2: (Lego The Hobbit,platform,PlayStation Vita), (Lego The Hobbit,composer,Howard Shore), (Lego The Hobbit,publisher,Warner Bros. Games), (Lego The Hobbit,distribution format,Steam), (Lego The Hobbit,platform,Nintendo 3DS), (Lego The Hobbit,platform,PlayStation 4), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2442, 17442
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Jyothika is same as Jyothika:
+set1: (Kushi_(2000_film),starring,Jyothika), (Dumm_Dumm_Dumm,starring,Jyothika), (123_(film),starring,Jyothika), (Mass_(film),starring,Jyothika), (Seetha_Kalyanam_(2009_film),starring,Jyothika), (Jyothika,residence,Chennai), (Arul,starring,Jyothika), (12B,starring,Jyothika), (Chandramukhi,starring,Jyothika), (Saravana,starring,Jyothika), (Jyothika,birthPlace,Mumbai), 
+set2: (Jyothika,place of birth,Mumbai), (123,cast member,Jyothika), (12B,cast member,Jyothika), (Dumm Dumm Dumm,cast member,Jyothika), (Kushi,cast member,Jyothika), (Seetha Kalyanam,cast member,Jyothika), (Arul,cast member,Jyothika), (Saravana,cast member,Jyothika), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2681, 17681
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Margin_Call_(film) is same as Margin Call:
+set1: (Margin_Call_(film),starring,Paul_Bettany), (Margin_Call_(film),distributor,Roadside_Attractions), 
+set2: (Margin Call,instance of,film), (Margin Call,cast member,Paul Bettany), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 9979, 24979
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Jules_Dassin is same as Jules Dassin:
+set1: (Phaedra_(film),writer,Jules_Dassin), (Reunion_in_France,director,Jules_Dassin), (Jules_Dassin,deathPlace,Athens), (Phaedra_(film),director,Jules_Dassin), (Nazi_Agent,director,Jules_Dassin), (Brute_Force_(1947_film),director,Jules_Dassin), (The_Naked_City,director,Jules_Dassin), (Night_and_the_City,director,Jules_Dassin), (The_Tell-Tale_Heart_(1941_film),director,Jules_Dassin), 
+set2: (Jules Dassin,occupation,film director), (The Tell-Tale Heart,director,Jules Dassin), (Nazi Agent,director,Jules Dassin), (The Naked City,director,Jules Dassin), (Night and the City,director,Jules Dassin), (Phaedra,producer,Jules Dassin), (Phaedra,director,Jules Dassin), (Reunion in France,director,Jules Dassin), (Brute Force,director,Jules Dassin), (Phaedra,cast member,Jules Dassin), (Phaedra,screenwriter,Jules Dassin), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1993, 16993
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Derek_Jarman is same as Derek Jarman:
+set1: (Derek_Jarman,almaMater,King's_College_London), (Derek_Jarman,deathPlace,London), (Blue_(1993_film),director,Derek_Jarman), (Aria_(film),director,Derek_Jarman), (Derek_Jarman,occupation,Film_director), (The_Tempest_(1979_film),director,Derek_Jarman), (Jubilee_(1978_film),director,Derek_Jarman), (Caravaggio_(1986_film),director,Derek_Jarman), (Blue_(1993_film),narrator,Derek_Jarman), (Blue_(1993_film),writer,Derek_Jarman), (Derek_Jarman,birthPlace,London), (Jubilee_(1978_film),writer,Derek_Jarman), (Caravaggio_(1986_film),writer,Derek_Jarman), 
+set2: (Aria,director,Derek Jarman), (Derek Jarman,occupation,film director), (Blue,narrator,Derek Jarman), (Caravaggio,screenwriter,Derek Jarman), (The Tempest,screenwriter,Derek Jarman), (Jubilee,screenwriter,Derek Jarman), (Derek Jarman,country of citizenship,United Kingdom), (Caravaggio,director,Derek Jarman), (Blue,screenwriter,Derek Jarman), (Jubilee,director,Derek Jarman), (Derek Jarman,educated at,King's College London), (Caravaggio,cast member,Derek Jarman), (Blue,cast member,Derek Jarman), (The Tempest,director,Derek Jarman), (Blue,director,Derek Jarman), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5144, 20144
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Open_Your_Heart_(The_Human_League_song) is same as Open Your Heart:
+set1: (Open_Your_Heart_(The_Human_League_song),subsequentWork,Don't_You_Want_Me), (Open_Your_Heart_(The_Human_League_song),musicalArtist,The_Human_League), (Open_Your_Heart_(The_Human_League_song),musicalBand,The_Human_League), (Don't_You_Want_Me,previousWork,Open_Your_Heart_(The_Human_League_song)), (Open_Your_Heart_(The_Human_League_song),recordedIn,Reading,_Berkshire), 
+set2: (Open Your Heart,followed by,Don't You Want Me), (Open Your Heart,performer,The Human League), (Don't You Want Me,follows,Open Your Heart), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5747, 20747
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Vivica_A._Fox is same as Vivica A. Fox:
+set1: (Booty_Call,starring,Vivica_A._Fox), (Kill_Bill,starring,Vivica_A._Fox), (Kickin'_It_Old_Skool,starring,Vivica_A._Fox), (Kill_Bill:_Volume_1,starring,Vivica_A._Fox), (Independence_Day_(1996_film),starring,Vivica_A._Fox), (Juwanna_Mann,starring,Vivica_A._Fox), (Set_It_Off_(film),starring,Vivica_A._Fox), (Missing_(Canadian_TV_series),starring,Vivica_A._Fox), (Idle_Hands,starring,Vivica_A._Fox), (Kingdom_Come_(2001_film),starring,Vivica_A._Fox), (Vivica_A._Fox,birthPlace,South_Bend,_Indiana), 
+set2: (Juwanna Mann,cast member,Vivica A. Fox), (Independence Day,cast member,Vivica A. Fox), (Kill Bill: The Whole Bloody Affair,cast member,Vivica A. Fox), (Set It Off,cast member,Vivica A. Fox), (Missing,cast member,Vivica A. Fox), (Booty Call,cast member,Vivica A. Fox), (Kickin' It Old Skool,cast member,Vivica A. Fox), (Kingdom Come,cast member,Vivica A. Fox), (Idle Hands,cast member,Vivica A. Fox), (Kill Bill Volume 1,cast member,Vivica A. Fox), (Vivica A. Fox,place of birth,Indianapolis), (Batman & Robin,cast member,Vivica A. Fox), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4727, 19727
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Pietro_Scalia is same as Pietro Scalia:
+set1: (The_Counselor,editing,Pietro_Scalia), (Masked_and_Anonymous,editing,Pietro_Scalia), (Pietro_Scalia,birthPlace,Sicily), (The_Martian_(film),editing,Pietro_Scalia), (Black_Hawk_Down_(film),editing,Pietro_Scalia), (The_Quick_and_the_Dead_(1995_film),editing,Pietro_Scalia), 
+set2: (The Martian,film editor,Pietro Scalia), (Pietro Scalia,place of birth,Sicily), (Black Hawk Down,film editor,Pietro Scalia), (The Counselor,film editor,Pietro Scalia), (Masked and Anonymous,film editor,Pietro Scalia), (The Quick and the Dead,film editor,Pietro Scalia), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7731, 22731
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Nothing's_Changed_(album) is same as Nothing's Changed:
+set1: (Under_Cover_(Joe_Lynn_Turner_album),previousWork,Nothing's_Changed_(album)), (Nothing's_Changed_(album),subsequentWork,Under_Cover_(Joe_Lynn_Turner_album)), 
+set2: (Nothing's Changed,followed by,Under Cover), (Under Cover,follows,Nothing's Changed), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8845, 23845
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Eddie_Phillips_(musician) is same as Eddie Phillips:
+set1: (Eddie_Phillips_(musician),birthPlace,Leytonstone), (Eddie_Phillips_(musician),birthPlace,London), 
+set2: (Eddie Phillips,instrument,guitar), (Eddie Phillips,country of citizenship,United Kingdom), (Eddie Phillips,place of birth,Leytonstone), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1328, 16328
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Roland_Beamont is same as Roland Beamont:
+set1: (Roland_Beamont,battle,Battle_of_Britain), 
+set2: (Roland Beamont,conflict,Battle of Britain), (Roland Beamont,country of citizenship,United Kingdom), (Roland Beamont,military branch,Royal Air Force), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4221, 19221
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Art_Carney is same as Art Carney:
+set1: (Terrible_Joe_Moran,starring,Art_Carney), (Firestarter_(film),starring,Art_Carney), (Art_Carney,hometown,New_York), (Last_Action_Hero,starring,Art_Carney), (Harry_and_Tonto,starring,Art_Carney), (The_Blue_Yonder,starring,Art_Carney), (House_Calls_(1978_film),starring,Art_Carney), 
+set2: (The Blue Yonder,cast member,Art Carney), (House Calls,cast member,Art Carney), (Harry and Tonto,cast member,Art Carney), (Firestarter,cast member,Art Carney), (Terrible Joe Moran,cast member,Art Carney), (Last Action Hero,cast member,Art Carney), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3940, 18940
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Fool_(novel) is same as Fool:
+set1: (Fool_(novel),literaryGenre,Comedy), (Fool_(novel),publisher,William_Morrow_and_Company), 
+set2: (Fool,genre,fantasy), (Fool,publisher,William Morrow and Company), (Fool,genre,comedy), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7942, 22942
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Wrocław is same as Wrocław:
+set1: (Johannes_Crato_von_Krafftheim,residence,Wrocław), (Heinz_Wozniakowski,birthPlace,Wrocław), (Alfred_Gomolka,birthPlace,Wrocław), (Adolf_Anderssen,birthPlace,Wrocław), (Arthur_Schlossmann,birthPlace,Wrocław), (Guido_Bodländer,birthPlace,Wrocław), (Eduard_Vogel_von_Falckenstein,birthPlace,Wrocław), (Wrocław,rdf-schema#seeAlso,Poland), (Wrocław,country,Poland), (Johannes_Crato_von_Krafftheim,deathPlace,Wrocław), (Felix_Hausdorff,birthPlace,Wrocław), (Johannes_Crato_von_Krafftheim,birthPlace,Wrocław), (Karl_Friedrich_Bonhoeffer,birthPlace,Wrocław), (Caspar_Neumann,birthPlace,Wrocław), (Eduard_Koschwitz,birthPlace,Wrocław), 
+set2: (Felix Hausdorff,place of birth,Wrocław), (Werner Mölders,place of death,Wrocław), (Arthur Schlossmann,place of birth,Wrocław), (Caspar Neumann,place of birth,Wrocław), (Wrocław,twinned administrative body,Wiesbaden), (Adolf Anderssen,place of death,Wrocław), (Bridge of Spies,filming location,Wrocław), (Eduard Vogel von Falckenstein,place of birth,Wrocław), (Johannes Crato von Krafftheim,place of birth,Wrocław), (Johannes Crato von Krafftheim,work location,Wrocław), (Skopje,twinned administrative body,Wrocław), (Johannes Crato von Krafftheim,place of death,Wrocław), (Wrocław,twinned administrative body,Skopje), (Wrocław,twinned administrative body,Guadalajara), (Alfred Gomolka,place of birth,Wrocław), (Caspar Neumann,work location,Wrocław), (Heinz Wozniakowski,place of birth,Wrocław), (Adolf Anderssen,place of birth,Wrocław), (Guido Bodländer,place of birth,Wrocław), (Eduard Koschwitz,place of birth,Wrocław), (Caspar Neumann,place of death,Wrocław), (Karl Friedrich Bonhoeffer,place of birth,Wrocław), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2060, 17060
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Mowmenabad,_Delfan is same as Mowmenabad, Delfan:
+set1: (Mowmenabad,_Delfan,isPartOf,Kakavand-e_Sharqi_Rural_District), (Mowmenabad,_Delfan,country,Iran), 
+set2: (Mowmenabad, Delfan,country,Iran), (Mowmenabad, Delfan,located in the administrative territorial entity,Kakavand-e Sharqi Rural District), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3697, 18697
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Macbeth_(2015_film) is same as Macbeth:
+set1: (Macbeth_(2015_film),distributor,StudioCanal), (Macbeth_(2015_film),distributor,The_Weinstein_Company), (Macbeth_(2015_film),starring,David_Thewlis), (Macbeth_(2015_film),starring,Michael_Fassbender), 
+set2: (Macbeth,country of origin,United Kingdom), (Macbeth,cast member,David Thewlis), (Macbeth,cast member,Michael Fassbender), (Macbeth,country of origin,France), (Macbeth,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3162, 18162
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Rick_Ross is same as Rick Ross:
+set1: (We_Takin'_Over,writer,Rick_Ross), (Rick_Ross,associatedBand,T-Pain), (John_(Lil_Wayne_song),writer,Rick_Ross), (I'm_on_One,musicalBand,Rick_Ross), (2_Chainz,associatedMusicalArtist,Rick_Ross), (Sean_Kingston,associatedBand,Rick_Ross), (DJ_Khaled,associatedMusicalArtist,Rick_Ross), (Welcome_to_My_Hood,writer,Rick_Ross), (Take_It_to_the_Head,musicalArtist,Rick_Ross), (Sean_Kingston,associatedMusicalArtist,Rick_Ross), (Rick_Ross,associatedBand,Jay_Z), (We_Takin'_Over,musicalBand,Rick_Ross), (Holla_at_Me,musicalBand,Rick_Ross), (Rick_Ross,associatedMusicalArtist,T-Pain), (DJ_Khaled,associatedBand,Rick_Ross), (Rick_Ross,associatedBand,Lil_Wayne), (We_Takin'_Over,musicalArtist,Rick_Ross), (Holla_at_Me,musicalArtist,Rick_Ross), (I'm_on_One,musicalArtist,Rick_Ross), (So_Sophisticated,musicalBand,Rick_Ross), (Rick_Ross,associatedMusicalArtist,Jay_Z), (T-Pain,associatedBand,Rick_Ross), (Take_It_to_the_Head,musicalBand,Rick_Ross), (Future_(rapper),associatedBand,Rick_Ross), (Port_of_Miami_(album),artist,Rick_Ross), (Booba,associatedBand,Rick_Ross), (Booba,associatedMusicalArtist,Rick_Ross), (T-Pain,associatedMusicalArtist,Rick_Ross), (Future_(rapper),associatedMusicalArtist,Rick_Ross), (Triumphant_(Get_'Em),writer,Rick_Ross), (Out_Here_Grindin,musicalBand,Rick_Ross), (Rick_Ross,associatedBand,DJ_Khaled), (Rick_Ross,associatedMusicalArtist,Lil_Wayne), (Out_Here_Grindin,musicalArtist,Rick_Ross), (2_Chainz,associatedBand,Rick_Ross), (Out_Here_Grindin,writer,Rick_Ross), (Sun_Come_Up_(song),writer,Rick_Ross), (Rick_Ross,associatedMusicalArtist,DJ_Khaled), (Jay_Sean,associatedMusicalArtist,Rick_Ross), (So_Sophisticated,musicalArtist,Rick_Ross), (Jay_Sean,associatedBand,Rick_Ross), (So_Sophisticated,writer,Rick_Ross), 
+set2: (Sun Come Up,performer,Rick Ross), (Port of Miami,performer,Rick Ross), (Rick Ross,occupation,businessperson), (Take It to the Head,performer,Rick Ross), (Triumphant (Get 'Em),performer,Rick Ross), (I'm on One,performer,Rick Ross), (Out Here Grindin,performer,Rick Ross), (Holla at Me,performer,Rick Ross), (Welcome to My Hood,performer,Rick Ross), (John,performer,Rick Ross), (So Sophisticated,performer,Rick Ross), (We Takin' Over,performer,Rick Ross), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8910, 23910
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Glenn_Ford is same as Glenn Ford:
+set1: (A_Time_for_Killing,starring,Glenn_Ford), (Torpedo_Run,starring,Glenn_Ford), (A_Stolen_Life_(1946_film),starring,Glenn_Ford), (The_Dick_Powell_Show,starring,Glenn_Ford), (Raw_Nerve_(1991_film),starring,Glenn_Ford), (The_Man_from_the_Alamo,starring,Glenn_Ford), (The_Green_Glove,starring,Glenn_Ford), (The_Courtship_of_Eddie's_Father_(film),starring,Glenn_Ford), (The_Mating_of_Millie,starring,Glenn_Ford), (The_Gazebo,starring,Glenn_Ford), (Four_Horsemen_of_the_Apocalypse_(film),starring,Glenn_Ford), (The_Return_of_October,starring,Glenn_Ford), (Is_Paris_Burning%3F,starring,Glenn_Ford), (Convicted_(1950_film),starring,Glenn_Ford), (Lust_for_Gold,starring,Glenn_Ford), (The_Violent_Men,starring,Glenn_Ford), (Midway_(film),starring,Glenn_Ford), (Destroyer_(1943_film),starring,Glenn_Ford), 
+set2: (The Courtship of Eddie's Father,cast member,Glenn Ford), (Torpedo Run,cast member,Glenn Ford), (Dangerous When Wet,cast member,Glenn Ford), (Lust for Gold,cast member,Glenn Ford), (Is Paris Burning?,cast member,Glenn Ford), (The Man from the Alamo,cast member,Glenn Ford), (Convicted,cast member,Glenn Ford), (The Green Glove,cast member,Glenn Ford), (Four Horsemen of the Apocalypse,cast member,Glenn Ford), (Glenn Ford,cause of death,stroke), (Destroyer,cast member,Glenn Ford), (The Mating of Millie,cast member,Glenn Ford), (The Dick Powell Show,cast member,Glenn Ford), (Raw Nerve,cast member,Glenn Ford), (Midway,cast member,Glenn Ford), (The Gazebo,cast member,Glenn Ford), (The Return of October,cast member,Glenn Ford), (The Violent Men,cast member,Glenn Ford), (A Stolen Life,cast member,Glenn Ford), (A Time for Killing,cast member,Glenn Ford), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7847, 22847
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Toby_Keith is same as Toby Keith:
+set1: (Somewhere_Else_(Toby_Keith_song),writer,Toby_Keith), (Toby_Keith,recordLabel,DreamWorks_Records), (Every_Dog_Has_Its_Day,writer,Toby_Keith), (Cryin'_for_Me_(Wayman's_Song),musicalArtist,Toby_Keith), (God_Love_Her,producer,Toby_Keith), (She_Never_Cried_in_Front_of_Me,musicalBand,Toby_Keith), (As_Good_as_I_Once_Was,producer,Toby_Keith), (Crash_Here_Tonight,writer,Toby_Keith), (Bullets_in_the_Gun_(song),producer,Toby_Keith), (Made_in_America_(Toby_Keith_song),musicalBand,Toby_Keith), (As_Good_as_I_Once_Was,musicalBand,Toby_Keith), (Should've_Been_a_Cowboy,writer,Toby_Keith), (Somewhere_Else_(Toby_Keith_song),producer,Toby_Keith), (Cryin'_for_Me_(Wayman's_Song),producer,Toby_Keith), (Pull_My_Chain,artist,Toby_Keith), (Toby_Keith,associatedBand,George_Strait), (Who's_That_Man,musicalBand,Toby_Keith), (Somewhere_Else_(Toby_Keith_song),musicalArtist,Toby_Keith), (Bullets_in_the_Gun_(song),musicalArtist,Toby_Keith), (American_Ride_(Toby_Keith_album),producer,Toby_Keith), (Beer_for_My_Horses_(film),starring,Toby_Keith), (Big_Blue_Note,musicalBand,Toby_Keith), (Made_in_America_(Toby_Keith_song),producer,Toby_Keith), (Crash_Here_Tonight,musicalBand,Toby_Keith), (Toby_Keith,associatedMusicalArtist,George_Strait), (Toby_Keith,recordLabel,Show_Dog-Universal_Music), (Big_Blue_Note,producer,Toby_Keith), (She_Never_Cried_in_Front_of_Me,writer,Toby_Keith), (Cryin'_for_Me_(Wayman's_Song),musicalBand,Toby_Keith), (Pull_My_Chain,producer,Toby_Keith), (Every_Dog_Has_Its_Day,musicalBand,Toby_Keith), (A_Little_Too_Late_(Toby_Keith_song),producer,Toby_Keith), (Who's_That_Man,musicalArtist,Toby_Keith), (Somewhere_Else_(Toby_Keith_song),musicalBand,Toby_Keith), (Bullets_in_the_Gun_(song),writer,Toby_Keith), (Cryin'_for_Me_(Wayman's_Song),writer,Toby_Keith), (Toby_Keith,recordLabel,Universal_Music_Group_Nashville), (Every_Dog_Has_Its_Day,musicalArtist,Toby_Keith), (God_Love_Her,writer,Toby_Keith), (God_Love_Her,musicalArtist,Toby_Keith), (As_Good_as_I_Once_Was,musicalArtist,Toby_Keith), (Bullets_in_the_Gun_(song),musicalBand,Toby_Keith), (She_Never_Cried_in_Front_of_Me,producer,Toby_Keith), (Should've_Been_a_Cowboy,musicalArtist,Toby_Keith), (Who's_That_Man,writer,Toby_Keith), (Beer_for_My_Horses_(film),writer,Toby_Keith), (Crash_Here_Tonight,musicalArtist,Toby_Keith), (A_Little_Too_Late_(Toby_Keith_song),musicalBand,Toby_Keith), (Big_Blue_Note,writer,Toby_Keith), (As_Good_as_I_Once_Was,writer,Toby_Keith), (Crash_Here_Tonight,producer,Toby_Keith), (A_Little_Too_Late_(Toby_Keith_song),writer,Toby_Keith), (Beer_for_My_Horses_(film),producer,Toby_Keith), (God_Love_Her,musicalBand,Toby_Keith), (Should've_Been_a_Cowboy,musicalBand,Toby_Keith), (American_Ride_(Toby_Keith_album),artist,Toby_Keith), (Show_Dog-Universal_Music,foundedBy,Toby_Keith), (She_Never_Cried_in_Front_of_Me,musicalArtist,Toby_Keith), (Big_Blue_Note,musicalArtist,Toby_Keith), (Every_Dog_Has_Its_Day,producer,Toby_Keith), (Made_in_America_(Toby_Keith_song),musicalArtist,Toby_Keith), (A_Little_Too_Late_(Toby_Keith_song),musicalArtist,Toby_Keith), 
+set2: (Bullets in the Gun,performer,Toby Keith), (Made in America,performer,Toby Keith), (Beer for My Horses,cast member,Toby Keith), (American Ride,performer,Toby Keith), (A Little Too Late,performer,Toby Keith), (Somewhere Else,performer,Toby Keith), (Should've Been a Cowboy,performer,Toby Keith), (Who's That Man,performer,Toby Keith), (Cryin' for Me,performer,Toby Keith), (God Love Her,performer,Toby Keith), (She Never Cried in Front of Me,performer,Toby Keith), (As Good as I Once Was,performer,Toby Keith), (Big Blue Note,performer,Toby Keith), (Pull My Chain,performer,Toby Keith), (Every Dog Has Its Day,performer,Toby Keith), (Crash Here Tonight,performer,Toby Keith), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8633, 23633
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Game_Boy_Wars is same as Game Boy Wars:
+set1: (Game_Boy_Wars,publisher,Hudson_Soft), (Game_Boy_Wars,developer,Intelligent_Systems), (Game_Boy_Wars,computingPlatform,Game_Boy_Color), (Game_Boy_Wars,developer,Hudson_Soft), 
+set2: (Game Boy Wars,developer,Intelligent Systems), (Game Boy Wars,publisher,Hudson Soft), (Game Boy Wars,developer,Hudson Soft), (Game Boy Wars,platform,Game Boy Color), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 9287, 24287
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Ray_Stevenson_(actor) is same as Ray Stevenson:
+set1: (Ray_Stevenson_(actor),birthPlace,United_Kingdom), (Cirque_du_Freak:_The_Vampire's_Assistant,starring,Ray_Stevenson_(actor)), (G.I._Joe:_Retaliation,starring,Ray_Stevenson_(actor)), (The_Book_of_Eli,starring,Ray_Stevenson_(actor)), 
+set2: (G.I. Joe: Retaliation,cast member,Ray Stevenson), (Cirque du Freak: The Vampire's Assistant,cast member,Ray Stevenson), (Ray Stevenson,country of citizenship,United Kingdom), (The Book of Eli,cast member,Ray Stevenson), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1915, 16915
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Once_(Roy_Harper_album) is same as Once:
+set1: (Once_(Roy_Harper_album),recordLabel,I.R.S._Records), (Once_(Roy_Harper_album),previousWork,Loony_on_the_Bus), (Death_or_Glory%3F_(album),previousWork,Once_(Roy_Harper_album)), (Loony_on_the_Bus,subsequentWork,Once_(Roy_Harper_album)), (Once_(Roy_Harper_album),artist,Roy_Harper), (Once_(Roy_Harper_album),subsequentWork,Death_or_Glory%3F_(album)), (Once_(Roy_Harper_album),producer,Roy_Harper), 
+set2: (Once,followed by,Death or Glory?), (Once,performer,Roy Harper), (Once,record label,I.R.S. Records), (Once,follows,Loony on the Bus), (Loony on the Bus,followed by,Once), (Death or Glory?,follows,Once), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5023, 20023
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Clint_Benedict is same as Clint Benedict:
+set1: (Clint_Benedict,formerTeam,Montreal_Maroons), 
+set2: (Clint Benedict,member of sports team,Montreal Maroons), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 216, 15216
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Cirque_du_Freak:_The_Vampire's_Assistant is same as Cirque du Freak: The Vampire's Assistant:
+set1: (Cirque_du_Freak:_The_Vampire's_Assistant,starring,Willem_Dafoe), (Cirque_du_Freak:_The_Vampire's_Assistant,producer,Lauren_Shuler_Donner), (Cirque_du_Freak:_The_Vampire's_Assistant,starring,John_C._Reilly), (Cirque_du_Freak:_The_Vampire's_Assistant,starring,Ray_Stevenson_(actor)), 
+set2: (Cirque du Freak: The Vampire's Assistant,cast member,John C. Reilly), (Cirque du Freak: The Vampire's Assistant,cast member,Willem Dafoe), (Cirque du Freak: The Vampire's Assistant,producer,Lauren Shuler Donner), (Cirque du Freak: The Vampire's Assistant,cast member,Ray Stevenson), (Cirque du Freak: The Vampire's Assistant,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4474, 19474
+Please identify the matching triplets in the following two triplet sets as explanation for predicting City_Slickers_II:_The_Legend_of_Curly's_Gold is same as City Slickers II: The Legend of Curly's Gold:
+set1: (City_Slickers_II:_The_Legend_of_Curly's_Gold,starring,Jack_Palance), (City_Slickers_II:_The_Legend_of_Curly's_Gold,editing,William_M._Anderson), (City_Slickers_II:_The_Legend_of_Curly's_Gold,distributor,Columbia_Pictures), 
+set2: (City Slickers II: The Legend of Curly's Gold,film editor,William M. Anderson), (City Slickers II: The Legend of Curly's Gold,instance of,film), (City Slickers II: The Legend of Curly's Gold,cast member,Jack Palance), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1207, 16207
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Lions_Are_Loose is same as Les Lions sont lâchés:
+set1: (The_Lions_Are_Loose,starring,Danielle_Darrieux), (The_Lions_Are_Loose,starring,Jean-Claude_Brialy), 
+set2: (Les Lions sont lâchés,instance of,film), (Les Lions sont lâchés,country of origin,France), (Les Lions sont lâchés,genre,comedy), (Les Lions sont lâchés,cast member,Lino Ventura), (Les Lions sont lâchés,cast member,Jean-Claude Brialy), (Les Lions sont lâchés,cast member,Danielle Darrieux), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1791, 16791
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Woman_on_the_Run is same as Woman on the Run:
+set1: (Woman_on_the_Run,writer,Alan_Campbell_(screenwriter)), (Woman_on_the_Run,cinematography,Hal_Mohr), (Woman_on_the_Run,starring,Dennis_O'Keefe), (Woman_on_the_Run,writer,Ross_Hunter), 
+set2: (Woman on the Run,director of photography,Hal Mohr), (Woman on the Run,instance of,film), (Woman on the Run,screenwriter,Alan Campbell), (Woman on the Run,cast member,Dennis O'Keefe), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1269, 16269
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Parlophone is same as Parlophone:
+set1: (Out_of_Time_(Blur_song),recordLabel,Parlophone), (Rush_Hour_Soul_(song),recordLabel,Parlophone), (Stylo_(song),recordLabel,Parlophone), (Pink_Floyd,recordLabel,Parlophone), (Graham_Coxon,recordLabel,Parlophone), (Chris_Lowe,recordLabel,Parlophone), (The_Works_(Queen_album),recordLabel,Parlophone), (Duran_Duran,recordLabel,Parlophone), (Hey_Mama_(David_Guetta_song),recordLabel,Parlophone), (Kiss_of_Life_(Supergrass_song),recordLabel,Parlophone), (The_Endless_River,recordLabel,Parlophone), (Rather_Be_(The_Verve_song),recordLabel,Parlophone), (Love_Is_Noise,recordLabel,Parlophone), (George_Harrison,recordLabel,Parlophone), (Bang_My_Head,recordLabel,Parlophone), (This_Boy,recordLabel,Parlophone), (These_Are_the_Days_of_Our_Lives,recordLabel,Parlophone), (Radiohead,recordLabel,Parlophone), (Crazy_Beat,recordLabel,Parlophone), (Another_World_(The_Chemical_Brothers_song),recordLabel,Parlophone), (Spectacular_(Graham_Coxon_song),recordLabel,Parlophone), (Nowhere_Man_(song),recordLabel,Parlophone), (David_Guetta,recordLabel,Parlophone), (Parlophone,parentCompany,EMI), (Interpol_(band),recordLabel,Parlophone), (Temporary_Secretary,recordLabel,Parlophone), (A_Night_at_the_Opera_(Queen_album),recordLabel,Parlophone), (A_Day_in_the_Life,recordLabel,Parlophone), (Pipes_of_Peace,recordLabel,Parlophone), (This_Is_Happening,recordLabel,Parlophone), (Blur_(band),recordLabel,Parlophone), (Bittersweet_Bundle_of_Misery,recordLabel,Parlophone), (The_Beatles,recordLabel,Parlophone), (The_Magic_Whip,recordLabel,Parlophone), (Parlophone,parentCompany,Warner_Music_Group), (Dirty_Harry_(song),recordLabel,Parlophone), (Ringo_Starr,recordLabel,Parlophone), (Anyone_Can_Play_Guitar,recordLabel,Parlophone), (Gorillaz,recordLabel,Parlophone), (Karma_Police,recordLabel,Parlophone), (Off_the_Ground_(song),recordLabel,Parlophone), (Go_West_(song),recordLabel,Parlophone), (Really_Love_You,recordLabel,Parlophone), (What_I_Did_for_Love_(David_Guetta_song),recordLabel,Parlophone), (Don't_Give_It_Up_(Siobhán_Donaghy_song),recordLabel,Parlophone), (Roy_Thomas_Baker,recordLabel,Parlophone), (Morrissey,recordLabel,Parlophone), (Sgt._Pepper's_Lonely_Hearts_Club_Band,recordLabel,Parlophone), (Pretty_Little_Head_(song),recordLabel,Parlophone), (Queen_(band),recordLabel,Parlophone), (Figure_of_Eight_(song),recordLabel,Parlophone), (You_Like_Me_Too_Much,recordLabel,Parlophone), (I'm_Looking_Through_You,recordLabel,Parlophone), (Biker_Like_an_Icon,recordLabel,Parlophone), (Rarities_(Beatles_compilations),recordLabel,Parlophone), (If_I_Needed_Someone,recordLabel,Parlophone), 
+set2: (The Endless River,record label,Parlophone), (Rush Hour Soul,record label,Parlophone), (Temporary Secretary,record label,Parlophone), (A Night at the Opera,record label,Parlophone), (The Works,record label,Parlophone), (The Magic Whip,record label,Parlophone), (Out of Time,record label,Parlophone), (If I Needed Someone,record label,Parlophone), (Kiss of Life,record label,Parlophone), (Sgt. Pepper's Lonely Hearts Club Band,record label,Parlophone), (Off the Ground,record label,Parlophone), (Figure of Eight,record label,Parlophone), (I'm Looking Through You,record label,Parlophone), (Dirty Harry,record label,Parlophone), (This Boy,record label,Parlophone), (Really Love You,record label,Parlophone), (Pipes of Peace,record label,Parlophone), (Karma Police,record label,Parlophone), (Spectacular,record label,Parlophone), (Rather Be,record label,Parlophone), (Bittersweet Bundle of Misery,record label,Parlophone), (Parlophone,country,United Kingdom), (A Day in the Life,record label,Parlophone), (Biker Like an Icon,record label,Parlophone), (These Are the Days of Our Lives,record label,Parlophone), (Anyone Can Play Guitar,record label,Parlophone), (Stylo,record label,Parlophone), (Love Is Noise,record label,Parlophone), (Don't Give It Up,record label,Parlophone), (Another World,record label,Parlophone), (Nowhere Man,record label,Parlophone), (Pretty Little Head,record label,Parlophone), (Crazy Beat,record label,Parlophone), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4231, 19231
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Women_in_Love_(film) is same as Women in Love:
+set1: (Women_in_Love_(film),cinematography,Billy_Williams_(cinematographer)), (Women_in_Love_(film),musicComposer,Georges_Delerue), (Women_in_Love_(film),director,Ken_Russell), (Women_in_Love_(film),starring,Oliver_Reed), 
+set2: (Women in Love,country of origin,United Kingdom), (Women in Love,director of photography,Billy Williams), (Women in Love,cast member,Oliver Reed), (Women in Love,composer,Georges Delerue), (Women in Love,director,Ken Russell), (Women in Love,instance of,film), (Women in Love,narrative location,Newcastle upon Tyne), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7797, 22797
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Persian_language is same as Persian:
+set1: (Taste_of_Cherry,language,Persian_language), (Lor_Girl,language,Persian_language), (The_Pear_Tree,language,Persian_language), (Iran,language,Persian_language), (Persian_language,spokenIn,Azerbaijan), (Khalilullah_Khalili,language,Persian_language), (Persian_language,spokenIn,Iran), (Persian_language,rdf-schema#seeAlso,Urdu), (About_Elly,language,Persian_language), (Iran,officialLanguage,Persian_language), (Persian_language,spokenIn,Tajikistan), (Where_Is_the_Friend's_Home%3F,language,Persian_language), (Not_Without_My_Daughter,language,Persian_language), (Persian_language,spokenIn,Russia), 
+set2: (Iran,official language,Persian), (Mashhad,official language,Persian), (Qovsi Tabrizi,languages spoken, written or signed,Persian), (Taste of Cherry,original language of film or TV show,Persian), (About Elly,original language of film or TV show,Persian), (Lor Girl,original language of film or TV show,Persian), (Abbas Kiarostami,languages spoken, written or signed,Persian), (Khalilullah Khalili,languages spoken, written or signed,Persian), (Where Is the Friend's Home?,original language of film or TV show,Persian), (Mohammad-Taqi Bahar,languages spoken, written or signed,Persian), (Argo,original language of film or TV show,Persian), (The Pear Tree,original language of film or TV show,Persian), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4911, 19911
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Rati_Agnihotri is same as Rati Agnihotri:
+set1: (Rati_Agnihotri,occupation,Model_(people)), (Dev_(film),starring,Rati_Agnihotri), (Tawaif_(film),starring,Rati_Agnihotri), (Kaante,starring,Rati_Agnihotri), (Rati_Agnihotri,birthPlace,Mumbai), (Yeh_Jo_Mohabbat_Hai,starring,Rati_Agnihotri), (Hum_Tum,starring,Rati_Agnihotri), (Coolie_(1983_Hindi_film),starring,Rati_Agnihotri), (Majunu,starring,Rati_Agnihotri), (Farz_Aur_Kanoon,starring,Rati_Agnihotri), 
+set2: (Coolie,cast member,Rati Agnihotri), (Tawaif,cast member,Rati Agnihotri), (Kaante,cast member,Rati Agnihotri), (Farz Aur Kanoon,cast member,Rati Agnihotri), (Rati Agnihotri,place of birth,Mumbai), (Ek Duuje Ke Liye,cast member,Rati Agnihotri), (Yeh Jo Mohabbat Hai,cast member,Rati Agnihotri), (Rati Agnihotri,occupation,model), (Hum Tum,cast member,Rati Agnihotri), (Dev,cast member,Rati Agnihotri), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 94, 15094
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Pony_Canyon is same as Pony Canyon:
+set1: (Surprise!_(Bonnie_Pink_song),recordLabel,Pony_Canyon), (Arashi,recordLabel,Pony_Canyon), (Shiroi_Honō,recordLabel,Pony_Canyon), (Kizuna_(Aya_Ueto_song),recordLabel,Pony_Canyon), (Pureness,recordLabel,Pony_Canyon), (Inu_to_Tsuki,recordLabel,Pony_Canyon), (This_Strange_Engine,recordLabel,Pony_Canyon), (Kimi_no_Tame_ni_Boku_ga_Iru,recordLabel,Pony_Canyon), (Marillion,recordLabel,Pony_Canyon), (19-sai_no_Uta,recordLabel,Pony_Canyon), (Forget_Me_Not_(Bonnie_Pink_song),recordLabel,Pony_Canyon), 
+set2: (19-sai no Uta,record label,Pony Canyon), (Pureness,record label,Pony Canyon), (This Strange Engine,record label,Pony Canyon), (Pony Canyon,industry,video game industry), (Pony Canyon,headquarters location,Tokyo), (Forget Me Not,record label,Pony Canyon), (Surprise!,record label,Pony Canyon), (Inu to Tsuki,record label,Pony Canyon), (Shiroi Honō,record label,Pony Canyon), (Kizuna,record label,Pony Canyon), (Pony Canyon,country,Japan), (Kimi no Tame ni Boku ga Iru,record label,Pony Canyon), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2123, 17123
+Please identify the matching triplets in the following two triplet sets as explanation for predicting It's_All_the_Way_Live_(Now) is same as It's All the Way Live (Now):
+set1: (It's_All_the_Way_Live_(Now),musicalArtist,Coolio), (It's_All_the_Way_Live_(Now),musicalBand,Coolio), 
+set2: (It's All the Way Live (Now),performer,Coolio), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8502, 23502
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Yaadon_Ki_Kasam is same as Yaadon Ki Kasam:
+set1: (Yaadon_Ki_Kasam,starring,Shakti_Kapoor), (Yaadon_Ki_Kasam,starring,Zeenat_Aman), 
+set2: (Yaadon Ki Kasam,instance of,film), (Yaadon Ki Kasam,cast member,Zeenat Aman), (Yaadon Ki Kasam,cast member,Shakti Kapoor), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7229, 22229
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Dam_Busters_(film) is same as The Dam Busters:
+set1: (The_Dam_Busters_(film),cinematography,Erwin_Hillier), (The_Dam_Busters_(film),starring,Basil_Sydney), (The_Dam_Busters_(film),starring,Richard_Todd), (The_Dam_Busters_(film),cinematography,Gilbert_Taylor), (The_Dam_Busters_(film),distributor,Associated_British_Picture_Corporation), 
+set2: (The Dam Busters,distributed by,Associated British Picture Corporation), (The Dam Busters,instance of,film), (The Dam Busters,cast member,Basil Sydney), (The Dam Busters,country of origin,United Kingdom), (The Dam Busters,director of photography,Erwin Hillier), (The Dam Busters,cast member,Richard Todd), (The Dam Busters,production company,Associated British Picture Corporation), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7226, 22226
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Marvin_Hamlisch is same as Marvin Hamlisch:
+set1: (Carly_Simon,associatedBand,Marvin_Hamlisch), (Behind_the_Candelabra,musicComposer,Marvin_Hamlisch), (Carly_Simon,associatedMusicalArtist,Marvin_Hamlisch), (Take_the_Money_and_Run,musicComposer,Marvin_Hamlisch), (Neil_Simon's_I_Ought_to_Be_in_Pictures,musicComposer,Marvin_Hamlisch), (Bananas_(film),musicComposer,Marvin_Hamlisch), (Frankie_and_Johnny_(1991_film),musicComposer,Marvin_Hamlisch), 
+set2: (Frankie and Johnny,composer,Marvin Hamlisch), (Neil Simon's I Ought to Be in Pictures,composer,Marvin Hamlisch), (Bananas,composer,Marvin Hamlisch), (Behind the Candelabra,composer,Marvin Hamlisch), (Take the Money and Run,composer,Marvin Hamlisch), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1071, 16071
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Storm_at_Daybreak is same as Storm at Daybreak:
+set1: (Storm_at_Daybreak,editing,Margaret_Booth), (Storm_at_Daybreak,musicComposer,William_Axt), (Storm_at_Daybreak,cinematography,George_J._Folsey), (Storm_at_Daybreak,starring,Nils_Asther), 
+set2: (Storm at Daybreak,cast member,Nils Asther), (Storm at Daybreak,film editor,Margaret Booth), (Storm at Daybreak,director of photography,George J. Folsey), (Storm at Daybreak,composer,William Axt), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1393, 16393
+Please identify the matching triplets in the following two triplet sets as explanation for predicting WarGames is same as WarGames:
+set1: (WarGames,starring,Matthew_Broderick), (WarGames,writer,Walon_Green), (WarGames,cinematography,William_A._Fraker), (WarGames,writer,Walter_Parkes), 
+set2: (WarGames,screenwriter,Walon Green), (WarGames,instance of,film), (WarGames,director of photography,William A. Fraker), (WarGames,screenwriter,Walter F. Parkes), (WarGames,genre,thriller), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 700, 15700
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Angel_Wore_Red is same as The Angel Wore Red:
+set1: (The_Angel_Wore_Red,writer,Nunnally_Johnson), (The_Angel_Wore_Red,distributor,Titanus), (The_Angel_Wore_Red,director,Nunnally_Johnson), (The_Angel_Wore_Red,starring,Ava_Gardner), (The_Angel_Wore_Red,language,Italian_language), (The_Angel_Wore_Red,musicComposer,Bronisław_Kaper), (The_Angel_Wore_Red,starring,Vittorio_De_Sica), (The_Angel_Wore_Red,musicComposer,Angelo_Francesco_Lavagnino), (The_Angel_Wore_Red,starring,Aldo_Fabrizi), 
+set2: (The Angel Wore Red,director,Nunnally Johnson), (The Angel Wore Red,cast member,Ava Gardner), (The Angel Wore Red,instance of,film), (The Angel Wore Red,screenwriter,Nunnally Johnson), (The Angel Wore Red,cast member,Aldo Fabrizi), (The Angel Wore Red,main subject,Spanish Civil War), (The Angel Wore Red,composer,Bronisław Kaper), (The Angel Wore Red,producer,Titanus), (The Angel Wore Red,cast member,Vittorio De Sica), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4434, 19434
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Jules_Verne is same as Jules Verne:
+set1: (In_Search_of_the_Castaways_(film),writer,Jules_Verne), (Five_Weeks_in_a_Balloon_(film),basedOn,Jules_Verne), (The_Light_at_the_Edge_of_the_World,writer,Jules_Verne), (Robur_the_Conqueror,author,Jules_Verne), (The_Vanished_Diamond,author,Jules_Verne), (Claudius_Bombarnac,author,Jules_Verne), 
+set2: (Mysterious Island,screenwriter,Jules Verne), (The Vanished Diamond,author,Jules Verne), (Robur the Conqueror,author,Jules Verne), (Claudius Bombarnac,author,Jules Verne), (In Search of the Castaways,screenwriter,Jules Verne), (Jules Verne,country of citizenship,France), (From the Earth to the Moon,screenwriter,Jules Verne), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6719, 21719
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Langrisser_IV is same as Langrisser IV:
+set1: (Langrisser_IV,genre,Tactical_role-playing_game), (Langrisser_IV,computingPlatform,PlayStation_(console)), 
+set2: (Langrisser IV,platform,PlayStation), (Langrisser IV,genre,tactical role-playing game), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 47, 15047
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Alberto_Sordi is same as Alberto Sordi:
+set1: (Fumo_di_Londra,starring,Alberto_Sordi), (Il_Boom,starring,Alberto_Sordi), (I_complessi,writer,Alberto_Sordi), (Bertoldo,_Bertoldino_e_Cacasenno,starring,Alberto_Sordi), (My_Wife_(film),starring,Alberto_Sordi), (Where_Are_You_Going_on_Holiday%3F,starring,Alberto_Sordi), (Le_coppie,director,Alberto_Sordi), (Il_comune_senso_del_pudore,director,Alberto_Sordi), (The_Traffic_Policeman,starring,Alberto_Sordi), (Everybody_Go_Home,starring,Alberto_Sordi), (A_Difficult_Life,starring,Alberto_Sordi), (Everybody_in_Jail,director,Alberto_Sordi), (Fumo_di_Londra,director,Alberto_Sordi), (Pardon,_Are_You_For_or_Against%3F,director,Alberto_Sordi), (Il_comune_senso_del_pudore,writer,Alberto_Sordi), (The_Magliari,starring,Alberto_Sordi), (Everybody_in_Jail,starring,Alberto_Sordi), (Journey_with_Papa,writer,Alberto_Sordi), (In_the_Name_of_the_Sovereign_People,starring,Alberto_Sordi), (Nero's_Weekend,writer,Alberto_Sordi), (Romanzo_di_un_giovane_povero,starring,Alberto_Sordi), (Ladro_lui,_ladra_lei,starring,Alberto_Sordi), (The_Most_Wonderful_Evening_of_My_Life,starring,Alberto_Sordi), (A_Slice_of_Life_(1954_film),starring,Alberto_Sordi), (Venice,_the_Moon_and_You,starring,Alberto_Sordi), (While_There's_War_There's_Hope,starring,Alberto_Sordi), (Mamma_mia,_che_impressione!,writer,Alberto_Sordi), (Everybody_in_Jail,writer,Alberto_Sordi), (Journey_with_Papa,starring,Alberto_Sordi), (Pardon,_Are_You_For_or_Against%3F,writer,Alberto_Sordi), (Journey_with_Papa,director,Alberto_Sordi), (While_There's_War_There's_Hope,director,Alberto_Sordi), (While_There's_War_There's_Hope,writer,Alberto_Sordi), (The_Art_of_Getting_Along,starring,Alberto_Sordi), (Nero's_Weekend,starring,Alberto_Sordi), (Ladro_lui,_ladra_lei,writer,Alberto_Sordi), (The_Witches_(1967_film),starring,Alberto_Sordi), (I_complessi,starring,Alberto_Sordi), (Where_Are_You_Going_on_Holiday%3F,writer,Alberto_Sordi), (Mamma_mia,_che_impressione!,producer,Alberto_Sordi), (Pardon,_Are_You_For_or_Against%3F,starring,Alberto_Sordi), (Fumo_di_Londra,writer,Alberto_Sordi), (Where_Are_You_Going_on_Holiday%3F,director,Alberto_Sordi), 
+set2: (The Most Wonderful Evening of My Life,cast member,Alberto Sordi), (Pardon, Are You for or Against?,director,Alberto Sordi), (Mamma mia, che impressione!,screenwriter,Alberto Sordi), (A Difficult Life,cast member,Alberto Sordi), (My Wife,cast member,Alberto Sordi), (Le coppie,screenwriter,Alberto Sordi), (The Traffic Policeman,cast member,Alberto Sordi), (Fumo di Londra,director,Alberto Sordi), (In viaggio con papà,cast member,Alberto Sordi), (Il comune senso del pudore,cast member,Alberto Sordi), (Where Are You Going on Holiday?,cast member,Alberto Sordi), (Nero's Weekend,cast member,Alberto Sordi), (Le coppie,director,Alberto Sordi), (Fumo di Londra,screenwriter,Alberto Sordi), (Flesh Will Surrender,cast member,Alberto Sordi), (Pardon, Are You for or Against?,screenwriter,Alberto Sordi), (I complessi,cast member,Alberto Sordi), (While There's War There's Hope,cast member,Alberto Sordi), (Tutti dentro,cast member,Alberto Sordi), (Mamma mia, che impressione!,producer,Alberto Sordi), (A Slice of Life,cast member,Alberto Sordi), (Ladro lui, ladra lei,screenwriter,Alberto Sordi), (The Magliari,cast member,Alberto Sordi), (Bullet for Stefano,cast member,Alberto Sordi), (Two Nights with Cleopatra,cast member,Alberto Sordi), (The Witches,cast member,Alberto Sordi), (Tutti dentro,director,Alberto Sordi), (Let's Have a Riot,cast member,Alberto Sordi), (Everybody Go Home,cast member,Alberto Sordi), (Giarabub,cast member,Alberto Sordi), (Bertoldo, Bertoldino e Cacasenno,cast member,Alberto Sordi), (While There's War There's Hope,screenwriter,Alberto Sordi), (I complessi,screenwriter,Alberto Sordi), (Pardon, Are You for or Against?,cast member,Alberto Sordi), (Fumo di Londra,cast member,Alberto Sordi), (Il comune senso del pudore,director,Alberto Sordi), (Il Boom,cast member,Alberto Sordi), (Where Are You Going on Holiday?,screenwriter,Alberto Sordi), (Marriage,cast member,Alberto Sordi), (The Art of Getting Along,cast member,Alberto Sordi), (Sex Quartet,cast member,Alberto Sordi), (Il comune senso del pudore,screenwriter,Alberto Sordi), (In viaggio con papà,screenwriter,Alberto Sordi), (Ladro lui, ladra lei,cast member,Alberto Sordi), (In nome del popolo sovrano,cast member,Alberto Sordi), (Le coppie,cast member,Alberto Sordi), (Where Are You Going on Holiday?,director,Alberto Sordi), (Tutti dentro,screenwriter,Alberto Sordi), (Romanzo di un giovane povero,cast member,Alberto Sordi), (In viaggio con papà,director,Alberto Sordi), (Souvenir d'Italie,cast member,Alberto Sordi), (Doctor and the Healer,cast member,Alberto Sordi), (Venezia, la luna e tu,cast member,Alberto Sordi), (While There's War There's Hope,director,Alberto Sordi), (Mamma mia, che impressione!,cast member,Alberto Sordi), (Alberto Sordi,occupation,film director), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2967, 17967
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Sail_a_Crooked_Ship is same as Sail a Crooked Ship:
+set1: (Sail_a_Crooked_Ship,director,Irving_Brecher), (Sail_a_Crooked_Ship,cinematography,Joseph_F._Biroc), (Sail_a_Crooked_Ship,distributor,Columbia_Pictures), 
+set2: (Sail a Crooked Ship,production company,Columbia Pictures), (Sail a Crooked Ship,director of photography,Joseph F. Biroc), (Sail a Crooked Ship,instance of,film), (Sail a Crooked Ship,director,Irving Brecher), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 6103, 21103
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Shoes_of_the_Fisherman is same as The Shoes of the Fisherman:
+set1: (The_Shoes_of_the_Fisherman,starring,John_Gielgud), (The_Shoes_of_the_Fisherman,starring,Laurence_Olivier), (The_Shoes_of_the_Fisherman,cinematography,Erwin_Hillier), (The_Shoes_of_the_Fisherman,starring,Vittorio_De_Sica), (The_Shoes_of_the_Fisherman,starring,Anthony_Quinn), 
+set2: (The Shoes of the Fisherman,cast member,Vittorio De Sica), (The Shoes of the Fisherman,director of photography,Erwin Hillier), (The Shoes of the Fisherman,cast member,Laurence Olivier), (The Shoes of the Fisherman,instance of,film), (The Shoes of the Fisherman,cast member,Anthony Quinn), (The Shoes of the Fisherman,cast member,John Gielgud), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8246, 23246
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Max_Müller_(Catholic_intellectual) is same as Max Müller:
+set1: (Max_Müller_(Catholic_intellectual),influencedBy,Edmund_Husserl), (Max_Müller_(Catholic_intellectual),influencedBy,Martin_Heidegger), (Max_Müller_(Catholic_intellectual),deathPlace,Freiburg_im_Breisgau), 
+set2: (Max Müller,employer,Ludwig Maximilian University of Munich), (Max Müller,place of death,Freiburg im Breisgau), (Max Müller,work location,Freiburg im Breisgau), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 7072, 22072
+Please identify the matching triplets in the following two triplet sets as explanation for predicting TurboGrafx-16 is same as TurboGrafx-16:
+set1: (Darius_(video_game),computingPlatform,TurboGrafx-16), (KiKi_KaiKai,computingPlatform,TurboGrafx-16), (TurboGrafx-16,manufacturer,Hudson_Soft), (Fatal_Fury_2,computingPlatform,TurboGrafx-16), (Lode_Runner,computingPlatform,TurboGrafx-16), (Impossamole,computingPlatform,TurboGrafx-16), (Jack_Nicklaus'_Greatest_18_Holes_of_Major_Championship_Golf,computingPlatform,TurboGrafx-16), (Xak_II:_Rising_of_the_Redmoon,computingPlatform,TurboGrafx-16), (Fatal_Fury_Special,computingPlatform,TurboGrafx-16), (Romance_of_the_Three_Kingdoms_III:_Dragon_of_Destiny,computingPlatform,TurboGrafx-16), (Bomberman_'94,computingPlatform,TurboGrafx-16), (Fray_in_Magical_Adventure,computingPlatform,TurboGrafx-16), (Genpei_Tōma_Den,computingPlatform,TurboGrafx-16), (The_Addams_Family_(video_game_series),computingPlatform,TurboGrafx-16), 
+set2: (Romance of the Three Kingdoms III: Dragon of Destiny,platform,TurboGrafx-16), (Lode Runner,platform,TurboGrafx-16), (Genpei Tōma Den,platform,TurboGrafx-16), (Darius,platform,TurboGrafx-16), (Double Dragon II: The Revenge,platform,TurboGrafx-16), (Bomberman '94,platform,TurboGrafx-16), (Xevious,platform,TurboGrafx-16), (Ghouls 'n Ghosts,platform,TurboGrafx-16), (Impossamole,platform,TurboGrafx-16), (Jack Nicklaus' Greatest 18 Holes of Major Championship Golf,platform,TurboGrafx-16), (Kiki Kaikai,platform,TurboGrafx-16), (Fatal Fury 2,platform,TurboGrafx-16), (Fray in Magical Adventure,platform,TurboGrafx-16), (Xak II: Rising of the Redmoon,platform,TurboGrafx-16), (Fatal Fury Special,platform,TurboGrafx-16), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1087, 16087
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Futurama:_Bender's_Game is same as Futurama: Bender's Game:
+set1: (Futurama:_Bender's_Game,starring,Billy_West), (Futurama:_Bender's_Game,starring,Phil_LaMarr), (Futurama:_Bender's_Game,starring,Tress_MacNeille), (Futurama:_Bender's_Game,starring,Maurice_LaMarche), (Futurama:_Bender's_Game,starring,David_Herman), 
+set2: (Futurama: Bender's Game,followed by,Futurama: Into the Wild Green Yonder), (Futurama: Bender's Game,cast member,Tress MacNeille), (Futurama: Bender's Game,cast member,Phil LaMarr), (Futurama: Bender's Game,cast member,Maurice LaMarche), (Futurama: Into the Wild Green Yonder,follows,Futurama: Bender's Game), (Futurama: Bender's Game,cast member,Billy West), (Futurama: Bender's Game,cast member,David Herman), (Futurama: Bender's Game,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4184, 19184
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Jan_Troell is same as Jan Troell:
+set1: (Everlasting_Moments,writer,Jan_Troell), (Here_Is_Your_Life,director,Jan_Troell), (Flight_of_the_Eagle,cinematography,Jan_Troell), (Flight_of_the_Eagle,director,Jan_Troell), (Jan_Troell,nationality,Sweden), (Here_Is_Your_Life,writer,Jan_Troell), (Everlasting_Moments,cinematography,Jan_Troell), (Flight_of_the_Eagle,editing,Jan_Troell), (Flight_of_the_Eagle,writer,Jan_Troell), (Jan_Troell,stateOfOrigin,Sweden), (Everlasting_Moments,director,Jan_Troell), (Jan_Troell,birthPlace,Sweden), (Here_Is_Your_Life,cinematography,Jan_Troell), 
+set2: (Everlasting Moments,film editor,Jan Troell), (Here's Your Life,director of photography,Jan Troell), (Here's Your Life,director,Jan Troell), (Everlasting Moments,screenwriter,Jan Troell), (Flight of the Eagle,director,Jan Troell), (Flight of the Eagle,film editor,Jan Troell), (Jan Troell,country of citizenship,Sweden), (Flight of the Eagle,screenwriter,Jan Troell), (Flight of the Eagle,director of photography,Jan Troell), (Jan Troell,occupation,film director), (Everlasting Moments,director of photography,Jan Troell), (Everlasting Moments,director,Jan Troell), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 299, 15299
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Charity_Ann is same as Charity Ann:
+set1: (Charity_Ann,starring,Elisabeth_Risdon), (Charity_Ann,director,Maurice_Elvey), 
+set2: (Charity Ann,cast member,Elisabeth Risdon), (Charity Ann,country of origin,United Kingdom), (Charity Ann,director,Maurice Elvey), (Charity Ann,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 3797, 18797
+Please identify the matching triplets in the following two triplet sets as explanation for predicting A_Robust_Romeo is same as A Robust Romeo:
+set1: (A_Robust_Romeo,director,George_Nichols_(actor)), (A_Robust_Romeo,starring,Roscoe_Arbuckle), 
+set2: (A Robust Romeo,director,George Nichols), (A Robust Romeo,instance of,film), (A Robust Romeo,cast member,Roscoe Arbuckle), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 782, 15782
+Please identify the matching triplets in the following two triplet sets as explanation for predicting McQ is same as McQ:
+set1: (McQ,distributor,Warner_Home_Video), (McQ,starring,John_Wayne), (McQ,editing,William_H._Ziegler), (McQ,distributor,NBC), (McQ,musicComposer,Elmer_Bernstein), 
+set2: (McQ,instance of,film), (McQ,cast member,John Wayne), (McQ,film editor,William H. Ziegler), (McQ,composer,Elmer Bernstein), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 10166, 25166
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Talal_Malik is same as Q7678843:
+set1: (Talal_Malik,birthPlace,Kuwait), 
+set2: (Q7678843,place of birth,Kuwait), (Q7678843,country of citizenship,Kuwait), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1258, 16258
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Sidney_Hickox is same as Sidney Hickox:
+set1: (Special_Agent_(1935_film),cinematography,Sidney_Hickox), (Party_Husband,cinematography,Sidney_Hickox), (Dark_Passage_(film),cinematography,Sidney_Hickox), (Lilac_Time_(1928_film),cinematography,Sidney_Hickox), (The_Way_of_All_Men,cinematography,Sidney_Hickox), (Women_in_the_Wind,cinematography,Sidney_Hickox), (White_Heat,cinematography,Sidney_Hickox), (I_Found_Stella_Parish,cinematography,Sidney_Hickox), (Frisco_Jenny,cinematography,Sidney_Hickox), (The_Horn_Blows_at_Midnight,cinematography,Sidney_Hickox), (Women_Are_Like_That,cinematography,Sidney_Hickox), (The_Love_Racket,cinematography,Sidney_Hickox), (Safe_in_Hell,cinematography,Sidney_Hickox), (Oh,_Kay!_(film),cinematography,Sidney_Hickox), (The_Big_Sleep_(1946_film),cinematography,Sidney_Hickox), 
+set2: (I Found Stella Parish,director of photography,Sidney Hickox), (The Big Sleep,director of photography,Sidney Hickox), (Special Agent,director of photography,Sidney Hickox), (The Horn Blows at Midnight,director of photography,Sidney Hickox), (Oh, Kay!,director of photography,Sidney Hickox), (The Way of All Men,director of photography,Sidney Hickox), (Frisco Jenny,director of photography,Sidney Hickox), (The Love Racket,director of photography,Sidney Hickox), (Party Husband,director of photography,Sidney Hickox), (Safe in Hell,director of photography,Sidney Hickox), (Women in the Wind,director of photography,Sidney Hickox), (White Heat,director of photography,Sidney Hickox), (Dark Passage,director of photography,Sidney Hickox), (Lilac Time,director of photography,Sidney Hickox), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 8741, 23741
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Gustavo_Santaolalla is same as Gustavo Santaolalla:
+set1: (All_You_Need_Is_Me,producer,Gustavo_Santaolalla), (August:_Osage_County_(film),musicComposer,Gustavo_Santaolalla), (Biutiful,musicComposer,Gustavo_Santaolalla), (Gustavo_Santaolalla,instrument,Guitar), (Volverte_a_Ver,producer,Gustavo_Santaolalla), (On_the_Road_(film),musicComposer,Gustavo_Santaolalla), (Things_We_Lost_in_the_Fire_(film),musicComposer,Gustavo_Santaolalla), (Fundamental_(Puya_album),producer,Gustavo_Santaolalla), (La_Camisa_Negra,producer,Gustavo_Santaolalla), (I_Come_with_the_Rain,musicComposer,Gustavo_Santaolalla), (Brokeback_Mountain,musicComposer,Gustavo_Santaolalla), (Gustavo_Santaolalla,instrument,Bass_guitar), (Gustavo_Santaolalla,instrument,Singing), 
+set2: (I Come with the Rain,composer,Gustavo Santaolalla), (August: Osage County,composer,Gustavo Santaolalla), (Things We Lost in the Fire,composer,Gustavo Santaolalla), (Biutiful,composer,Gustavo Santaolalla), (Brokeback Mountain,composer,Gustavo Santaolalla), (On the Road,composer,Gustavo Santaolalla), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 5758, 20758
+Please identify the matching triplets in the following two triplet sets as explanation for predicting George_F._Kennan:_An_American_Life is same as George F. Kennan: An American Life:
+set1: (George_F._Kennan:_An_American_Life,literaryGenre,Biography), (George_F._Kennan:_An_American_Life,publisher,W._W._Norton_&_Company), 
+set2: (George F. Kennan: An American Life,genre,biography), (George F. Kennan: An American Life,publisher,W. W. Norton & Company), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 206, 15206
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Hut_Records is same as Hut Records:
+set1: (A_Song_for_the_Lovers,recordLabel,Hut_Records), (Placebo_(band),recordLabel,Hut_Records), (Without_You_I'm_Nothing_(Placebo_album),recordLabel,Hut_Records), (The_Smashing_Pumpkins,recordLabel,Hut_Records), (Money_to_Burn_(song),recordLabel,Hut_Records), (Special_Needs_(Placebo_song),recordLabel,Hut_Records), 
+set2: (A Song for the Lovers,record label,Hut Records), (Special Needs,record label,Hut Records), (Hut Records,country,United Kingdom), (Money to Burn,record label,Hut Records), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2029, 17029
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Johnny_Got_His_Gun_(film) is same as Johnny Got His Gun:
+set1: (Johnny_Got_His_Gun_(film),musicComposer,Jerry_Fielding), (Johnny_Got_His_Gun_(film),starring,Donald_Sutherland), (Johnny_Got_His_Gun_(film),writer,Luis_Buñuel), (Johnny_Got_His_Gun_(film),starring,Jason_Robards), 
+set2: (Johnny Got His Gun,composer,Jerry Fielding), (Johnny Got His Gun,instance of,film), (Johnny Got His Gun,cast member,Donald Sutherland), (Johnny Got His Gun,cast member,Jason Robards), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4832, 19832
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Twin_Peaks is same as Twin Peaks:
+set1: (Episode_1_(Twin_Peaks),series,Twin_Peaks), (Twin_Peaks,executiveProducer,David_Lynch), (Twin_Peaks,creator,David_Lynch), (Twin_Peaks,genre,Psychological_thriller), (Twin_Peaks,starring,Dana_Ashbrook), (Twin_Peaks,starring,Ray_Wise), (Episode_29_(Twin_Peaks),series,Twin_Peaks), (Twin_Peaks,network,American_Broadcasting_Company), (Twin_Peaks,starring,Russ_Tamblyn), (Twin_Peaks,starring,Sherilyn_Fenn), (Twin_Peaks,genre,Horror_fiction), (Pilot_(Twin_Peaks),series,Twin_Peaks), 
+set2: (Episode 1,part of the series,Twin Peaks), (Episode 29,part of the series,Twin Peaks), (Twin Peaks,cast member,Sherilyn Fenn), (Twin Peaks,cast member,Russ Tamblyn), (Pilot,part of the series,Twin Peaks), (Twin Peaks,original broadcaster,American Broadcasting Company), (Twin Peaks,cast member,Ray Wise), (Twin Peaks,creator,David Lynch), (Twin Peaks,genre,psychological thriller), (Twin Peaks,cast member,Dana Ashbrook), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2382, 17382
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Don't_Be_Afraid_of_the_Dark_(2010_film) is same as Don't Be Afraid of the Dark:
+set1: (Don't_Be_Afraid_of_the_Dark_(2010_film),producer,Mark_Johnson_(producer)), (Don't_Be_Afraid_of_the_Dark_(2010_film),cinematography,Oliver_Stapleton), 
+set2: (Don't Be Afraid of the Dark,producer,Mark Johnson), (Don't Be Afraid of the Dark,director of photography,Oliver Stapleton), (Don't Be Afraid of the Dark,instance of,film), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 2069, 17069
+Please identify the matching triplets in the following two triplet sets as explanation for predicting AS_Cannes is same as AS Cannes:
+set1: (AS_Cannes,league,Championnat_de_France_Amateur), 
+set2: (AS Cannes,league,Championnat National 2), (AS Cannes,country,France), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 10338, 25338
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Moontide is same as Moontide:
+set1: (Moontide,starring,Ida_Lupino), (Moontide,cinematography,Charles_G._Clarke), 
+set2: (Moontide,instance of,film), (Moontide,director of photography,Charles G. Clarke), (Moontide,cast member,Ida Lupino), (Moontide,cast member,Tully Marshall), (Moontide,composer,Cyril J. Mockridge), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 9640, 24640
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Stéphane_Fiset is same as Stéphane Fiset:
+set1: (Stéphane_Fiset,draftTeam,Quebec_Nordiques), (Stéphane_Fiset,formerTeam,Quebec_Nordiques), (Stéphane_Fiset,formerTeam,Colorado_Avalanche), 
+set2: (Stéphane Fiset,member of sports team,Quebec Nordiques), (Stéphane Fiset,drafted by,Quebec Nordiques), (Stéphane Fiset,member of sports team,Colorado Avalanche), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 4738, 19738
+Please identify the matching triplets in the following two triplet sets as explanation for predicting What_Every_Woman_Learns is same as What Every Woman Learns:
+set1: (What_Every_Woman_Learns,distributor,Paramount_Pictures), (What_Every_Woman_Learns,producer,Thomas_H._Ince), (What_Every_Woman_Learns,cinematography,George_Barnes_(cinematographer)), 
+set2: (What Every Woman Learns,distributed by,Paramount Pictures), (What Every Woman Learns,director of photography,George Barnes), (What Every Woman Learns,instance of,film), (What Every Woman Learns,producer,Thomas H. Ince), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1824, 16824
+Please identify the matching triplets in the following two triplet sets as explanation for predicting The_Trouble_with_Tribbles is same as The Trouble With Tribbles:
+set1: (The_Trouble_with_Tribbles,musicComposer,Jerry_Fielding), (The_Trouble_with_Tribbles,series,Star_Trek:_The_Original_Series), (The_Gamesters_of_Triskelion,previousWork,The_Trouble_with_Tribbles), (The_Trouble_with_Tribbles,director,Joseph_Pevney), (The_Trouble_with_Tribbles,subsequentWork,The_Gamesters_of_Triskelion), 
+set2: (The Trouble With Tribbles,director,Joseph Pevney), (The Trouble With Tribbles,part of the series,Star Trek: The Original Series), (The Gamesters of Triskelion,follows,The Trouble With Tribbles), (The Trouble With Tribbles,followed by,The Gamesters of Triskelion), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 1213, 16213
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Guadalcanal_Diary_(film) is same as Guadalcanal Diary:
+set1: (Guadalcanal_Diary_(film),producer,Bryan_Foy), (Guadalcanal_Diary_(film),starring,Lloyd_Nolan), (Guadalcanal_Diary_(film),cinematography,Charles_G._Clarke), (Guadalcanal_Diary_(film),musicComposer,David_Buttolph), (Guadalcanal_Diary_(film),starring,Anthony_Quinn), 
+set2: (Guadalcanal Diary,cast member,Lloyd Nolan), (Guadalcanal Diary,instance of,film), (Guadalcanal Diary,director of photography,Charles G. Clarke), (Guadalcanal Diary,main subject,Pacific War), (Guadalcanal Diary,composer,David Buttolph), (Guadalcanal Diary,cast member,Anthony Quinn), (Guadalcanal Diary,producer,Bryan Foy), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)
+case: 10260, 25260
+Please identify the matching triplets in the following two triplet sets as explanation for predicting Greenberg_(film) is same as Greenberg:
+set1: (Greenberg_(film),distributor,Focus_Features), (Greenberg_(film),starring,Rhys_Ifans), 
+set2: (Greenberg,instance of,film), (Greenberg,production company,Focus Features), (Greenberg,distributed by,Focus Features), (Greenberg,cast member,Rhys Ifans), 
+example:
+Please identify the matching triplets in the following two triplet sets as explanation for predicting 小明 is same as Xiaoming:
+set1: (小明,父亲,小李), (小明,母亲,小红)
+set2: (Xiaoming,father,Xiaoli), (Xiaoming,brother,Xiaozhang)
+output: (小明,父亲,小李) - (Xiaoming,father,Xiaoli)

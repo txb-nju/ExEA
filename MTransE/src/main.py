@@ -1,4 +1,3 @@
-from re import S
 import numpy as np
 import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -7,14 +6,13 @@ import torch
 import math
 import tqdm
 import sys
-import matplotlib.pyplot as plt
-import networkx as nx
 # from model import Encoder_Model
 import warnings
 import argparse
 import time
 from collections import defaultdict
-
+import anchor
+from anchor import anchor_tabular
 from preprocessing import DBpDataset
 from count import read_tri, read_link
 import numpy as np
@@ -28,11 +26,17 @@ import copy
 from count import read_list
 import matplotlib.pyplot as plt
 from itertools import combinations
-import networkx as nx
 import random
 import numpy as np
 import argparse
 import difflib
+import pandas as pd
+from LORE import util
+from LORE.prepare_dataset import prepare_EA_dataset
+from LORE import lore
+from LORE.neighbor_generator import genetic_neighborhood
+
+
 def sigmoid(x):
     return 1 / (1 + math.exp(-x))
 
@@ -53,6 +57,15 @@ class Proxy:
             return 0
         return F.cosine_similarity(self.embed1[tri1].mean(dim = 0), self.embed2[tri2].mean(dim = 0), dim=0)
 
+    def predict(self, x, split):
+        tri1 = []
+        tri2 = []
+        for i in range(len(x)):
+            if x[i] == 1:
+                tri1.append(player)
+                tri2.append(player - split)
+        
+        sim = self.sim_kernel(tri1, tri2)
     def mask_sim(self, mask, split):
 
         return F.cosine_similarity((self.embed1 * mask[:split].unsqueeze(1)).mean(dim = 0), (self.embed2 * mask[split:].unsqueeze(1)).mean(dim = 0), dim=0)
@@ -165,7 +178,241 @@ class LIME:
         # res = torch.mm(torch.inverse(torch.mm(Z.t(),Z) + I), torch.mm(Z.t(), Y.unsqueeze(1)))
         return res
 
+class LLM:
+    def __init__(self, model, num_players, players, split, e1, e2, embed):
+        self.model = model
+        self.num_players = num_players
+        self.players = players
+        self.split = split
+        self.e1 = e1
+        self.e2 = e2
+        self.embed = embed
 
+    def sim_kernel(self, tri1, tri2):
+        if len(tri1) == 0 or len(tri2) == 0:
+            return 0
+        tmp_e1, tmp_e2 = self.model.aggregation(tri1, tri2)
+        
+        sim1 = F.cosine_similarity(tmp_e1, self.embed[self.e1], dim=0)
+        sim2 = F.cosine_similarity(tmp_e2, self.embed[self.e2], dim=0)
+        # print(tri1, tri2, sim1, sim2)
+        return (sim1 + sim2) / 2
+
+    def compute(self, sample_nums):
+        mask = []
+        Y = []
+        pi = []
+        for _ in range(sample_nums):
+            # players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
+
+            tri1 = []
+            tri2 = []
+            cur_mask = [0] * (self.num_players)
+            for player in players:
+                # 计算当前联盟中添加玩家后的价值差异
+                cur_mask[player] = 1
+                if player < self.split:
+                    tri1.append(player)
+                else:
+                    tri2.append(player - self.split)
+            
+            sim = self.sim_kernel(tri1, tri2)
+            if sim == 0:
+                continue
+            mask.append(cur_mask)
+            Y.append(self.model.sim(tri1, tri2))
+            
+            pi.append(float(sim))
+                    
+        
+        Z = torch.Tensor(mask)
+        Y = torch.Tensor(Y)
+        return Z, Y
+
+class Anchor:
+    def __init__(self, model, num_players, players, split, e1, e2, embed):
+        self.model = model
+        self.num_players = num_players
+        self.players = players
+        self.split = split
+        self.e1 = e1
+        self.e2 = e2
+        self.embed = embed
+
+    def compute(self, sample_nums, alpha):
+        mask = []
+        Y = []
+        pi = []
+        pred = {}
+        def encoder_fn(X):
+            tri = []
+            # print(X)
+            for x in X:
+                tri1 = []
+                tri2 = []
+                for i in range(len(x)):
+                    if x[i] == 1:
+                        if i < self.split:
+                            tri1.append(i)
+                        else:
+                            tri2.append(i - self.split)
+                tri.append((tri1, tri2))
+            return tri
+        def predict(tri):
+            res = []
+            # print(tri)
+            for tri1, tri2 in tri:
+                # print(tri1, tri2)
+                sim = self.model.sim(tri1, tri2)
+                if sim >= alpha:
+                    c = 1
+                else:
+                    c = 0
+                res.append(c)
+            return np.array(res)
+        for _ in range(sample_nums):
+            # players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
+
+            tri1 = []
+            tri2 = []
+            cur_mask = [0] * (self.num_players)
+            for player in players:
+                cur_mask[player] = 1
+                if player < self.split:
+                    tri1.append(player)
+                else:
+                    tri2.append(player - self.split)
+            
+            sim = self.model.sim(tri1, tri2)
+            if sim >= alpha:
+                c = 1
+            else:
+                c = 0
+            pred[tuple(cur_mask)] = c
+            
+            mask.append(cur_mask)
+            Y.append(c)
+                    
+        Z = np.array(mask)
+        self.explainer = anchor_tabular.AnchorTabularExplainer(
+            class_names=[0,1],
+            feature_names=list(range(self.num_players)),
+            train_data=Z,
+            categorical_names={},
+            encoder_fn=encoder_fn
+        )
+        x = np.array([[1] * (self.num_players)])
+        
+        explanation = self.explainer.explain_instance(x, predict)
+
+        # 打印Anchor规则
+        # print(explanation.names())
+        return explanation.names()
+
+class BLACK:
+    def __init__(self, model, split, alpha):
+        self.model = model
+        self.split = split
+        self.alpha = alpha
+    
+    def predict(self, X):
+        tri = []
+        # print(X)
+        for x in X:
+            tri1 = []
+            tri2 = []
+            for i in range(len(x)):
+                if x[i] == 1:
+                    if i < self.split:
+                        tri1.append(i)
+                    else:
+                        tri2.append(i - self.split)
+            tri.append((tri1, tri2))
+        res = []
+        # print(tri)
+        for tri1, tri2 in tri:
+            # print(tri1, tri2)
+            sim = self.model.sim(tri1, tri2)
+            if sim >= self.alpha:
+                c = 1
+            else:
+                c = 0
+            res.append(c)
+        return np.array(res)
+        
+class LORE:
+    def __init__(self, model, num_players, players, split, e1, e2, embed, lang):
+        self.model = model
+        self.num_players = num_players
+        self.players = players
+        self.split = split
+        self.e1 = e1
+        self.e2 = e2
+        self.embed = embed
+        self.lang = lang
+
+    def compute(self, sample_nums, alpha):
+        data = []
+        Y = []
+        pi = []
+        pred = []
+        
+        data.append([1] * (self.num_players + 1))
+        X2E = []
+        X2E.append([1] * (self.num_players))
+        for _ in range(sample_nums):
+            # players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
+
+            tri1 = []
+            tri2 = []
+            cur_mask = [0] * (self.num_players + 1)
+            cur_x = [0] * (self.num_players)
+            for player in players:
+                cur_mask[player] = 1
+                cur_x[player] = 1
+                if player < self.split:
+                    tri1.append(player)
+                else:
+                    tri2.append(player - self.split)
+            
+            sim = self.model.sim(tri1, tri2)
+            if sim >= alpha:
+                c = 1
+            else:
+                c = 0
+            Y.append(sim)
+            pred.append(c)
+            cur_mask[self.num_players] = c
+            data.append(cur_mask)
+            X2E.append(cur_x)
+        X2E = np.array(X2E)
+        # print(pred)
+        if max(pred) == 0 or min(pred) == 1:
+            alpha = sum(Y) / len(Y)
+            for j in range(len(Y)):
+                if Y[j] > alpha:
+                    data[j + 1][-1] = 1
+                else:
+                    data[j + 1][-1] = 0
+        # print(data)
+        feature = [str(i) for i in range(self.num_players)]
+        feature.append('class')
+        df = pd.DataFrame(data, columns=feature)
+        dataset = prepare_EA_dataset(df, self.lang)
+        blackbox = BLACK(self.model, self.split, alpha)
+        explanation, infos = lore.explain(0, X2E, dataset, blackbox,
+                                      ng_function=genetic_neighborhood,
+                                      discrete_use_probabilities=True,
+                                      continuous_function_estimation=False,
+                                      returns_infos=True,
+                                      path='', sep=';', log=False)
+        if explanation == None:
+            return None, None
+        print('r = %s --> %s' % (explanation[0][1], explanation[0][0]))
+        return explanation[0][1], explanation[0][0]['class']
 class KernelSHAP:
     def __init__(self, model, e1, e2, num_players, players, split, p, e_dict, r_dict, dataset, embed):
         self.model = model
@@ -290,12 +537,42 @@ class EAExplainer(torch.nn.Module):
             loadData = np.load('../saved_model/ent_embeds_de.npy')
             r_embed = np.load('../saved_model/rel_embeds_de.npy')
             mapping = np.load('../saved_model/mapping_mat_de.npy')
+        elif lang == 'y':
+            loadData = np.load('../saved_model/ent_embeds_y.npy')
+            r_embed = np.load('../saved_model/rel_embeds_y.npy')
+            mapping = np.load('../saved_model/mapping_mat_y.npy')
+        elif lang == 'w':
+            loadData = np.load('../saved_model/ent_embeds_w.npy')
+            r_embed = np.load('../saved_model/rel_embeds_w.npy')
+            mapping = np.load('../saved_model/mapping_mat_w.npy')
+        elif lang == 'w2':
+            loadData = np.load('../saved_model/ent_embeds_w2.npy')
+            r_embed = np.load('../saved_model/rel_embeds_w2.npy')
+            mapping = np.load('../saved_model/mapping_mat_w2.npy')
+        elif lang == 'zh2':
+            loadData = np.load('../saved_model/ent_embeds_zh2.npy')
+            r_embed = np.load('../saved_model/rel_embeds_zh2.npy')
+            mapping = np.load('../saved_model/mapping_mat_zh2.npy')
+        elif lang == 'zh_2':
+            loadData = np.load('../saved_model/ent_embeds_zh_2.npy')
+            r_embed = np.load('../saved_model/rel_embeds_zh_2.npy')
+            mapping = np.load('../saved_model/mapping_mat_zh_2.npy')
+        elif lang == 'ja2':
+            loadData = np.load('../saved_model/ent_embeds_ja_2.npy')
+            r_embed = np.load('../saved_model/rel_embeds_ja_2.npy')
+            mapping = np.load('../saved_model/mapping_mat_ja_2.npy')
+        elif lang == 'fr2':
+            loadData = np.load('../saved_model/ent_embeds_fr_2.npy')
+            r_embed = np.load('../saved_model/rel_embeds_fr_2.npy')
+            mapping = np.load('../saved_model/mapping_mat_fr_2.npy')
 
         # exit(0)
         # test_embeds1_mapped = np.matmul(embeds1, mapping)
         self.mapping = torch.Tensor(mapping)
         self.G_dataset = G_dataset
         self.embed = torch.Tensor(loadData)
+        # print(r_embed.shape)
+        # exit(0)
         # self.embed = torch.Tensor(mapping).cuda()
         self.e_sim =self.cosine_matrix(self.embed[:self.split], self.embed[self.split:])
         if self.model_name == 'mean_pooling':
@@ -410,6 +687,7 @@ class EAExplainer(torch.nn.Module):
             self.r_map1 = {}
             self.r_map2 = {}
             
+            '''
             pair1 = set()
             pair2 = set()
             
@@ -450,6 +728,34 @@ class EAExplainer(torch.nn.Module):
                 cur2 = p[1]
                 self.r_map1[int(self.G_dataset.id_r[cur1])] = int(self.G_dataset.id_r[cur2])
                 self.r_map2[int(self.G_dataset.id_r[cur2])] = int(self.G_dataset.id_r[cur1])
+            '''
+
+            with open('../datasets/D_Y/rel_links') as f:
+                lines = f.readlines()
+                for line in lines:
+                    cur = line.strip().split(' ')
+                    self.r_map1[int(cur[0])] = int(cur[1])
+                    self.r_map2[int(cur[1])] = int(cur[0])
+            
+
+            for i in range(self.splitr):
+                cur1 = self.G_dataset.r_dict[i]            
+                if self.G_dataset.id_r[cur1] not in self.r_map1:
+                    self.r_map1[self.G_dataset.id_r[cur1]] = None
+            for i in range(self.splitr, len(self.G_dataset.id_r)):
+                cur2 = self.G_dataset.r_dict[i]
+                if self.G_dataset.id_r[cur2] not in self.r_map2:
+                    self.r_map2[self.G_dataset.id_r[cur2]] = None
+        elif lang == 'w' or lang == 'w2':
+            self.r_map1 = {}
+            self.r_map2 = {}
+            with open('../datasets/D_W/rel_links') as f:
+                lines = f.readlines()
+                for line in lines:
+                    cur = line.strip().split('\t')
+                    self.r_map1[int(cur[0])] = int(cur[1])
+                    self.r_map2[int(cur[1])] = int(cur[0])
+            
 
             for i in range(self.splitr):
                 cur1 = self.G_dataset.r_dict[i]            
@@ -509,7 +815,97 @@ class EAExplainer(torch.nn.Module):
                             for cur in tri2:
                                 f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
                     
-                            self.get_test_file_mask_two('../datasets/dbp_z_e/exp_ours', str(version))
+                        self.get_test_file_mask_two('../datasets/dbp_z_e/exp_ours', str(version))
+            elif self.lang == 'zh2':
+                if self.version == 1:
+                    # with open('../datasets/dbp_z_e_wrong/exp_ours', 'w') as f:
+                    with open('../datasets/z_e_2/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                        # self.get_test_file_mask('../datasets/dbp_z_e_wrong/exp_ours', str(version))
+                        self.get_test_file_mask('../datasets/z_e_2/exp_ours', str(version))
+                else:
+                    with open('../datasets/dbp_z_e/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            exp_tri1, exp_tri2 = self.explain_ours5(gid1, gid2)
+                            tri1 = set(tri1 + exp_tri1)
+                            tri2 = set(tri2 + exp_tri2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    
+                        self.get_test_file_mask_two('../datasets/dbp_z_e/exp_ours', str(version))
+            elif self.lang == 'zh_2':
+                if self.version == 1:
+                    with open('../datasets/dbp_z_e_wrong/exp_ours', 'w') as f:
+                    # with open('../datasets/z_e_2/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                        self.get_test_file_mask('../datasets/dbp_z_e_wrong/exp_ours', str(version))
+                        # self.get_test_file_mask('../datasets/z_e_2/exp_ours', str(version))
+                else:
+                    with open('../datasets/dbp_z_e/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            exp_tri1, exp_tri2 = self.explain_ours5(gid1, gid2)
+                            tri1 = set(tri1 + exp_tri1)
+                            tri2 = set(tri2 + exp_tri2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    
+                        self.get_test_file_mask_two('../datasets/dbp_z_e/exp_ours', str(version))
+            elif self.lang == 'ja2':
+                if self.version == 1:
+                    with open('../datasets/dbp_j_e_wrong/exp_ours', 'w') as f:
+                    # with open('../datasets/z_e_2/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                        self.get_test_file_mask('../datasets/dbp_j_e_wrong/exp_ours', str(version))
+                        # self.get_test_file_mask('../datasets/z_e_2/exp_ours', str(version))
+            elif self.lang == 'fr2':
+                if self.version == 1:
+                    with open('../datasets/dbp_f_e_wrong/exp_ours', 'w') as f:
+                    # with open('../datasets/z_e_2/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                        self.get_test_file_mask('../datasets/dbp_f_e_wrong/exp_ours', str(version))
+                        # self.get_test_file_mask('../datasets/z_e_2/exp_ours', str(version))
             elif self.lang == 'ja':
                 if self.version == 1:
                     with open('../datasets/dbp_j_e/exp_ours', 'w') as f:
@@ -537,8 +933,8 @@ class EAExplainer(torch.nn.Module):
                             for cur in tri2:
                                 f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
                     
-                            self.get_test_file_mask_two('../datasets/dbp_j_e/exp_ours', str(version))
-            else:
+                        self.get_test_file_mask_two('../datasets/dbp_j_e/exp_ours', str(version))
+            elif self.lang == 'fr':
                 if self.version == 1:
                     with open('../datasets/dbp_f_e/exp_ours', 'w') as f:
                         for gid1, gid2 in self.test_indices:
@@ -565,8 +961,92 @@ class EAExplainer(torch.nn.Module):
                             for cur in tri2:
                                 f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
                     
-                            self.get_test_file_mask_two('../datasets/dbp_f_e/exp_ours', str(version))
-        
+                        self.get_test_file_mask_two('../datasets/dbp_f_e/exp_ours', str(version))
+            elif self.lang == 'y':
+                if self.version == 1:
+                    with open('../datasets/D_Y/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                        self.get_test_file_mask('../datasets/D_Y/exp_ours', str(version))
+                else:
+                    with open('../datasets/D_Y/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            exp_tri1, exp_tri2 = self.explain_ours5(gid1, gid2)
+                            tri1 = set(tri1 + exp_tri1)
+                            tri2 = set(tri2 + exp_tri2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    
+                        self.get_test_file_mask_two('../datasets/D_Y/exp_ours', str(version))
+            elif self.lang == 'w':
+                if self.version == 1:
+                    with open('../datasets/D_W/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1[:3]:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2[:4]:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    self.get_test_file_mask('../datasets/D_W/exp_ours', str(version))
+                else:
+                    with open('../datasets/D_W/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            exp_tri1, exp_tri2 = self.explain_ours5(gid1, gid2)
+                            tri1 = set(tri1 + exp_tri1)
+                            tri2 = set(tri2 + exp_tri2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    
+                        self.get_test_file_mask_two('../datasets/D_W/exp_ours', str(version))
+            elif self.lang == 'w2':
+                if self.version == 1:
+                    with open('../datasets/D_W2/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                        
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            for cur in tri1[:3]:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2[:4]:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    self.get_test_file_mask('../datasets/D_W2/exp_ours', str(version))
+                else:
+                    with open('../datasets/D_W2/exp_ours', 'w') as f:
+                        for gid1, gid2 in self.test_indices:
+                            gid1 = int(gid1)
+                            gid2 = int(gid2)
+                            tri1, tri2, _ = self.explain_ours4(gid1, gid2)
+                            exp_tri1, exp_tri2 = self.explain_ours5(gid1, gid2)
+                            tri1 = set(tri1 + exp_tri1)
+                            tri2 = set(tri2 + exp_tri2)
+                            for cur in tri1:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                            for cur in tri2:
+                                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    
+                        self.get_test_file_mask_two('../datasets/D_W2/exp_ours', str(version))
+
         elif method == 'shapley':
             if self.lang == 'zh':
                 with open('../datasets/dbp_z_e/exp_shapley', 'w') as f:
@@ -582,6 +1062,91 @@ class EAExplainer(torch.nn.Module):
                        
                         
                 self.get_test_file_mask('../datasets/dbp_z_e/exp_shapley', str(version), method)
+            elif self.lang == 'zh2':
+                with open('../datasets/z_e_2/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                       
+                        
+                self.get_test_file_mask('../datasets/z_e_2/exp_shapley', str(version), method)
+            elif self.lang == 'zh_2':
+                with open('../datasets/dbp_z_e_wrong/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                       
+                        
+                self.get_test_file_mask('../datasets/dbp_z_e_wrong/exp_shapley', str(version), method)
+            elif self.lang == 'ja2':
+                with open('../datasets/dbp_j_e_wrong/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                       
+                        
+                self.get_test_file_mask('../datasets/dbp_j_e_wrong/exp_shapley', str(version), method)
+            elif self.lang == 'fr2':
+                with open('../datasets/dbp_f_e_wrong/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                       
+                        
+                self.get_test_file_mask('../datasets/dbp_f_e_wrong/exp_shapley', str(version), method)
+            elif self.lang == 'zh2':
+                with open('../datasets/z_e_2/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                       
+                        
+                self.get_test_file_mask('../datasets/z_e_2/exp_shapley', str(version), method)
+            elif self.lang == 'zh2':
+                with open('../datasets/z_e_2/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                       
+                        
+                self.get_test_file_mask('../datasets/z_e_2/exp_shapley', str(version), method)
+            
             elif self.lang == 'ja':
                 with open('../datasets/dbp_j_e/exp_shapley', 'w') as f:
                     for i in trange(len(self.test_indices)):
@@ -592,9 +1157,48 @@ class EAExplainer(torch.nn.Module):
                         tri = self.explain_shapely(gid1, gid2)
                         
                         for cur in tri:
-                       
-                        
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
                 self.get_test_file_mask('../datasets/dbp_j_e/exp_shapley', str(version), method)
+            elif self.lang == 'w':
+                with open('../datasets/D_W/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/D_W/exp_shapley', str(version), method)
+            elif self.lang == 'y':
+                with open('../datasets/D_Y/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/D_Y/exp_shapley', str(version), method)
+            elif self.lang == 'w2':
+                with open('../datasets/D_W2/exp_shapley', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/D_W2/exp_shapley', str(version), method)
             else:
                 with open('../datasets/dbp_f_e/exp_shapley', 'w') as f:
                     for i in trange(len(self.test_indices)):
@@ -654,6 +1258,311 @@ class EAExplainer(torch.nn.Module):
            
                         
                 self.get_test_file_mask('../datasets/dbp_f_e/exp_lime', str(version), method)
+            elif self.lang == 'w':
+                with open('../datasets/D_W/exp_lime', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/D_W/exp_lime', str(version), method)
+            elif self.lang == 'y':
+                with open('../datasets/D_Y/exp_lime', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/D_Y/exp_lime', str(version), method)
+            elif self.lang == 'zh_2':
+                with open('../datasets/dbp_z_e_wrong/exp_lime', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/dbp_z_e_wrong/exp_lime', str(version), method)
+            elif self.lang == 'ja2':
+                with open('../datasets/dbp_j_e_wrong/exp_lime', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/dbp_j_e_wrong/exp_lime', str(version), method)
+            elif self.lang == 'fr2':
+                with open('../datasets/dbp_f_e_wrong/exp_lime', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/dbp_f_e_wrong/exp_lime', str(version), method)
+            elif self.lang == 'w2':
+                with open('../datasets/D_W2/exp_lime', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        tri = self.explain_shapely(gid1, gid2)
+                        
+                        for cur in tri:
+                            f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                  
+                self.get_test_file_mask('../datasets/D_W2/exp_lime', str(version), method)
+        elif method == 'anchor':
+            if self.lang == 'zh':
+                with open('../datasets/dbp_z_e/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n')             
+            elif self.lang == 'ja':
+                with open('../datasets/dbp_j_e/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+                  
+                    
+            elif self.lang == 'fr':
+                with open('../datasets/dbp_f_e/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+           
+
+            elif self.lang == 'w':
+                with open('../datasets/D_W/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+                  
+
+            elif self.lang == 'y':
+                with open('../datasets/D_Y/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+            elif self.lang == 'zh_2':
+                with open('../datasets/dbp_z_e_wrong/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+            elif self.lang == 'ja2':
+                with open('../datasets/dbp_j_e_wrong/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+            elif self.lang == 'fr2':
+                with open('../datasets/dbp_f_e_wrong/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+            elif self.lang == 'w2':
+                with open('../datasets/D_W2/exp_anchor', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+        
+        elif method == 'lore':
+            if self.lang == 'zh':
+                with open('../datasets/dbp_z_e/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        rule = self.explain_lore(gid1, gid2)
+                        f.write(str(rule) + '\n')             
+            elif self.lang == 'ja':
+                with open('../datasets/dbp_j_e/exp_lore', 'a') as f:
+                    for i in trange(114, len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_lore(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+                  
+                    
+            elif self.lang == 'fr':
+                with open('../datasets/dbp_f_e/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_lore(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+           
+
+            elif self.lang == 'w':
+                with open('../datasets/D_W/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_lore(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+            elif self.lang == 'w2':
+                with open('../datasets/D_W2/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_lore(gid1, gid2)
+                        f.write(str(rule) + '\n')
+                  
+
+            elif self.lang == 'y':
+                with open('../datasets/D_Y/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_lore(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+            elif self.lang == 'zh_2':
+                with open('../datasets/dbp_z_e_wrong/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+            elif self.lang == 'ja2':
+                with open('../datasets/dbp_j_e_wrong/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n') 
+            elif self.lang == 'fr2':
+                with open('../datasets/dbp_f_e_wrong/exp_lore', 'w') as f:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        rule = self.explain_anchor(gid1, gid2)
+                        f.write(str(rule) + '\n')  
+        elif method == 'llm':
+            
+            if self.lang == 'zh':
+                with open('../datasets/dbp_z_e/exp_llm_per_prompt', 'w') as f, open('../datasets/dbp_z_e/exp_llm_per_feature', 'w') as f1:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        Z, Y, p1, p2 = self.explain_llm(gid1, gid2)
+                        feature_name =''
+                        for i in range(len(p1) + len(p2) - 1):
+                            feature_name += 'f' + str(i) +','
+                        feature_name += 'f' + str(len(p1) + len(p2) - 1)
+                        context = 'We have a machine learning model that predicts based on {} features: [{}]. The model has been trained on a dataset and has made the following predictions\n'.format(len(p1) + len(p2), feature_name)
+                        dataset = 'Dataset:\n'
+                        for i in range(len(Z)):
+                            Input = 'Input:'
+                            for j in range(len(Z[i])):
+                                Input += 'f' + str(j) + '=' + str(int(Z[i][j])) +', '
+                            Output = 'Output: {}'.format(Y[i])
+                            dataset += Input + '\n'
+                            dataset += Output + '\n'
+                        Qestions = 'Based on the model\'s predictions and the given dataset, please rank features according to their importance in determining the model\'s prediction?\n'
+                        # Instructions = 'Instructions: Think about the question. After explaining your reasoning, provide your answer as features ranked from most important to least important, in descending order. Only provide the feature names on the last line. Do not provide any further details on the last line.\n'
+                        Instructions = 'Instructions: Only output the ranking feature names.\n'
+                        prompt = context + dataset + Qestions + Instructions + '-------------------------\n'
+                        f.write(prompt + '\n')                
+                        for i in range(len(p1)):
+                            f1.write(str(p1[i][0]) + ',' + str(p1[i][1]) + ',' + str(p1[i][2]) + '\t')
+                        for i in range(len(p2)):
+                            f1.write(str(p2[i][0]) + ',' + str(p2[i][1]) + ',' + str(p2[i][2]) + '\t')
+                        f1.write('\n')
+            elif self.lang == 'w':
+                with open('../datasets/D_W/exp_llm_per_prompt', 'w') as f, open('../datasets/D_W/exp_llm_per_feature', 'w') as f1:
+                    for i in trange(len(self.test_indices)):
+                        gid1, gid2 = self.test_indices[i]
+                        gid1 = int(gid1)
+                        gid2 = int(gid2)
+                        # exp = self.explain(gid1, gid2)
+                        Z, Y, p1, p2 = self.explain_llm(gid1, gid2)
+                        feature_name =''
+                        for i in range(len(p1) + len(p2) - 1):
+                            feature_name += 'f' + str(i) +','
+                        feature_name += 'f' + str(len(p1) + len(p2) - 1)
+                        context = 'We have a machine learning model that predicts based on {} features: [{}]. The model has been trained on a dataset and has made the following predictions\n'.format(len(p1) + len(p2), feature_name)
+                        dataset = 'Dataset:\n'
+                        for i in range(len(Z)):
+                            Input = 'Input:'
+                            for j in range(len(Z[i])):
+                                Input += 'f' + str(j) + '=' + str(int(Z[i][j])) +', '
+                            Output = 'Output: {}'.format(Y[i])
+                            dataset += Input + '\n'
+                            dataset += Output + '\n'
+                        Qestions = 'Based on the model\'s predictions and the given dataset, please rank features according to their importance in determining the model\'s prediction?\n'
+                        # Instructions = 'Instructions: Think about the question. After explaining your reasoning, provide your answer as features ranked from most important to least important, in descending order. Only provide the feature names on the last line. Do not provide any further details on the last line.\n'
+                        Instructions = 'Instructions: Only output the ranking feature names.\n'
+                        prompt = context + dataset + Qestions + Instructions + '-------------------------\n'
+                        f.write(prompt + '\n')                
+                        for i in range(len(p1)):
+                            f1.write(str(p1[i][0]) + ',' + str(p1[i][1]) + ',' + str(p1[i][2]) + '\t')
+                        for i in range(len(p2)):
+                            f1.write(str(p2[i][0]) + ',' + str(p2[i][1]) + ',' + str(p2[i][2]) + '\t')
+                        f1.write('\n')
+
+        
         elif method == 'phase1':
             with open('../datasets/dbp_z_e/exp_ours_phase1' + str(version), 'w') as f:
                 for i in trange(len(self.model_pair)):
@@ -706,6 +1615,76 @@ class EAExplainer(torch.nn.Module):
                         f.write(self.G_dataset.ent_dict[cur2[0]] + '\t' + self.G_dataset.r_dict[cur2[1]] + '\t' + self.G_dataset.ent_dict[cur2[2]] + '\n')
                         f.write('------------------------------------------\n')
                     f.write('**********************************\n')
+        elif method == 'confidence':
+            K = 100
+            r1_func, r1_func_r, r2_func, r2_func_r = self.get_r_func()
+            node = {}
+            ground = {}
+            cur_link = {}
+            cur_pair = set()
+            for p in self.model_pair:
+                cur_link[int(p[0])] = int(p[1])
+                cur_pair.add((int(p[0]), int(p[1])))
+            for cur in self.test_pair:
+                ground[str(cur[0])] = str(cur[1])
+                ground[str(cur[1])] = str(cur[0])
+            node_set = defaultdict(float)
+            
+            kg2 = set()
+            all_kg1 = set()
+            for p in self.test_pair:
+                kg2.add(p[1])
+                all_kg1.add(p[0])
+            ans_pair = set()
+            for cur in self.test_link:
+                ans_pair.add((int(cur), int(self.test_link[str(cur)])))
+            
+            kg1_embed = self.embed[:self.split]
+            kg2_list = list(kg2)
+            kg2_list.sort()
+            kg2_embed = self.embed[kg2_list]
+            sim = self.cosine_matrix(kg1_embed, kg2_embed)
+            rank = (-sim).argsort()
+            # 示例数据
+            
+
+            x = []
+            y = []
+            r = 0
+            w = 0
+            count = 0
+            for cur in cur_link:
+                gid1 = cur
+                gid2 = cur_link[cur]
+                pair, score= self.get_pair_score(gid1, gid2,r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
+                # score2 = self.get_pair_score_high(gid1, gid2,r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
+                # score +=  score2
+                if cur_link[cur] == int(self.test_link[str(cur)]):
+                    x.append(1)
+                    y.append(score)
+                    r += score
+                    # r += sim[int(cur), cur_link[cur] - 19388]
+                    count += 1
+                else:
+                    x.append(0)
+                    y.append(score)
+                    w += score
+                    # w += sim[int(cur), cur_link[cur] - 19388]
+            print(r / count, w / (len(x) - count))
+            plt.scatter(x, y)
+
+            # 添加标题和标签
+            plt.title('2D Scatter Plot')
+            plt.xlabel('X Values')
+            plt.ylabel('Y Values')
+
+            # 显示图形
+            plt.show()
+            plt.savefig('confidence.png')
+
+
+                    
+        
         elif method == 'repair':
             K = 100
             r1_func, r1_func_r, r2_func, r2_func_r = self.get_r_func()
@@ -792,7 +1771,7 @@ class EAExplainer(torch.nn.Module):
                     gid2 = cur_link[cur]
                     _, score = self.find_low_confidence(gid1, gid2,r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
                     # _, score = self.get_pair_score6(gid1, gid2,r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
-                    if score == 0:
+                    if score <= 0.7:
                         kg1.add(gid1)
                         cur_pair.remove((gid1, gid2))
                 if last_len1 != None and len(kg1) >= last_len1:
@@ -835,9 +1814,9 @@ class EAExplainer(torch.nn.Module):
             new_pair, _ = self.re_align(left_kg1, left_kg2)
             cur_pair |= new_pair
             print('final res: ', len(cur_pair & ans_pair) / len(ans_pair))
-            # with open('repair_pair', 'w') as f:
-                # for p in cur_pair:
-                    # f.write(str(p[0]) + '\t' + str(p[1]) + '\n')
+            with open('repair_pair', 'w') as f:
+                for p in cur_pair:
+                    f.write(str(p[0]) + '\t' + str(p[1]) + '\n')
             T2 = time.clock()
             print(T2 - T1)
 
@@ -931,7 +1910,7 @@ class EAExplainer(torch.nn.Module):
                         elif rule_type == 1:
                             cur_score = values[j]
                         
-                            _, other = self.get_pair_score5(cur_link_r[e2], e2, r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
+                            _, other = self.get_pair_score6(cur_link_r[e2], e2, r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
                             other += 0.5 * self.e_sim[cur_link_r[e2], e2 - self.split]
                         elif rule_type == 2:
                             _, cur_score = self.get_pair_score4(kg1[i], e2, r1_func, r1_func_r, r2_func, r2_func_r, cur_link)
@@ -2026,7 +3005,7 @@ class EAExplainer(torch.nn.Module):
                 direct2 = 0
                 cur_score = 1
                 if tri1[pr[0]][0] == e1:
-                    cur_score = min(cur_score, r1_func_r[str(tri1[pr[0]][1])])
+                    cur_score = min(cur_score,r1_func_r[str(tri1[pr[0]][1])])
                 else:
                     cur_score = min(cur_score,r1_func[str(tri1[pr[0]][1])])
                     direct1 = 1
@@ -2051,15 +3030,51 @@ class EAExplainer(torch.nn.Module):
                     # cur_score = 0
 
                 r_score += cur_score
-            
+            # print('solve relation alignment conflict----')
+            # print(pair_r_d,  neigh_r1, neigh_r2)
+            '''
+            a = 1
             for pr in pair_r_d:
                 for cur in neigh_r1:
                     if ((pr[0], cur) in self.conflict_id or (cur, pr[0]) in self.conflict_id):
-                        r_score = 0
+                        # print(r1_func_r[str(pr[0][0])], pr[0][0])
+                        if pr[0][1] == 1 and r1_func_r[str(pr[0][0])] >= a and cur[1] == 1 and r1_func_r[str(cur[0])] >= a:
+                            r_score = 0
+                        elif pr[0][1] == 1 and r1_func_r[str(pr[0][0])] >= a and cur[1] == 0 and r1_func[str(cur[0])] >= a:
+                            r_score = 0
+                        elif pr[0][1] == 0 and r1_func[str(pr[0][0])] >= a and cur[1] == 1 and r1_func_r[str(cur[0])] >= a:
+                            r_score = 0
+                        elif pr[0][1] == 0 and r1_func[str(pr[0][0])] >= a and cur[1] == 0 and r1_func[str(cur[0])] >= a:
+                            r_score = 0
+                        # print(self.G_dataset.r_dict[pr[0][0]], pr[0][1], self.G_dataset.r_dict[cur[0]], cur[1])
+                        # print('solve')
+                        
                 for cur in neigh_r2:
                     if ((pr[1], cur) in self.conflict_id or (cur, pr[1]) in self.conflict_id):
+                        # print(self.G_dataset.r_dict[pr[1][0]], pr[1][1], self.G_dataset.r_dict[cur[0]], cur[1])
+                        
+                        
+                        # print('solve')
+                        if pr[1][1] == 1 and r2_func_r[str(pr[1][0])] >= a and cur[1] == 1 and r2_func_r[str(cur[0])] >= a:
+                            r_score = 0
+                        elif pr[1][1] == 1 and r2_func_r[str(pr[1][0])] >= a and cur[1] == 0 and r2_func[str(cur[0])] >= a:
+                            r_score = 0
+                        elif pr[1][1] == 0 and r2_func[str(pr[1][0])] >= a and cur[1] == 1 and r2_func_r[str(cur[0])] >= a:
+                            r_score = 0
+                        elif pr[1][1] == 0 and r2_func[str(pr[1][0])] >= a and cur[1] == 0 and r2_func[str(cur[0])] >= a:
+                            r_score = 0
+            '''
+            for pr in pair_r_d:
+                for cur in neigh_r1:
+                    if ((pr[0], cur) in self.conflict_id or (cur, pr[0]) in self.conflict_id):
+                       r_score = 0
+                        # print(self.G_dataset.r_dict[pr[0][0]], pr[0][1], self.G_dataset.r_dict[cur[0]], cur[1])
+                        # print('solve')
+                        
+                for cur in neigh_r2:
+                    if ((pr[1], cur) in self.conflict_id or (cur, pr[1]) in self.conflict_id):
+                        
                         r_score = 0
-            
             score += r_score * float(self.e_sim[p[0]][p[1] - self.split])
             
             # score += r_score 
@@ -2420,6 +3435,83 @@ class EAExplainer(torch.nn.Module):
         # exit(0)
         return conflict_set, new_model_pair, count1
 
+    def find_low_confidence1(self, e1, e2, r1_func, r1_func_r, r2_func, r2_func_r, cur_link):
+        neigh1, neigh2 = self.init_1_hop(e1, e2)
+        
+        pair = set()
+        for cur in neigh1:
+            if cur in cur_link:
+                if cur_link[cur] in neigh2:
+                    pair.add((cur, cur_link[cur]))
+        for cur in neigh1:
+            if str(cur) in self.train_link:
+                if int(self.train_link[str(cur)]) in neigh2:
+                    pair.add((cur, int(self.train_link[str(cur)])))
+        pair_node = set()
+        
+        score = 0
+        for p in pair:
+            tri1 = list(self.search_1_hop_tri(e1, p[0]))
+            tri2 = list(self.search_1_hop_tri(e2, p[1]))
+            r1 = []
+            r2 = []
+            for cur in tri1:
+                # r1.append(self.r_embed[cur[1]])
+                r1.append(torch.cat((self.r_embed[cur[1]], self.e_embed[e1]),dim=0))
+            for cur in tri2:
+                r2.append(torch.cat((self.r_embed[cur[1]], self.e_embed[e2]), dim=0))
+                # r2.append(self.r_embed[cur[1]])
+            r1 = torch.stack(r1)
+            r2 = torch.stack(r2)
+            sim = torch.mm(r1, r2.t())
+            pre1 = (-sim).argsort()
+            pre2 = (-(sim.t())).argsort()
+            pair_r = self.bidirect_match(pre1, pre2)
+            r_score = 0
+            neigh_r1 = set()
+            neigh_r2 = set()
+            pair_r_d = set() 
+            for pr in pair_r:
+                direct1 = 0
+                direct2 = 0
+                cur_score = 1
+                if tri1[pr[0]][0] == e1:
+                    cur_score = min(cur_score, r1_func_r[str(tri1[pr[0]][1])])
+                else:
+                    cur_score = min(cur_score,r1_func[str(tri1[pr[0]][1])])
+                    direct1 = 1
+                if tri2[pr[1]][0] == e2:
+                    cur_score = min(cur_score,r2_func_r[str(tri2[pr[1]][1])])
+                else:
+                    cur_score = min(cur_score,r2_func[str(tri2[pr[1]][1])])
+                    direct2 = 1
+                # r_score = max(r_score, cur_score)
+                map_r2 = None
+                map_r1 = None
+                # if tri2[pr[1]][1] in self.r_map2:
+                map_r2 = self.r_map2[tri2[pr[1]][1]]
+                neigh_r1.add((map_r2, direct2))
+                # if tri1[pr[0]][1] in self.r_map1:
+                map_r1 = self.r_map1[tri1[pr[0]][1]]
+                neigh_r2.add((map_r1,direct1))
+                pair_r_d.add(((tri1[pr[0]][1], direct1), (tri2[pr[1]][1], direct2)))
+
+                # print(tri1[pr[0]][1], self.r_map2[tri2[pr[1]][1]])
+                # if ((tri1[pr[0]][1], map_r2) in self.conflict_r_pair) or ((map_r1, tri2[pr[1]][1]) in self.conflict_r_pair) or ((map_r2, tri1[pr[0]][1]) in self.conflict_r_pair) or ((tri2[pr[1]][1], map_r1) in self.conflict_r_pair):
+                    # cur_score = 0
+
+                r_score += cur_score
+            for pr in pair_r_d:
+                for cur in neigh_r1:
+                    if ((pr[0], cur) in self.conflict_id or (cur, pr[0]) in self.conflict_id):
+                        r_score = 0
+                for cur in neigh_r2:
+                    if ((pr[1], cur) in self.conflict_id or (cur, pr[1]) in self.conflict_id):
+                        r_score = 0
+            # score += r_score * float(self.e_sim[p[0]][p[1] - self.split])
+            score += r_score 
+        return sigmoid(score)
+    
     def find_low_confidence(self, e1, e2, r1_func, r1_func_r, r2_func, r2_func_r, cur_link):
         neigh1, neigh2 = self.init_1_hop(e1, e2)
         
@@ -2439,7 +3531,8 @@ class EAExplainer(torch.nn.Module):
         
     def get_test_file_mask(self, file, thred, method=''):
         nec_tri = set()
-        with open(file) as f:
+        print(file)
+        with open(file, 'r') as f:
             lines = f.readlines()
             for cur in lines:
                 cur = cur.strip().split('\t')
@@ -2469,6 +3562,76 @@ class EAExplainer(torch.nn.Module):
                         f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
             new_kg = (self.G_dataset.kgs - self.G_dataset.suff_kgs) | nec_tri
             with open('../datasets/dbp_j_e/test_triples_1_suf' + method +thred, 'w') as f1, open('../datasets/dbp_j_e/test_triples_2_suf' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+        elif self.lang == 'y':
+            with open('../datasets/D_Y/test_triples_1_nec' + method + thred, 'w') as f1, open('../datasets/D_Y/test_triples_2_nec' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+            new_kg = (self.G_dataset.kgs - self.G_dataset.suff_kgs) | nec_tri
+            with open('../datasets/D_Y/test_triples_1_suf' + method +thred, 'w') as f1, open('../datasets/D_Y/test_triples_2_suf' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+        elif self.lang == 'w':
+            with open('../datasets/D_W/test_triples_1_nec' + method + thred, 'w') as f1, open('../datasets/D_W/test_triples_2_nec' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+            new_kg = (self.G_dataset.kgs - self.G_dataset.suff_kgs) | nec_tri
+            with open('../datasets/D_W/test_triples_1_suf' + method +thred, 'w') as f1, open('../datasets/D_W/test_triples_2_suf' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+        elif self.lang == 'zh_2':
+            with open('../datasets/dbp_z_e_wrong/test_triples_1_nec' + method + thred, 'w') as f1, open('../datasets/dbp_z_e_wrong/test_triples_2_nec' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+            new_kg = (self.G_dataset.kgs - self.G_dataset.suff_kgs) | nec_tri
+            with open('../datasets/dbp_z_e_wrong/test_triples_1_suf' + method +thred, 'w') as f1, open('../datasets/dbp_z_e_wrong/test_triples_2_suf' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+        elif self.lang == 'ja2':
+            with open('../datasets/dbp_j_e_wrong/test_triples_1_nec' + method + thred, 'w') as f1, open('../datasets/dbp_j_e_wrong/test_triples_2_nec' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+            new_kg = (self.G_dataset.kgs - self.G_dataset.suff_kgs) | nec_tri
+            with open('../datasets/dbp_j_e_wrong/test_triples_1_suf' + method +thred, 'w') as f1, open('../datasets/dbp_j_e_wrong/test_triples_2_suf' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+        elif self.lang == 'fr2':
+            with open('../datasets/dbp_f_e_wrong/test_triples_1_nec' + method + thred, 'w') as f1, open('../datasets/dbp_f_e_wrong/test_triples_2_nec' + method +thred, 'w') as f2:
+                for cur in new_kg:
+                    if cur[0] < self.split:
+                        f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    else:
+                        f2.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+            new_kg = (self.G_dataset.kgs - self.G_dataset.suff_kgs) | nec_tri
+            with open('../datasets/dbp_f_e_wrong/test_triples_1_suf' + method +thred, 'w') as f1, open('../datasets/dbp_f_e_wrong/test_triples_2_suf' + method +thred, 'w') as f2:
                 for cur in new_kg:
                     if cur[0] < self.split:
                         f1.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
@@ -2897,10 +4060,26 @@ class EAExplainer(torch.nn.Module):
             tri1 = read_tri('/data/xbtian/Explain/MTransE/datasets/OpenEA/D_Y_15K/triples_1')
             tri2 = read_tri('/data/xbtian/Explain/MTransE/datasets/OpenEA/D_Y_15K/triples_2')
             r, _ = read_link('/data/xbtian/Explain/MTransE/datasets/OpenEA/D_Y_15K/rel_dict')
-        elif self.lang == 'w':
+        elif self.lang == 'w' or self.lang == 'w2':
             tri1 = read_tri('/data/xbtian/Explain/MTransE/datasets/OpenEA/D_W_15K/triples_1')
             tri2 = read_tri('/data/xbtian/Explain/MTransE/datasets/OpenEA/D_W_15K/triples_2')
             r, _ = read_link('/data/xbtian/Explain/MTransE/datasets/OpenEA/D_W_15K/rel_dict')
+        elif self.lang == 'zh2':
+            tri1 = read_tri('../datasets/z_e_2/triples_1')
+            tri2 = read_tri('../datasets/z_e_2/triples_2')
+            r, _ = read_link('../datasets/z_e_2/rel_dict')
+        elif self.lang == 'zh_2':
+            tri1 = read_tri('../datasets/dbp_z_e_wrong/triples_1')
+            tri2 = read_tri('../datasets/dbp_z_e_wrong/triples_2')
+            r, _ = read_link('../datasets/dbp_z_e_wrong/rel_dict')
+        elif self.lang == 'ja2':
+            tri1 = read_tri('../datasets/dbp_j_e_wrong/triples_1')
+            tri2 = read_tri('../datasets/dbp_j_e_wrong/triples_2')
+            r, _ = read_link('../datasets/dbp_j_e_wrong/rel_dict')
+        elif self.lang == 'fr2':
+            tri1 = read_tri('../datasets/dbp_f_e_wrong/triples_1')
+            tri2 = read_tri('../datasets/dbp_f_e_wrong/triples_2')
+            r, _ = read_link('../datasets/dbp_f_e_wrong/rel_dict')
         else:
             tri1 = read_tri('/data/xbtian/ContEA-explain/datasets/' + self.lang + '-en_f/base/triples_1')
             tri2 = read_tri('/data/xbtian/ContEA-explain/datasets/' + self.lang + '-en_f/base/triples_2')
@@ -2936,6 +4115,15 @@ class EAExplainer(torch.nn.Module):
             for t in r2[cur]:
                 x_r[t[1]] = 1
             r2_func_r[cur] = len(x_r) / len(r2[cur])
+        '''
+        for cur in r1_func:
+            # print(self.G_dataset.r_dict[int(cur)], r1_func[cur], r1_func_r[cur])
+            print(str(cur) + '\t'+ str(r1_func[cur]) + '\t' + str(r1_func_r[cur]))
+        for cur in r2_func:
+            print(str(cur) + '\t'+ str(r2_func[cur]) + '\t' + str(r2_func_r[cur]))
+            # print(self.G_dataset.r_dict[int(cur)], r2_func[cur], r2_func_r[cur])
+        exit(0)
+        '''
         '''
         for cur in r1_func:
             if r1_func[cur] == 1:
@@ -4099,6 +5287,154 @@ class EAExplainer(torch.nn.Module):
         neigh2 = F.normalize(neigh2, dim = 0)
         return F.cosine_similarity(neigh1, neigh2, dim=0)
 
+    def analyze_rule(self, rule):
+        need = set()
+        delete = set()
+        for condition in rule:
+            tmp = condition.split(' ')
+            if tmp[1] == '>' and int(float(tmp[2])) == 0:
+                need.add(int(float(tmp[0])))
+            elif tmp[1] == '<' and int(float(tmp[2])) == 1:
+                delete.add(int(float(tmp[0])))
+            elif tmp[1] == '>=' and int(float(tmp[2])) == 1:
+                need.add(int(float(tmp[0])))
+            elif tmp[1] == '==' and int(float(tmp[2])) == 1:
+                need.add(int(float(tmp[0])))
+            elif tmp[1] == '==' and int(float(tmp[2])) == 0:
+                delete.add(int(float(tmp[0])))
+            elif tmp[1] == '<=' and int(float(tmp[2])) == 0:
+                delete.add(int(float(tmp[0])))
+        return need, delete
+
+    def analyze_rule_lore(self, rule, class_name):
+        need = set()
+        delete = set()
+        if class_name == 1:
+            for condition in rule:
+                tmp = rule[condition]
+                if tmp[0] == '>' and tmp[1] == '-':
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '-':
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and tmp[2] == '-':
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and tmp[2] == '-':
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '>' and int(float(tmp[1])) == 0:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '<' and int(float(tmp[1])) == 1:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '=' and int(float(tmp[2])) == 1:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '==' and int(float(tmp[1])) == 0:
+                    delete.add(int(float(condition)))
+        else:
+            for condition in rule:
+                tmp = rule[condition]
+                if tmp[0] == '>' and tmp[1] == '-':
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '-':
+                    need.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and tmp[2] == '-':
+                    need.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and tmp[2] == '-':
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '>' and int(float(tmp[1])) == 0:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '<' and int(float(tmp[1])) == 1:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '=' and int(float(tmp[2])) == 1:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '==' and int(float(tmp[1])) == 0:
+                    need.add(int(float(condition)))
+
+        return need, delete
+
+    def explain_anchor(self, e1, e2):
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        explain = Anchor(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed)
+        rule = explain.compute(100, 0.6)
+        need, delete = self.analyze_rule(rule)
+        need_tri = []
+        delete_tri = []
+        i = 0
+        for cur in need:
+            if cur < len(p1):
+                need_tri.append(p1[cur])  
+            else:
+                need_tri.append(p2[cur - len(p1)])
+        for cur in delete:
+            if cur < len(p1):
+                delete_tri.append(p1[cur])  
+            else:
+                delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+
+    def explain_lore(self, e1, e2):
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        if (len(p1) + len(p2)) < 50:
+            explain = LORE(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed, self.lang)
+            rule, class_name = explain.compute(30, 0.5)
+        else:
+            rule = None
+        if rule == None:
+            need_tri = []
+            delete_tri = []
+        else:
+            need, delete = self.analyze_rule_lore(rule, class_name)
+            need_tri = []
+            delete_tri = []
+            i = 0
+            for cur in need:
+                if cur < len(p1):
+                    need_tri.append(p1[cur])  
+                else:
+                    need_tri.append(p2[cur - len(p1)])
+            for cur in delete:
+                if cur < len(p1):
+                    delete_tri.append(p1[cur])  
+                else:
+                    delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+
     def explain_lime(self, e1, e2):
         p1, p_embed1 = self.pattern_process(e1, 1)
         p2, p_embed2 = self.pattern_process(e2, 1)
@@ -4124,7 +5460,20 @@ class EAExplainer(torch.nn.Module):
                 # self.read_triple_name(p2[cur - len(p1)])
                 # print(score[i]) 
             i += 1
-        return tri[:num]
+        # return tri[:num]
+        tri.append((0,0,0))
+        return tri
+    
+    def explain_llm(self, e1, e2):
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        llm = LLM(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed)
+        sim_num = int(600 / (len(p1) + len(p2)))
+        Z, Y = llm.compute(sim_num)
+        return Z, Y, p1, p2
 
     def explain_shapely(self, e1, e2):
         p1, p_embed1 = self.pattern_process(e1, 1)
@@ -4150,7 +5499,9 @@ class EAExplainer(torch.nn.Module):
                 tri.append(p2[cur - len(p1)])
                 # self.read_triple_name(p2[cur - len(p1)])
                 # print(shapley_value[cur])
-        return tri[:num]
+        # return tri[:num]
+        tri.append((0,0,0))
+        return tri
         # print(shapley_value)
         # exit(0)
 
@@ -5020,7 +6371,8 @@ if __name__ == '__main__':
     if args.version:
         version = args.version
     if args.num:
-        num = args.num
+        num = int(args.num)
+
     pair = '/pair'
 
 
@@ -5034,7 +6386,27 @@ if __name__ == '__main__':
     elif lang == 'fr':
         G_dataset = DBpDataset('../datasets/dbp_f_e/', device=device, pair=pair, lang=lang)
         test_indices = read_list('../datasets/dbp_f_e/' + pair)
-
+    elif lang == 'y':
+        G_dataset = DBpDataset('../datasets/D_Y/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/D_Y/' + pair)
+    elif lang == 'w':
+        G_dataset = DBpDataset('../datasets/D_W/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/D_W/' + pair)
+    elif lang == 'w2':
+        G_dataset = DBpDataset('../datasets/D_W2/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/D_W2/' + pair)
+    elif lang == 'zh2':
+        G_dataset = DBpDataset('../datasets/z_e_2/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/z_e_2/' + pair)
+    elif lang == 'zh_2':
+        G_dataset = DBpDataset('../datasets/dbp_z_e_wrong/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/dbp_z_e_wrong/' + pair)
+    elif lang == 'ja2':
+        G_dataset = DBpDataset('../datasets/dbp_j_e_wrong/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/dbp_j_e_wrong/' + pair)
+    elif lang == 'fr2':
+        G_dataset = DBpDataset('../datasets/dbp_f_e_wrong/', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/dbp_f_e_wrong/' + pair)
     Lvec = None
     Rvec = None
     model_name = 'mean_pooling'
@@ -5057,6 +6429,27 @@ if __name__ == '__main__':
     elif lang == 'fr':
         split = len(read_list('../datasets/dbp_f_e/ent_dict1'))
         splitr = len(read_list('../datasets/dbp_f_e/rel_dict1'))
+    elif lang == 'y':
+        split = len(read_list('../datasets/D_Y/ent_dict1'))
+        splitr = len(read_list('../datasets/D_Y/rel_dict1'))
+    elif lang == 'w':
+        split = len(read_list('../datasets/D_W/ent_dict1'))
+        splitr = len(read_list('../datasets/D_W/rel_dict1'))
+    elif lang == 'w2':
+        split = len(read_list('../datasets/D_W2/ent_dict1'))
+        splitr = len(read_list('../datasets/D_W2/rel_dict1'))
+    elif lang == 'zh2':
+        split = len(read_list('../datasets/z_e_2/ent_dict1'))
+        splitr = len(read_list('../datasets/z_e_2/rel_dict1'))
+    elif lang == 'zh_2':
+        split = len(read_list('../datasets/dbp_z_e_wrong/ent_dict1'))
+        splitr = len(read_list('../datasets/dbp_z_e_wrong/rel_dict1'))
+    elif lang == 'ja2':
+        split = len(read_list('../datasets/dbp_j_e_wrong/ent_dict1'))
+        splitr = len(read_list('../datasets/dbp_j_e_wrong/rel_dict1'))
+    elif lang == 'fr2':
+        split = len(read_list('../datasets/dbp_f_e_wrong/ent_dict1'))
+        splitr = len(read_list('../datasets/dbp_f_e_wrong/rel_dict1'))
 
     model = None
     evaluator = None

@@ -20,15 +20,24 @@ class DBpDataset:
             self.all_2_hop2[cur] = self.one_hop2[cur] | self.two_hop2[cur]
         '''
         self.kgs = set()
-        if lang == 'zh':
+        if lang == 'zh' or lang == 'zh_2':
             self.ent_dict, self.id_ent = self.read_dict('../datasets/dbp_z_e/ent_dict')
             self.r_dict, self.id_r = self.read_dict('../datasets/dbp_z_e/rel_dict')
-        elif lang == 'ja':
+        elif lang == 'zh2':
+            self.ent_dict, self.id_ent = self.read_dict('../datasets/z_e_2/ent_dict')
+            self.r_dict, self.id_r = self.read_dict('../datasets/z_e_2/rel_dict')
+        elif lang == 'ja' or lang == 'ja2':
             self.ent_dict, self.id_ent = self.read_dict('../datasets/dbp_j_e/ent_dict')
             self.r_dict, self.id_r = self.read_dict('../datasets/dbp_j_e/rel_dict')
-        elif lang == 'fr':
+        elif lang == 'fr' or lang == 'fr2':
             self.ent_dict, self.id_ent = self.read_dict('../datasets/dbp_f_e/ent_dict')
             self.r_dict, self.id_r = self.read_dict('../datasets/dbp_f_e/rel_dict')
+        elif lang == 'y':
+            self.ent_dict, self.id_ent = self.read_dict('../datasets/D_Y/ent_dict')
+            self.r_dict, self.id_r = self.read_dict('../datasets/D_Y/rel_dict')
+        elif lang == 'w' or lang == 'w2':
+            self.ent_dict, self.id_ent = self.read_dict('../datasets/D_W/ent_dict')
+            self.r_dict, self.id_r = self.read_dict('../datasets/D_W/rel_dict')
         # self.target_link1, self.target_link2 = read_link(file_path + '/sample_pair_v1')
         
         self.target_link1, self.target_link2 = read_link(file_path + pair)
@@ -62,7 +71,10 @@ class DBpDataset:
         # self.model_pair = self.load_alignment_pair('rule2_pair_zh')
         self.conflict_r_pair = set(self.load_alignment_pair(file_path + '/triangle_id'))
         if os.path.exists(file_path + '/triangle_id_2'):
-            self.conflict_id = self.read_line_rel(file_path + '/triangle_id_2')
+            if lang == 'zh2':
+                self.conflict_id = self.read_line_rel(file_path + '/triangle_id_2', self.id_r)
+            else:
+                self.conflict_id = self.read_line_rel(file_path + '/triangle_id_2')
         else:
             self.conflict_id = None
 
@@ -164,13 +176,20 @@ class DBpDataset:
             for cur in d:
                 f.write(str(self.r_dict[cur]) + '\t' + str(d[cur]) + '\n')
 
-    def read_line_rel(self, file):
+    def read_line_rel(self, file, r_dict_r = None):
         line_id = set()
-        with open(file, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
-            for line in lines:
-                cur = line.strip().split('\t')
-                line_id.add(((int(cur[0]), int(cur[1])), (int(cur[2]), int(cur[3]))))
+        if r_dict_r is None:
+            with open(file, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                for line in lines:
+                    cur = line.strip().split('\t')
+                    line_id.add(((int(cur[0]), int(cur[1])), (int(cur[2]), int(cur[3]))))
+        else:
+            with open(file, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                for line in lines:
+                    cur = line.strip().split('\t')
+                    line_id.add(((int(r_dict_r[cur[0]]), int(cur[1])), (int(r_dict_r[cur[2]]), int(cur[3]))))
         return line_id
 
     def get_2_all_hop(self,tri):

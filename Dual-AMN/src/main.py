@@ -1,22 +1,19 @@
-from re import S
 import numpy as np
 import os
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import torch
 import math
 import tqdm
 import sys
-import matplotlib.pyplot as plt
-import networkx as nx
 from model import Encoder_Model
 import warnings
+import difflib
 import argparse
 import time
+from anchor import anchor_tabular
 from collections import defaultdict
 from preprocessing import DBpDataset
-
 import numpy as np
+from sklearn.linear_model import LinearRegression
 import logging
 import torch.nn as nn
 from count import read_list, read_tri, read_link
@@ -25,11 +22,17 @@ import time
 from tqdm import trange
 import copy
 from eval import Evaluate
-import matplotlib.pyplot as plt
 from itertools import combinations
-import networkx as nx
 import random
 from sklearn import linear_model
+import pandas as pd
+from LORE import util
+from LORE.prepare_dataset import prepare_EA_dataset
+from LORE import lore
+from LORE.neighbor_generator import genetic_neighborhood
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 def comb(n, m):
     return math.factorial(n) // (math.factorial(n - m) * math.factorial(m))
@@ -68,95 +71,7 @@ class Proxy:
 
         return F.cosine_similarity((self.embed1 * mask[:split].unsqueeze(1)).mean(dim = 0), (self.embed2 * mask[split:].unsqueeze(1)).mean(dim = 0), dim=0)
 
-class ExplainMask(torch.nn.Module):
-    def __init__(self, p1, p2):
-        super(ExplainMask, self).__init__()
-        self.p1 = p1
-        self.p2 = p2
-        self.mask1, self.mask2 = self.construct_mask()
 
-    def early_stop(self, d5, d6, len1, len2):
-        if self.cur_stat == None:
-            self.cur_stat = (d5, d6, len1, len2)
-        else:
-            if len1 < len(self.tri1) /2 and len2 < len(self.tri2) /2:
-                return True
-            self.cur_stat = (d6, len1, len2)
-        return False
-
-
-    def rank(self, e, candidate):
-        #print(e)
-        sim = torch.mm(e, candidate.t()).squeeze(0)
-        # print(sim)
-        rank_index = sim.topk(k =1, dim=0).indices[0]
-        return rank_index, sim
-
-
-    def forward(self):
-        mask1, mask2 = self.get_masked_triple()
-        # print('--------cur mask-------------')
-        # print(mask1,mask2)
-        me1 = (mask1.unsqueeze(1) * self.p1).mean(dim = 0)
-        me2 = (mask2.unsqueeze(1) * self.p2).mean(dim = 0)
-        ume1 = ((1 - mask1).unsqueeze(1) * self.p1).mean(dim = 0)
-        ume2 = ((1 - mask2).unsqueeze(1) * self.p2).mean(dim = 0)
-        me1 = F.normalize(me1, dim = 0)
-        me2 = F.normalize(me2, dim = 0)
-        ume1 = F.normalize(ume1, dim = 0)
-        ume2 = F.normalize(ume2, dim = 0)
-        l1 = torch.linalg.norm(mask1, ord=1) / mask1.shape[0]
-        l2 = torch.linalg.norm(mask2, ord=1) / mask2.shape[0]
-        d1 = F.cosine_similarity(me1, me2, dim=0).to(device)  # 让变动跟原本的尽可能近
-        d2 = F.cosine_similarity(ume1, ume2, dim=0).to(device) # 让变动后跟原本的尽可能远
-        relu = torch.nn.ReLU()
-        alpha = 0.5
-        # print(l1 + l2, l1, l2)
-        # loss = (1 - alpha) * relu(0.5 - d2) + alpha * d1 
-        loss =  relu(1 - d1) + d2
-        print(loss)
-        print(d2 , d1)
-        # print(mask1, mask2)
-        return loss
-
-
-
-    def construct_mask(self):
-        mask1 = torch.nn.Parameter(torch.FloatTensor(len(self.p1)), requires_grad=True)
-        mask2 = torch.nn.Parameter(torch.FloatTensor(len(self.p2)), requires_grad=True)
-
-        
-        std1 = torch.nn.init.calculate_gain("relu") * math.sqrt(
-            1 / (len(self.p1))
-        )
-        std2 = torch.nn.init.calculate_gain("relu") * math.sqrt(
-            1 / (len(self.p2))
-        )
-        with torch.no_grad():
-            mask1.normal_(1.0, std1)
-            mask2.normal_(1.0, std2)
-
-        
-        
-        return mask1, mask2
-
-    def get_masked_triple(self):
-        
-        mask1 = torch.sigmoid(self.mask1)
-        mask2 = torch.sigmoid(self.mask2)
-        return mask1, mask2
-    
-    def get_explain(self):
-        # exp = self.triple_mask - self.rel_fact
-        
-        exp = torch.sigmoid(self.triple_mask)  > self.exp_thred
-        
-        return exp
-
-    def get_res(self):
-        mask1 = torch.sigmoid(self.mask1)
-        mask2 = torch.sigmoid(self.mask2)
-        return mask1, mask2
 
 
 
@@ -490,7 +405,7 @@ class LIME:
         Y = []
         pi = []
         for _ in range(sample_nums):
-            players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
             if len(players) == self.num_players or len(players) == 0:
                 continue
             tri1 = []
@@ -516,11 +431,287 @@ class LIME:
         Z = torch.Tensor(mask)
         Y = torch.Tensor(Y)
         I = torch.eye(Z.shape[1])
-        pi = torch.Tensor(pi)
-        pi = torch.diag(pi)
-        res = torch.mm(torch.inverse(torch.mm(torch.mm(Z.t(),pi),Z) + I), torch.mm(torch.mm(Z.t(),pi), Y.unsqueeze(1)))
+        # print(pi)
+        # print(Z,Y,I)
+        # exit(0)
+        # pi = torch.Tensor(pi)
+        # pi = torch.diag(pi)
+        # print(np.array(pi) + 1)
+        # print(Z)
+        # print(Y)
+        reg = LinearRegression().fit(Z,Y,np.array(pi) + 1)
+        # print(reg.coef_)
+        # exit(0)
+        # pi = I
+        res = reg.coef_
+        # res = torch.mm(torch.inverse(torch.mm(torch.mm(Z.t(),pi),Z) + I), torch.mm(torch.mm(Z.t(),pi), Y.unsqueeze(1)))
+        # res = torch.mm(torch.inverse(torch.mm(Z.t(),Z) + I), torch.mm(Z.t(), Y.unsqueeze(1)))
         return res
 
+class LLM:
+    def __init__(self, model, e1, e2, num_players, players, split, p, e_dict, r_dict, dataset, embed):
+        self.model = model
+        self.e1 = e1
+        self.e2 = e2
+        self.num_players = num_players
+        self.players = players
+        self.split = split
+        self.p = p
+        self.e_dict = e_dict
+        self.r_dict = r_dict
+        self.dataset = dataset
+        self.embed = embed
+
+    def value(self, tri1, tri2):
+        try:
+            ent_adj, rel_adj, node_size, rel_size, adj_list, r_index, r_val, triple_size = self.dataset.reconstruct_search(self.e_dict[self.e1], self.e_dict[self.e2], tri1, tri2, True, len(self.e_dict), len(self.r_dict))
+            # print(node_size,adj_list, model.ent_embedding.weight.shape )
+            proxy_e1, proxy_e2 = self.model.get_embeddings([self.e_dict[self.e1]], [self.e_dict[self.e2]], ent_adj, rel_adj, node_size, rel_size, adj_list, r_index, r_val, triple_size, None)
+            v_suf = F.cosine_similarity(proxy_e1[0], proxy_e2[0], dim=0)
+        except RuntimeError as exception:
+            if "out of memory" in str(exception):
+                print('WARNING: out of memory')
+                if hasattr(torch.cuda, 'empty_cache'):
+                    torch.cuda.empty_cache()
+                else:
+                    raise exception
+            v_suf = -2
+
+        return v_suf, proxy_e1, proxy_e2
+    def sim_kernel(self, proxy_e1, proxy_e2):
+        try:
+            
+            sim1 = F.cosine_similarity(proxy_e1[0], self.embed[e1], dim=0)
+            sim2 = F.cosine_similarity(proxy_e2[0], self.embed[e2], dim=0)
+            sim = (sim1 + sim2) / 2
+        except RuntimeError as exception:
+            if "out of memory" in str(exception):
+                print('WARNING: out of memory')
+                if hasattr(torch.cuda, 'empty_cache'):
+                    torch.cuda.empty_cache()
+                else:
+                    raise exception
+            return 0
+
+        return sim
+    def compute(self, sample_nums):
+        mask = []
+        Y = []
+        pi = []
+        for _ in range(sample_nums):
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
+            if len(players) == self.num_players or len(players) == 0:
+                continue
+            tri1 = []
+            tri2 = []
+            cur_mask = [0] * (self.num_players)
+            for player in players:
+                # 计算当前联盟中添加玩家后的价值差异
+                cur_mask[player] = 1
+                if player < self.split:
+                    tri1.append(self.p[player])
+                else:
+                    tri2.append(self.p[player])
+            v,proxy_e1, proxy_e2 = self.value(tri1, tri2)
+            sim = self.sim_kernel(proxy_e1, proxy_e2)
+            
+            if v == -2:
+                continue
+            pi.append(sim)
+            mask.append(cur_mask)
+            Y.append(v)
+                    
+        
+        Z = torch.Tensor(mask)
+        Y = torch.Tensor(Y)
+        return Z, Y
+
+
+
+class BLACK:
+    def __init__(self, model, split, alpha):
+        self.model = model
+        self.split = split
+        self.alpha = alpha
+    
+    def predict(self, X):
+        tri = []
+        # print(X)
+        for x in X:
+            tri1 = []
+            tri2 = []
+            for i in range(len(x)):
+                if x[i] == 1:
+                    if i < self.split:
+                        tri1.append(i)
+                    else:
+                        tri2.append(i - self.split)
+            tri.append((tri1, tri2))
+        res = []
+        # print(tri)
+        for tri1, tri2 in tri:
+            # print(tri1, tri2)
+            sim = self.model.sim(tri1, tri2)
+            if sim >= self.alpha:
+                c = 1
+            else:
+                c = 0
+            res.append(c)
+        return np.array(res)
+        
+class LORE:
+    def __init__(self, model, num_players, players, split, e1, e2, embed, lang):
+        self.model = model
+        self.num_players = num_players
+        self.players = players
+        self.split = split
+        self.e1 = e1
+        self.e2 = e2
+        self.embed = embed
+        self.lang = lang
+
+    def compute(self, sample_nums, alpha):
+        data = []
+        Y = []
+        pi = []
+        pred = []
+        
+        data.append([1] * (self.num_players + 1))
+        X2E = []
+        X2E.append([1] * (self.num_players))
+        for _ in range(sample_nums):
+            # players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
+
+            tri1 = []
+            tri2 = []
+            cur_mask = [0] * (self.num_players + 1)
+            cur_x = [0] * (self.num_players)
+            for player in players:
+                cur_mask[player] = 1
+                cur_x[player] = 1
+                if player < self.split:
+                    tri1.append(player)
+                else:
+                    tri2.append(player - self.split)
+            
+            sim = self.model.sim(tri1, tri2)
+            if sim >= alpha:
+                c = 1
+            else:
+                c = 0
+            Y.append(sim)
+            pred.append(c)
+            cur_mask[self.num_players] = c
+            data.append(cur_mask)
+            X2E.append(cur_x)
+        X2E = np.array(X2E)
+        # print(pred)
+        if max(pred) == 0 or min(pred) == 1:
+            alpha = sum(Y) / len(Y)
+            for j in range(len(Y)):
+                if Y[j] > alpha:
+                    data[j + 1][-1] = 1
+                else:
+                    data[j + 1][-1] = 0
+        # print(data)
+        feature = [str(i) for i in range(self.num_players)]
+        feature.append('class')
+        df = pd.DataFrame(data, columns=feature)
+        dataset = prepare_EA_dataset(df, self.lang)
+        blackbox = BLACK(self.model, self.split, alpha)
+        explanation, infos = lore.explain(0, X2E, dataset, blackbox,
+                                      ng_function=genetic_neighborhood,
+                                      discrete_use_probabilities=True,
+                                      continuous_function_estimation=False,
+                                      returns_infos=True,
+                                      path='', sep=';', log=False)
+        if explanation == None:
+            return None, None
+        print('r = %s --> %s' % (explanation[0][1], explanation[0][0]))
+        return explanation[0][1], explanation[0][0]['class']
+
+class Anchor:
+    def __init__(self, model, num_players, players, split, e1, e2, embed, lang):
+        self.model = model
+        self.num_players = num_players
+        self.players = players
+        self.split = split
+        self.e1 = e1
+        self.e2 = e2
+        self.embed = embed
+        self.lang = lang
+
+    def compute(self, sample_nums, alpha):
+        mask = []
+        Y = []
+        pi = []
+        pred = {}
+        def encoder_fn(X):
+            tri = []
+            # print(X)
+            for x in X:
+                tri1 = []
+                tri2 = []
+                for i in range(len(x)):
+                    if x[i] == 1:
+                        if i < self.split:
+                            tri1.append(i)
+                        else:
+                            tri2.append(i - self.split)
+                tri.append((tri1, tri2))
+            return tri
+        def predict(tri):
+            res = []
+            # print(tri)
+            for tri1, tri2 in tri:
+                # print(tri1, tri2)
+                sim = self.model.sim(tri1, tri2)
+                if sim >= alpha:
+                    c = 1
+                else:
+                    c = 0
+                res.append(c)
+            return np.array(res)
+        for _ in range(sample_nums):
+            # players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
+
+            tri1 = []
+            tri2 = []
+            cur_mask = [0] * (self.num_players)
+            for player in players:
+                cur_mask[player] = 1
+                if player < self.split:
+                    tri1.append(player)
+                else:
+                    tri2.append(player - self.split)
+            
+            sim = self.model.sim(tri1, tri2)
+            if sim >= alpha:
+                c = 1
+            else:
+                c = 0
+            pred[tuple(cur_mask)] = c
+            
+            mask.append(cur_mask)
+            Y.append(c)
+                    
+        Z = np.array(mask)
+        self.explainer = anchor_tabular.AnchorTabularExplainer(
+            class_names=[0,1],
+            feature_names=list(range(self.num_players)),
+            train_data=Z,
+            categorical_names={},
+            encoder_fn=encoder_fn
+        )
+        x = np.array([[1] * (self.num_players)])
+        
+        explanation = self.explainer.explain_instance(x, predict)
+
+        # 打印Anchor规则
+        # print(explanation.names())
+        return explanation.names()
 class KernelSHAP:
     def __init__(self, model, e1, e2, num_players, players, split, p, e_dict, r_dict, dataset, embed):
         self.model = model
@@ -548,27 +739,26 @@ class KernelSHAP:
                     torch.cuda.empty_cache()
                 else:
                     raise exception
-            if "浮点数" in str(exception):
-                print('WARNING: out of memory')
-                if hasattr(torch.cuda, 'empty_cache'):
-                    torch.cuda.empty_cache()
-                else:
-                    raise exception
             v_suf = -2
 
-        return v_suf
-    def sim_kernel(self, tri1, tri2):
+        return v_suf, proxy_e1, proxy_e2
+    def sim_kernel(self, tri1,tri2):
+        if len(tri1) + len(tri2) == self.num_players:
+            return 1
+        if len(tri1) == 0 or len(tri2) == 0:
+            return 0
         z = len(tri1) + len(tri2)
         # print(z, self.num_players)
         sim = (self.num_players - 1) / (comb(self.num_players, z) * z * (self.num_players - z))
 
         return sim
+
     def compute(self, sample_nums):
         mask = []
         Y = []
         pi = []
         for _ in range(sample_nums):
-            players = np.random.permutation(random.randint(0, self.num_players))
+            players = np.random.choice(self.num_players,random.randint(0, self.num_players), replace=False)
             if len(players) == self.num_players or len(players) == 0:
                 continue
             tri1 = []
@@ -581,12 +771,8 @@ class KernelSHAP:
                     tri1.append(self.p[player])
                 else:
                     tri2.append(self.p[player])
-            # print('compute')
-            # print(tri1, tri2)
-            v = self.value(tri1, tri2)
-            # print(v)
+            v, proxy_e1, proxy_e2 = self.value(tri1, tri2)
             sim = self.sim_kernel(tri1, tri2)
-            # print(sim)
             
             if v == -2:
                 continue
@@ -594,14 +780,25 @@ class KernelSHAP:
             mask.append(cur_mask)
             Y.append(v)
                     
-        # print('end')
+        
         Z = torch.Tensor(mask)
         Y = torch.Tensor(Y)
         I = torch.eye(Z.shape[1])
-        pi = torch.Tensor(pi)
-        pi = torch.diag(pi)
-        # print('cur')
-        res = torch.mm(torch.inverse(torch.mm(torch.mm(Z.t(),pi),Z) + I), torch.mm(torch.mm(Z.t(),pi), Y.unsqueeze(1)))
+        # print(pi)
+        # print(Z,Y,I)
+        # exit(0)
+        # pi = torch.Tensor(pi)
+        # pi = torch.diag(pi)
+        # print(np.array(pi) + 1)
+        # print(Z)
+        # print(Y)
+        reg = LinearRegression().fit(Z,Y,np.array(pi) + 1)
+        # print(reg.coef_)
+        # exit(0)
+        # pi = I
+        res = reg.coef_
+        # res = torch.mm(torch.inverse(torch.mm(torch.mm(Z.t(),pi),Z) + I), torch.mm(torch.mm(Z.t(),pi), Y.unsqueeze(1)))
+        # res = torch.mm(torch.inverse(torch.mm(Z.t(),Z) + I), torch.mm(Z.t(), Y.unsqueeze(1)))
         return res
 
 class EAExplainer(torch.nn.Module):
@@ -617,13 +814,21 @@ class EAExplainer(torch.nn.Module):
         self.dist = nn.PairwiseDistance(p=2)
         if lang == 'zh':
             self.embed = torch.load('../saved_model/embed.pt').cuda()
+        elif lang == 'zh2':
+            self.embed = torch.load('../saved_model/embed_zh2.pt').cuda()
         elif lang == 'ja':
             self.embed = torch.load('../saved_model/embed_ja.pt').cuda()
         elif lang == 'fr':
             self.embed = torch.load('../saved_model/embed_fr.pt').cuda()
+        elif lang == 'w':
+            self.embed = torch.load('../saved_model/embed_w.pt').cuda()
+        elif lang == 'w2':
+            self.embed = torch.load('../saved_model/embed_w2.pt').cuda()
+        elif lang == 'y':
+            self.embed = torch.load('../saved_model/embed_y.pt').cuda()
         self.embed.requires_grad = False
         self.r_embed = model.rel_embedding.weight
-        self.get_r_map()
+        self.get_r_map(lang)
         self.e_embed = model.ent_embedding.weight
         # print(self.r_embed.shape)
         self.e_sim =self.cosine_matrix(self.embed[:self.split], self.embed[self.split:])
@@ -667,8 +872,35 @@ class EAExplainer(torch.nn.Module):
         Rvec = Rvec / (torch.linalg.norm(Rvec, dim=-1, keepdim=True) + 1e-5)
         self.evaluator.test_rank(Lvec, Rvec)
 
-    def get_r_map(self):
+    def get_r_map(self, lang):
+        '''
+        self.r_sim_l =self.cosine_matrix(self.r_embed[:self.splitr], self.r_embed[self.splitr:])
+        self.r_sim_r =self.cosine_matrix(self.r_embed[self.splitr:], self.r_embed[:self.splitr])
+        rankl = (-self.r_sim_l).argsort()
+        rankr = (-self.r_sim_r).argsort()
+        self.r_map1 = {}
+        self.r_map2 = {}
+        for i in range(rankl.shape[0]):
+            self.r_map1[i] = rankl[i][0] + self.splitr
+            print(self.G_dataset.r_dict[i], self.G_dataset.r_dict[int(rankl[i][0] + self.splitr)])
+        for i in range(rankr.shape[0]):
+            self.r_map2[i + self.splitr] = rankr[i][0]
+            print(self.G_dataset.r_dict[i + self.splitr], self.G_dataset.r_dict[int(rankr[i][0])])
+        exit(0)
         
+        self.r_map1 = {}
+        self.r_map2 = {}
+        
+        
+        for i in range(self.splitr):
+            cur1 = self.G_dataset.r_dict[i]
+            for j in range(self.splitr, len(self.G_dataset.r_dict)):
+                cur2 = self.G_dataset.r_dict[j]
+                if cur1.split('/')[-1] == cur2.split('/')[-1]:
+                    self.r_map1[self.G_dataset.id_r[cur1]] = self.G_dataset.id_r[cur2]
+                    self.r_map2[self.G_dataset.id_r[cur2]] = self.G_dataset.id_r[cur1]
+                    # print(cur1, cur2)
+        '''
         if lang == 'de':
             self.r_map1 = {}
             self.r_map2 = {}
@@ -679,6 +911,7 @@ class EAExplainer(torch.nn.Module):
             self.r_map1 = {}
             self.r_map2 = {}
             
+            '''
             pair1 = set()
             pair2 = set()
             
@@ -719,6 +952,34 @@ class EAExplainer(torch.nn.Module):
                 cur2 = p[1]
                 self.r_map1[int(self.G_dataset.id_r[cur1])] = int(self.G_dataset.id_r[cur2])
                 self.r_map2[int(self.G_dataset.id_r[cur2])] = int(self.G_dataset.id_r[cur1])
+            '''
+
+            with open('../datasets/y-en_f/rel_links') as f:
+                lines = f.readlines()
+                for line in lines:
+                    cur = line.strip().split(' ')
+                    self.r_map1[int(cur[0])] = int(cur[1])
+                    self.r_map2[int(cur[1])] = int(cur[0])
+            
+
+            for i in range(self.splitr):
+                cur1 = self.G_dataset.r_dict[i]            
+                if self.G_dataset.id_r[cur1] not in self.r_map1:
+                    self.r_map1[self.G_dataset.id_r[cur1]] = None
+            for i in range(self.splitr, len(self.G_dataset.id_r)):
+                cur2 = self.G_dataset.r_dict[i]
+                if self.G_dataset.id_r[cur2] not in self.r_map2:
+                    self.r_map2[self.G_dataset.id_r[cur2]] = None
+        elif lang == 'w':
+            self.r_map1 = {}
+            self.r_map2 = {}
+            with open('../datasets/w-en_f/rel_links') as f:
+                lines = f.readlines()
+                for line in lines:
+                    cur = line.strip().split('\t')
+                    self.r_map1[int(cur[0])] = int(cur[1])
+                    self.r_map2[int(cur[1])] = int(cur[0])
+            
 
             for i in range(self.splitr):
                 cur1 = self.G_dataset.r_dict[i]            
@@ -759,17 +1020,18 @@ class EAExplainer(torch.nn.Module):
                     gid2 = int(gid2)
                     # exp = self.explain(gid1, gid2)
                     # self.explain_ours2(gid1, gid2)
-                    if version == 1:
-                        tri1, tri2, pair = self.explain_ours4(gid1, gid2)
+                    # if version == 1:
+                    tri1, tri2, pair = self.explain_ours4(gid1, gid2)
                     if version == 2:
                         exp_tri1, exp_tri2 = self.explain_ours_two(gid1, gid2)
                         tri1 = set(tri1 + exp_tri1)
                         tri2 = set(tri2 + exp_tri2)
                     
-                    for cur in tri1:
+                    for cur in tri1[:3]:
                         f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
-                    for cur in tri2:
+                    for cur in tri2[:3]:
                         f.write(str(cur[0]) + '\t' + str(cur[1]) + '\t' + str(cur[2]) + '\n')
+                    f.write(str(0) + '\t' + str(0) + '\t' + str(0) + '\n')
             if version == 1:
                 self.get_test_file_mask('../datasets/' + lang + '-en_f/base/exp_ours' + str(version), str(version))
             else:
@@ -810,6 +1072,68 @@ class EAExplainer(torch.nn.Module):
                 self.get_test_file_mask('../datasets/' + lang + '-en_f/base/exp_lime', str(version), method)
             else:
                 self.get_test_file_mask_two('../datasets/' + lang + '-en_f/base/exp_lime', str(version), method)
+        elif method == 'llm':
+            with open('../datasets/' + lang + '-en_f/base/exp_llm_per', 'w') as f, open('../datasets/' + lang + '-en_f/base/exp_llm_per_feature', 'w') as f1:
+                for i in trange(len(self.test_indices)):
+                    gid1, gid2 = self.test_indices[i]
+                    gid1 = int(gid1)
+                    gid2 = int(gid2)
+                    # exp = self.explain(gid1, gid2)
+                    # tri1, tri2 = self.explain_lime(gid1, gid2)
+                    Z, Y, p1, p2 = self.explain_llm(gid1, gid2)
+                    feature_name =''
+                    for i in range(len(p1) + len(p2) - 1):
+                        feature_name += 'f' + str(i) +','
+                    feature_name += 'f' + str(len(p1) + len(p2) - 1)
+                    context = 'We have a machine learning model that predicts based on {} features: [{}]. The model has been trained on a dataset and has made the following predictions\n'.format(len(p1) + len(p2), feature_name)
+                    dataset = 'Dataset:\n'
+                    for i in range(len(Z)):
+                        Input = 'Input:'
+                        for j in range(len(Z[i])):
+                            Input += 'f' + str(j) + '=' + str(int(Z[i][j])) +', '
+                        Output = 'Output: {}'.format(Y[i])
+                        dataset += Input + '\n'
+                        dataset += Output + '\n'
+                    Qestions = 'Based on the model\'s predictions and the given dataset, please rank features according to their importance in determining the model\'s prediction?\n'
+                    # Instructions = 'Instructions: Think about the question. After explaining your reasoning, provide your answer as features ranked from most important to least important, in descending order. Only provide the feature names on the last line. Do not provide any further details on the last line.\n'
+                    Instructions = 'Instructions: Only output the ranking feature names.\n'
+                    prompt = context + dataset + Qestions + Instructions + '-------------------------\n'
+                    f.write(prompt + '\n')                
+                    for i in range(len(p1)):
+                        f1.write(str(p1[i][0]) + ',' + str(p1[i][1]) + ',' + str(p1[i][2]) + '\t')
+                    for i in range(len(p2)):
+                        f1.write(str(p2[i][0]) + ',' + str(p2[i][1]) + ',' + str(p2[i][2]) + '\t')
+                    f1.write('\n')
+            
+        elif method == 'anchor':
+            with open('../datasets/' + lang + '-en_f/base/exp_anchor', 'w') as f:
+                for i in trange(len(self.test_indices)):
+                    gid1, gid2 = self.test_indices[i]
+                    gid1 = int(gid1)
+                    gid2 = int(gid2)
+                    # exp = self.explain(gid1, gid2)
+                    # tri1, tri2 = self.explain_lime(gid1, gid2)
+                    if version == 1:
+                        rule = self.explain_anchor(gid1, gid2)
+                    else:
+                        rule = self.explain_anchor_two(gid1, gid2)
+    
+                    f.write(str(rule) + '\n')
+            
+        elif method == 'lore':
+            with open('../datasets/' + lang + '-en_f/base/exp_lore_2', 'w') as f:
+                for i in trange(len(self.test_indices)):
+                    gid1, gid2 = self.test_indices[i]
+                    gid1 = int(gid1)
+                    gid2 = int(gid2)
+                    # exp = self.explain(gid1, gid2)
+                    # tri1, tri2 = self.explain_lime(gid1, gid2)
+                    if version == 1:
+                        rule = self.explain_lore(gid1, gid2)
+                    else:
+                        rule = self.explain_lore_two(gid1, gid2)
+                    f.write(str(rule) + '\n')
+            
 
         
         
@@ -987,6 +1311,9 @@ class EAExplainer(torch.nn.Module):
             new_pair, _ = self.re_align(left_kg1, left_kg2)
             cur_pair |= new_pair
             print('final res: ', len(cur_pair & ans_pair) / len(ans_pair))
+            with open('repair_pair', 'w') as f:
+                for p in cur_pair:
+                    f.write(str(p[0]) + '\t' + str(p[1]) + '\n')
             T2 = time.clock()
             print(T2 - T1)
            
@@ -1882,7 +2209,7 @@ class EAExplainer(torch.nn.Module):
             r_dict_r[r_dict[cur]] = cur
         return torch.Tensor(new_tri).long().cuda(), e_dict, r_dict, list(kg1_index), list(kg2_index), tri1, tri2, e_dict_r, r_dict_r
 
-
+    
     def extract_subgraph(self, e1, e2, l=1):
         if l == 1:
             tri = self.G_dataset.gid[e1] + self.G_dataset.gid[e2]
@@ -1939,7 +2266,25 @@ class EAExplainer(torch.nn.Module):
         for cur in r_dict:
             # print(cur, r_dict[cur], self.G_dataset.r_dict[cur])
             r_dict_r[r_dict[cur]] = cur
-        return torch.Tensor(new_tri).long().cuda(), e_dict, r_dict, list(kg1_index), list(kg2_index), tri1, tri2, e_dict_r, r_dict_r
+        return torch.Tensor(new_tri).long(), e_dict, r_dict, list(kg1_index), list(kg2_index), tri1, tri2, e_dict_r, r_dict_r
+
+    def Trans_Process(self, e):
+        i = 0
+        p_embed = torch.zeros(len(self.G_dataset.gid[e]), self.embed.shape[1] + self.r_embed.shape[1]) 
+        for cur in self.G_dataset.gid[e]:
+            '''
+            if cur[0] == e:
+                p_embed[i] = self.embed[cur[2]] +  self.r_embed[cur[1]]
+            else:
+                p_embed[i] = self.embed[cur[0]] -  self.r_embed[cur[1]]
+            '''
+            # print(self.embed[cur[2]].shape, self.r_embed[cur[1]].shape)
+            if cur[0] == e:
+                p_embed[i] = torch.cat((self.embed[cur[2]] ,  self.r_embed[cur[1] + 1]), dim=0)
+            else:
+                p_embed[i] = torch.cat((self.embed[cur[0]] ,  self.r_embed[int(self.r_embed.shape[0] / 2) + cur[1] + 1]), dim=0)
+            i += 1
+        return p_embed
 
     def extract_rule(self, file, file_out):
         local_rule = {}
@@ -2385,6 +2730,17 @@ class EAExplainer(torch.nn.Module):
                 elif len(cur) == 3:
                     rule.append((cur[0], cur[1], cur[2]))
         print(tn, fn)
+
+    def get_proxy_model_ori_Trans(self, e1, e2):
+        new_graph, e_dict, r_dict, kg1_index, kg2_index, tri1, tri2, e_dict_r, r_dict_r = self.extract_subgraph(e1, e2, 1)
+
+
+        p_embed1 = self.Trans_Process(e1)
+        p_embed2 = self.Trans_Process(e2)
+        model = Proxy(p_embed1, p_embed2)
+        
+        return model,  e_dict, r_dict, e_dict_r, r_dict_r, new_graph
+
 
     def get_proxy_model(self, e1, e2):
         new_graph, e_dict, r_dict, kg1_index, kg2_index = self.extract_subgraph(e1, e2, 1)
@@ -2868,6 +3224,352 @@ class EAExplainer(torch.nn.Module):
                     torch.cuda.empty_cache()
                 else:
                     raise exception
+    def analyze_rule(self, rule):
+        need = set()
+        delete = set()
+        for condition in rule:
+            tmp = condition.split(' ')
+            if tmp[1] == '>' and int(float(tmp[2])) == 0:
+                need.add(int(float(tmp[0])))
+            elif tmp[1] == '<' and int(float(tmp[2])) == 1:
+                delete.add(int(float(tmp[0])))
+            elif tmp[1] == '>=' and int(float(tmp[2])) == 1:
+                need.add(int(float(tmp[0])))
+            elif tmp[1] == '==' and int(float(tmp[2])) == 1:
+                need.add(int(float(tmp[0])))
+            elif tmp[1] == '==' and int(float(tmp[2])) == 0:
+                delete.add(int(float(tmp[0])))
+            elif tmp[1] == '<=' and int(float(tmp[2])) == 0:
+                delete.add(int(float(tmp[0])))
+        return need, delete
+    
+    def explain_lore_two(self, e1, e2):
+        neigh12, neigh11 = self.init_2_hop(e1)
+        neigh22, neigh21 = self.init_2_hop(e2)
+        suff1 = set()
+        suff2 = set()
+        sample_num = 10
+        for cur in neigh11:
+            suff1 |= self.search_1_hop_tri(e1, cur)
+        for cur in neigh12:
+            two_hop = self.search_2_hop_tri1(e1, cur)
+            for cur1 in two_hop:
+                t1 = cur1[0]
+                t2 = cur1[1]
+                suff1 |= t1
+                suff1 |= t2
+        suff1  = set(random.sample(suff1, min(sample_num,len(suff1))))
+        for cur in neigh21:
+            suff2 |= self.search_1_hop_tri(e2, cur)
+        for cur in neigh22:
+            two_hop = self.search_2_hop_tri1(e2, cur)
+            for cur1 in two_hop:
+                t1 = cur1[0]
+                t2 = cur1[1]
+                suff2 |= t1
+                suff2 |= t2
+        suff2  = set(random.sample(suff2, min(sample_num,len(suff2))))
+        # new_graph, e_dict, r_dict, kg1_index, kg2_index = self.change_map(suff1, suff2)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori_Trans_two(e1, e2, suff1, suff2)
+        # print(model.ent_embedding.weight.shape)
+        # exit(0)
+        p1 = list(suff1)
+        p2 = list(suff2)
+        new_p1 = self.change_pattern_id(p1, e_dict, r_dict)
+        new_p2 = self.change_pattern_id(p2, e_dict, r_dict)
+        # print(p1, len(p1))
+        new_p = new_p1 + new_p2
+        if (len(p1) + len(p2)) < 100:
+            explain = LORE(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed, self.lang)
+            rule, class_name = explain.compute(30, 0.5)
+        else:
+            rule = None
+        if rule == None:
+            need_tri = []
+            delete_tri = []
+        else:
+            need, delete = self.analyze_rule_lore(rule, class_name)
+            need_tri = []
+            delete_tri = []
+            i = 0
+            for cur in need:
+                if cur < len(p1):
+                    need_tri.append(p1[cur])  
+                else:
+                    need_tri.append(p2[cur - len(p1)])
+            for cur in delete:
+                if cur < len(p1):
+                    delete_tri.append(p1[cur])  
+                else:
+                    delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+        
+    def explain_anchor_two(self, e1, e2):
+        neigh12, neigh11 = self.init_2_hop(e1)
+        neigh22, neigh21 = self.init_2_hop(e2)
+        suff1 = set()
+        suff2 = set()
+        sample_num = 10
+        for cur in neigh11:
+            suff1 |= self.search_1_hop_tri(e1, cur)
+        for cur in neigh12:
+            two_hop = self.search_2_hop_tri1(e1, cur)
+            for cur1 in two_hop:
+                t1 = cur1[0]
+                t2 = cur1[1]
+                suff1 |= t1
+                suff1 |= t2
+        suff1  = set(random.sample(suff1, min(sample_num,len(suff1))))
+        for cur in neigh21:
+            suff2 |= self.search_1_hop_tri(e2, cur)
+        for cur in neigh22:
+            two_hop = self.search_2_hop_tri1(e2, cur)
+            for cur1 in two_hop:
+                t1 = cur1[0]
+                t2 = cur1[1]
+                suff2 |= t1
+                suff2 |= t2
+        suff2  = set(random.sample(suff2, min(sample_num,len(suff2))))
+        # new_graph, e_dict, r_dict, kg1_index, kg2_index = self.change_map(suff1, suff2)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori_Trans_two(e1, e2, suff1, suff2)
+        # print(model.ent_embedding.weight.shape)
+        # exit(0)
+        p1 = list(suff1)
+        p2 = list(suff2)
+        new_p1 = self.change_pattern_id(p1, e_dict, r_dict)
+        new_p2 = self.change_pattern_id(p2, e_dict, r_dict)
+        # print(p1, len(p1))
+        new_p = new_p1 + new_p2
+        explain = Anchor_two(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed)
+        rule = explain.compute(30, 0.6)
+        need, delete = self.analyze_rule(rule)
+        need_tri = []
+        delete_tri = []
+        i = 0
+        for cur in need:
+            if cur < len(p1):
+                need_tri.append(p1[cur])  
+            else:
+                need_tri.append(p2[cur - len(p1)])
+        for cur in delete:
+            if cur < len(p1):
+                delete_tri.append(p1[cur])  
+            else:
+                delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+
+    def explain_anchor(self, e1, e2):
+        '''
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        new_p1 = self.change_pattern_id(p1, e_dict, r_dict)
+        new_p2 = self.change_pattern_id(p2, e_dict, r_dict)
+        # print(p1, len(p1))
+        new_p = new_p1 + new_p2
+        explain = Anchor(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset, self.embed)
+        rule = explain.compute(10, 0.6)
+        need, delete = self.analyze_rule(rule)
+        need_tri = []
+        delete_tri = []
+        i = 0
+        for cur in need:
+            if cur < len(p1):
+                need_tri.append(p1[cur])  
+            else:
+                need_tri.append(p2[cur - len(p1)])
+        for cur in delete:
+            if cur < len(p1):
+                delete_tri.append(p1[cur])  
+            else:
+                delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+        '''
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori_Trans(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        if (len(p1) + len(p2)) < 50:
+            explain = Anchor(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed, self.lang)
+            rule = explain.compute(30, 0.5)
+        else:
+            rule = None
+        if rule == None:
+            need_tri = []
+            delete_tri = []
+        else:
+            need, delete = self.analyze_rule(rule)
+            need_tri = []
+            delete_tri = []
+            i = 0
+            for cur in need:
+                if cur < len(p1):
+                    need_tri.append(p1[cur])  
+                else:
+                    need_tri.append(p2[cur - len(p1)])
+            for cur in delete:
+                if cur < len(p1):
+                    delete_tri.append(p1[cur])  
+                else:
+                    delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+
+    def analyze_rule_lore(self, rule, class_name):
+        need = set()
+        delete = set()
+        if class_name == 1:
+            for condition in rule:
+                tmp = rule[condition]
+                if tmp[0] == '>' and tmp[1] == '-':
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '-':
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and tmp[2] == '-':
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and tmp[2] == '-':
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '>' and int(float(tmp[1])) == 0:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '<' and int(float(tmp[1])) == 1:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '=' and int(float(tmp[2])) == 1:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '==' and int(float(tmp[1])) == 0:
+                    delete.add(int(float(condition)))
+        else:
+            for condition in rule:
+                tmp = rule[condition]
+                if tmp[0] == '>' and tmp[1] == '-':
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '-':
+                    need.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and tmp[2] == '-':
+                    need.add(int(float(condition)))
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    continue
+                elif tmp[0] == '<' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 0:
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and tmp[2] == '-':
+                    continue
+                elif tmp[0] == '>' and tmp[1] == '=' and int(float(tmp[2])) == 1:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '>' and int(float(tmp[1])) == 0:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '<' and int(float(tmp[1])) == 1:
+                    need.add(int(float(condition)))
+                elif tmp[0] == '=' and int(float(tmp[2])) == 1:
+                    delete.add(int(float(condition)))
+                elif tmp[0] == '==' and int(float(tmp[1])) == 0:
+                    need.add(int(float(condition)))
+
+        return need, delete
+
+    def explain_lore(self, e1, e2):
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori_Trans(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        if (len(p1) + len(p2)) < 50:
+            explain = LORE(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), e1, e2, self.embed, self.lang)
+            rule, class_name = explain.compute(30, 0.5)
+        else:
+            rule = None
+        if rule == None:
+            need_tri = []
+            delete_tri = []
+        else:
+            need, delete = self.analyze_rule_lore(rule, class_name)
+            need_tri = []
+            delete_tri = []
+            i = 0
+            for cur in need:
+                if cur < len(p1):
+                    need_tri.append(p1[cur])  
+                else:
+                    need_tri.append(p2[cur - len(p1)])
+            for cur in delete:
+                if cur < len(p1):
+                    delete_tri.append(p1[cur])  
+                else:
+                    delete_tri.append(p2[cur - len(p1)])
+        need_rule = 'need:'
+        for cur in need_tri:
+            need_rule += '\t' + str(cur)
+        delete_rule = 'delete:'
+        for cur in delete_tri:
+            delete_rule += '\t' + str(cur)
+        rule = need_rule + ',' + delete_rule
+        return rule
+    
+    
+    def Trans_Process_two(self, e, tri):
+        i = 0
+        p_embed = torch.zeros(len(tri), self.embed.shape[1] + self.r_embed.shape[1]) 
+        for cur in tri:
+            '''
+            if cur[0] == e:
+                p_embed[i] = self.embed[cur[2]] +  self.r_embed[cur[1]]
+            else:
+                p_embed[i] = self.embed[cur[0]] -  self.r_embed[cur[1]]
+            '''
+            # print(self.embed[cur[2]].shape, self.r_embed[cur[1]].shape)
+            if cur[0] == e:
+                p_embed[i] = torch.cat((self.embed[cur[2]] ,  self.r_embed[cur[1] + 1]), dim=0)
+            else:
+                p_embed[i] = torch.cat((self.embed[cur[0]] ,  self.r_embed[int(self.r_embed.shape[0] / 2) + cur[1] + 1]), dim=0)
+            i += 1
+        return p_embed
+
+    def get_proxy_model_ori_Trans_two(self, e1, e2, suff1, suff2):
+        new_graph, e_dict, r_dict, kg1_index, kg2_index, tri1, tri2, e_dict_r, r_dict_r = self.change_map(suff1, suff2)
+        
+        p_embed1 = self.Trans_Process_two(e1, suff1)
+        p_embed2 = self.Trans_Process_two(e2, suff2)
+        model = Proxy(p_embed1, p_embed2)
+        
+        return model,  e_dict, r_dict, e_dict_r, r_dict_r, new_graph
 
     def explain_lime(self, e1, e2):
         p1, p_embed1 = self.pattern_process(e1, 1)
@@ -2881,7 +3583,8 @@ class EAExplainer(torch.nn.Module):
         new_p = new_p1 + new_p2
         lime = LIME(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset, self.embed)
         res = lime.compute(100)
-        res = res.squeeze(1)
+        res = torch.Tensor(res)
+        # res = res.squeeze(1)
         score, indices = res.sort(descending=True)
         tri1 = []
         tri2 = []
@@ -2891,7 +3594,23 @@ class EAExplainer(torch.nn.Module):
                 tri.append(p1[cur])
             else:
                 tri.append(p2[cur - len(p1)])
+        tri.append((0,0,0))
         return tri
+
+    def explain_llm(self, e1, e2):
+        p1, p_embed1 = self.pattern_process(e1, 1)
+        p2, p_embed2 = self.pattern_process(e2, 1)
+        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
+        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
+        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
+        new_p1 = self.change_pattern_id(p1, e_dict, r_dict)
+        new_p2 = self.change_pattern_id(p2, e_dict, r_dict)
+        # print(p1, len(p1))
+        new_p = new_p1 + new_p2
+        llm = LLM(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset, self.embed)
+        sim_num = int(600 / (len(p1) + len(p2)))
+        Z, Y = llm.compute(sim_num)
+        return Z, Y, p1, p2
 
     def explain_shapely(self, e1, e2):
         p1, p_embed1 = self.pattern_process(e1, 1)
@@ -2903,18 +3622,36 @@ class EAExplainer(torch.nn.Module):
         new_p2 = self.change_pattern_id(p2, e_dict, r_dict)
         # print(p1, len(p1))
         new_p = new_p1 + new_p2
-        Shapley = Shapley_Value(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset)
-        shapley_value = Shapley.MTC(30)
-        res = torch.Tensor(shapley_value).argsort(descending=True)
-        tri1 = []
-        tri2 = []
-        tri = []
-        for cur in res:
-            if cur < len(p1):
-                tri.append(p1[cur])
-            else:
-                tri.append(p2[cur - len(p1)])
-        # return tri1, tri2
+        if len(p1) > 50 or len(p2) > 50:
+            new_p = new_p1 + new_p2
+            Shapley = KernelSHAP(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset, self.embed)
+            res = Shapley.compute(100)
+            res = torch.Tensor(res)
+            # res = res.squeeze(1)
+            score, indices = res.sort(descending=True)
+            tri1 = []
+            tri2 = []
+            tri = []
+            for cur in indices:
+                if cur < len(p1):
+                    tri.append(p1[cur])
+                else:
+                    tri.append(p2[cur - len(p1)])
+            tri.append((0,0,0))
+        else:
+            Shapley = Shapley_Value(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset)
+            shapley_value = Shapley.MTC(30)
+            res = torch.Tensor(shapley_value).argsort(descending=True)
+            tri1 = []
+            tri2 = []
+            tri = []
+            for cur in res:
+                if cur < len(p1):
+                    tri.append(p1[cur])
+                else:
+                    tri.append(p2[cur - len(p1)])
+            # return tri1, tri2
+            tri.append((0,0,0))
         return tri
     
     def get_proxy_two(self, tri1, tri2):
@@ -2971,7 +3708,8 @@ class EAExplainer(torch.nn.Module):
         new_p = new_p1 + new_p2
         lime = LIME(model, e1, e2, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1), new_p, e_dict, r_dict, self.G_dataset, self.embed)
         res = lime.compute(100)
-        res = res.squeeze(1)
+        # res = res.squeeze(1)
+        res = torch.Tensor(res)
         score, indices = res.sort(descending=True)
         tri1 = []
         tri2 = []
@@ -2981,6 +3719,7 @@ class EAExplainer(torch.nn.Module):
                 tri.append(p1[cur])
             else:
                 tri.append(p2[cur - len(p1)])
+        tri.append((0,0,0))
         return tri
 
     def explain_shapely_two(self, e1, e2):
@@ -3026,7 +3765,8 @@ class EAExplainer(torch.nn.Module):
         # Shapley = Shapley_Value(model, e1, e2, len(new_p1) + len(new_p2), list(range(len(new_p1) + len(new_p2))), len(new_p1), new_p, e_dict, r_dict, self.G_dataset)
         # shapley_valu e = Shapley.MTC(30)
         res = Kernelshap.compute(100)
-        res = res.squeeze(1)
+        # res = res.squeeze(1)
+        res = torch.Tensor(res)
         score, indices = res.sort(descending=True)
         tri1 = []
         tri2 = []
@@ -3036,6 +3776,7 @@ class EAExplainer(torch.nn.Module):
                 tri.append(p1[cur])
             else:
                 tri.append(p2[cur - len(p1)])
+        tri.append((0,0,0))
         return tri
 
     def explain_aggre(self, e1, e2):
@@ -6302,6 +7043,29 @@ if __name__ == '__main__':
                         in_d=in_d, 
                         out_d=out_d,
                         m_adj = m_adj, e1=e1, e2=e2).to(device)
+    elif lang == 'zh2':
+    # saved_model = '../saved_model/base_model.pt'
+        saved_model = '../saved_model/zh2_model.pt'
+        G_dataset = DBpDataset('../datasets/zh2-en_f/base', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/zh2-en_f/base/' + pair)
+        split = len(read_list('../datasets/zh2-en_f/base/ent_dict1'))
+        rsplit = len(read_list('../datasets/zh2-en_f/base/rel_dict1'))
+        model = Encoder_Model(node_hidden=100,
+                        rel_hidden=100,
+                        node_size=38960,
+                        rel_size=6050,
+                        device=device,
+                        new_ent_nei = np.array([]),
+                        dropout_rate=0,
+                        ind_dropout_rate=0,
+                        gamma=2,
+                        lr=0.0001,
+                        depth=2,
+                        alpha=0.1,
+                        beta=0.1, 
+                        in_d=in_d, 
+                        out_d=out_d,
+                        m_adj = m_adj, e1=e1, e2=e2).to(device)
     elif lang == 'ja':
         saved_model = '../saved_model/base_model_ja.pt'
         G_dataset = DBpDataset('../datasets/ja-en_f/base', device=device, pair=pair, lang=lang)
@@ -6347,6 +7111,74 @@ if __name__ == '__main__':
                         in_d=in_d, 
                         out_d=out_d,
                         m_adj = m_adj, e1=e1, e2=e2).to(device)
+
+    elif lang=='w':
+        saved_model = '../saved_model/base_model_w.pt'
+        G_dataset = DBpDataset('../datasets/w-en_f/base', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/w-en_f/base/' + pair)
+        split = len(read_list('../datasets/w-en_f/base/ent_dict1'))
+        rsplit = len(read_list('../datasets/w-en_f/base/rel_dict1'))
+        model = Encoder_Model(node_hidden=100,
+                        rel_hidden=100,
+                        node_size=30000,
+                        rel_size=836,
+                        device=device,
+                        new_ent_nei = np.array([]),
+                        dropout_rate=0,
+                        ind_dropout_rate=0,
+                        gamma=2,
+                        lr=0.0001,
+                        depth=2,
+                        alpha=0.1,
+                        beta=0.1, 
+                        in_d=in_d, 
+                        out_d=out_d,
+                        m_adj = m_adj, e1=e1, e2=e2).to(device)
+    elif lang=='w2':
+        saved_model = '../saved_model/w2_model.pt'
+        G_dataset = DBpDataset('../datasets/w2-en_f/base', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/w2-en_f/base/' + pair)
+        split = len(read_list('../datasets/w2-en_f/base/ent_dict1'))
+        rsplit = len(read_list('../datasets/w2-en_f/base/rel_dict1'))
+        model = Encoder_Model(node_hidden=100,
+                        rel_hidden=100,
+                        node_size=30000,
+                        rel_size=836,
+                        device=device,
+                        new_ent_nei = np.array([]),
+                        dropout_rate=0,
+                        ind_dropout_rate=0,
+                        gamma=2,
+                        lr=0.0001,
+                        depth=2,
+                        alpha=0.1,
+                        beta=0.1, 
+                        in_d=in_d, 
+                        out_d=out_d,
+                        m_adj = m_adj, e1=e1, e2=e2).to(device)
+    elif lang=='y':
+        saved_model = '../saved_model/base_model_y.pt'
+        G_dataset = DBpDataset('../datasets/y-en_f/base', device=device, pair=pair, lang=lang)
+        test_indices = read_list('../datasets/y-en_f/base/' + pair)
+        split = len(read_list('../datasets/y-en_f/base/ent_dict1'))
+        rsplit = len(read_list('../datasets/y-en_f/base/rel_dict1'))
+        model = Encoder_Model(node_hidden=100,
+                        rel_hidden=100,
+                        node_size=30000,
+                        rel_size=388,
+                        device=device,
+                        new_ent_nei = np.array([]),
+                        dropout_rate=0,
+                        ind_dropout_rate=0,
+                        gamma=2,
+                        lr=0.0001,
+                        depth=2,
+                        alpha=0.1,
+                        beta=0.1, 
+                        in_d=in_d, 
+                        out_d=out_d,
+                        m_adj = m_adj, e1=e1, e2=e2).to(device)
+
     evaluator = Evaluate(
                         test_dict=None,
                         valid_dict=None,
@@ -6360,6 +7192,8 @@ if __name__ == '__main__':
                         dataset=None,
                         batch=512,
                         M=None)
+    
+
 
 
 

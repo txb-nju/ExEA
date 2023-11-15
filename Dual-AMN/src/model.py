@@ -8,7 +8,7 @@ from torch_scatter import scatter_mean
 import numpy as np
 from torch_scatter import scatter_add
 import torch_geometric.utils as utils
-import numpy as np
+
 def getPositionEncoding(seq_len,dim,n=10000):
   PE = np.zeros(shape=(seq_len,dim))
   for pos in range(seq_len):
