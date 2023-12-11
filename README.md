@@ -57,9 +57,15 @@ To run Entity Alignment Repair by ExEA on the zh -en dataset , enter `src/` and 
 $ python main.py zh repair
 ```
 
-To run  Explanation Generation by baseline, such as lime, on the zh -en dataset , enter `src/` and run:
+To run  Explanation Generation by baseline, such as lime, on the zh-en dataset , enter `src/` and run:
 
 ```
 $ python main.py zh lime
+```
+
+Based on the above operations, important features that are sorted will be obtained. Then run the following command to get the selected topk features as explanations.
+
+```
+$ python select_exp.py zh lime --num k
 ```
 
