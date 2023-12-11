@@ -43,7 +43,7 @@ There is a folder for each model, organized as follows:
      |- src/  
 ```
 
-`datasets` stores the DBP15K dataset and the generated explanation will be placed under the corresponding sub-dataset. The trained model is saved under the `saved_model`.  The code files are placed in `src`.
+`datasets` stores the DBP15K dataset and the generated explanation will be placed under the corresponding sub-dataset. The trained model is saved under the `saved_model`.  The code files are placed in `src`. The implementation of [LORE](https://github.com/riccotti/LORE) and [Anchor](https://github.com/marcotcr/anchor?tab=readme-ov-file) comes from the github repositories given in the original papers.
 
 For example, To run Explanation Generation by ExEA on the zh -en dataset , enter `src/` and run:
 
