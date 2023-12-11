@@ -5,20 +5,11 @@ from count import read_tri, read_link, read_list,read_tri_list
 from collections import defaultdict
 import scipy.sparse as sp
 import networkx as nx
+
 class DBpDataset:
     def __init__(self, file_path, device, pair, lang='zh'):
         self.kg1 = read_tri_list(file_path + '/triples_1')
         self.kg2 = read_tri_list(file_path + '/triples_2')
-        '''
-        self.two_hop1, self.one_hop1 = self.get_2_all_hop(self.kg1)
-        self.two_hop2, self.one_hop2 = self.get_2_all_hop(self.kg2)
-        self.all_2_hop1 = defaultdict(set)
-        self.all_2_hop2 = defaultdict(set)
-        for cur in self.one_hop1:
-            self.all_2_hop1[cur] = self.one_hop1[cur] | self.two_hop1[cur]
-        for cur in self.one_hop2:
-            self.all_2_hop2[cur] = self.one_hop2[cur] | self.two_hop2[cur]
-        '''
         self.kgs = set()
         if lang == 'zh' or lang == 'zh_2':
             self.ent_dict, self.id_ent = self.read_dict('../datasets/dbp_z_e/ent_dict')
@@ -38,37 +29,23 @@ class DBpDataset:
         elif lang == 'w' or lang == 'w2':
             self.ent_dict, self.id_ent = self.read_dict('../datasets/D_W/ent_dict')
             self.r_dict, self.id_r = self.read_dict('../datasets/D_W/rel_dict')
-        # self.target_link1, self.target_link2 = read_link(file_path + '/sample_pair_v1')
         
         self.target_link1, self.target_link2 = read_link(file_path + pair)
         self.gid1 = defaultdict(list)
         self.gid2 = defaultdict(list)
         self.gid = defaultdict(list)
         self.triple_size = len(self.kg1) + len(self.kg2)
-        # self.rel_fact = self.read_rel_fact(file_path)
-        # self.rel_fact_pair = self.read_rel_fact_pair(file_path)
         self.test_pair = self.load_alignment_pair(file_path + '/test')
         self.test_pair = np.array(self.test_pair)
         self.train_pair = self.load_alignment_pair(file_path + '/train_links')
         self.train_pair = np.array(self.train_pair)
-        
-        # self.model_link, _ = read_link('hard_pair')
         self.train_link, _ = read_link(file_path + '/train_links')
         self.gid = defaultdict(list)
         self.triple_size = len(self.kg1) + len(self.kg2)
-        # self.rel_fact = self.read_rel_fact(file_path)
-        # self.rel_fact_pair = self.read_rel_fact_pair(file_path)
         self.test_pair = self.load_alignment_pair(file_path + '/test')
         self.test_pair = np.array(self.test_pair)
-        # self.model_pair = self.load_alignment_pair(file_path + '/ori_pair.txt')
         self.model_link, _ = read_link(file_path + '/pair.txt')
         self.model_pair = self.load_alignment_pair(file_path + '/pair.txt')
-        # self.model_link, _ = read_link(file_path + '/repair_pair')
-        # self.model_pair = self.load_alignment_pair(file_path + '/repair_pair')
-        # self.model_link, _ = read_link('one2one_pair_fr')
-        # self.model_pair = self.load_alignment_pair('one2one_pair_fr')
-        # self.model_link, _ = read_link('rule2_pair_zh')
-        # self.model_pair = self.load_alignment_pair('rule2_pair_zh')
         self.conflict_r_pair = set(self.load_alignment_pair(file_path + '/triangle_id'))
         if os.path.exists(file_path + '/triangle_id_2'):
             if lang == 'zh2':
@@ -132,15 +109,6 @@ class DBpDataset:
             self.gid[int(h)].append([int(h), int(r), int(t)])
             self.gid[int(t)].append([int(h), int(r), int(t)])
             self.kgs.add((int(h), int(r), int(t)))
-        '''
-        with open(file_path + '/triples_name', 'w') as f:
-            for cur in self.gid:
-                f.write(self.ent_dict[cur] + '\n')
-                f.write('--------------------\n')
-                for tri in self.gid[cur]:
-                    f.write(self.ent_dict[tri[0]] + '\t' + self.r_dict[tri[1]] + '\t' + self.ent_dict[tri[2]] + '\n')
-        exit(0)
-        '''
         self.G = nx.Graph()
         # for r in self.r_ent_set:
             # self.rfunc[r] = len(self.r_o_set[r]) / len(self.r_ent_set[r])

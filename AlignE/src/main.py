@@ -992,7 +992,7 @@ class EAExplainer(torch.nn.Module):
                         gid2 = int(gid2)
                         rule = self.explain_anchor(gid1, gid2)
                         f.write(str(rule) + '\n') 
-
+            print('Save rules to exp_anchor in the corresponding dataset directory')
         elif method == 'lore':
             if self.lang == 'zh':
                 with open('../datasets/dbp_z_e/exp_lore', 'w') as f:
@@ -1041,45 +1041,8 @@ class EAExplainer(torch.nn.Module):
                         gid2 = int(gid2)
                         rule = self.explain_lore(gid1, gid2)
                         f.write(str(rule) + '\n') 
-                        
-        elif method == 'phase1':
-            with open('../datasets/dbp_z_e/exp_ours_phase1' + str(version), 'w') as f:
-                for i in trange(len(self.model_pair)):
-                    gid1, gid2 = self.model_pair[i]
-                    gid1 = int(gid1)
-                    gid2 = int(gid2)
-                    # exp = self.explain(gid1, gid2)
-                    tri1, tri2, pair = self.explain_ours4(gid1, gid2)
-                    judge = 0
-                    if self.test_link[str(gid1)] == str(gid2):
-                        judge = 1
-                    f.write(self.G_dataset.ent_dict[gid1] + '\t' + self.G_dataset.ent_dict[gid2] + '\t' + str(judge) + '\n')
-                    for cur in pair:
-                        if str(cur[0]) in self.test_link:
-                            if self.test_link[str(cur[0])] == str(cur[1]):
-                                judge = 1
-                            else:
-                                judge = 0
-                            f.write(self.G_dataset.ent_dict[cur[0]] + '\t' + self.G_dataset.ent_dict[cur[1]] + '\t' + str(judge) +'\n')
-                        else:
-                            f.write(self.G_dataset.ent_dict[cur[0]] + '\t' + self.G_dataset.ent_dict[cur[1]] +'\n')
-                    '''
-                    for k in range(len(tri1)):
-                        for cur1 in tri1[k]:
-                            f.write(self.G_dataset.ent_dict[cur1[0]] + '\t' + self.G_dataset.r_dict[cur1[1]] + '\t' + self.G_dataset.ent_dict[cur1[2]] + '\n')
-                        for cur2 in tri2[k]:
-                            f.write(self.G_dataset.ent_dict[cur2[0]] + '\t' + self.G_dataset.r_dict[cur2[1]] + '\t' + self.G_dataset.ent_dict[cur2[2]] + '\n')
-                        f.write('------------------------------------------\n')
-                    '''
-                    for k in range(len(tri1)):
-                        cur1 = tri1[k]
-                        cur2 = tri2[k]
-                        f.write(self.G_dataset.ent_dict[cur1[0]] + '\t' + self.G_dataset.r_dict[cur1[1]] + '\t' + self.G_dataset.ent_dict[cur1[2]] + '\n')
-                        f.write(self.G_dataset.ent_dict[cur2[0]] + '\t' + self.G_dataset.r_dict[cur2[1]] + '\t' + self.G_dataset.ent_dict[cur2[2]] + '\n')
-                        f.write('------------------------------------------\n')
-                    f.write('**********************************\n')
+            print('Save rules to exp_lore in the corresponding dataset directory')
         elif method == 'repair':
-            
             r1_func, r1_func_r, r2_func, r2_func_r = self.get_r_func()
             node = {}
             ground = {}
@@ -1136,13 +1099,13 @@ class EAExplainer(torch.nn.Module):
             
             kg1, _, cur_pair = self.conflict_solve(c_set, node_set, new_model_pair, kg2, count1, ground)
             # kg1 |= new_kg1
-            print(len(kg1), len(cur_pair))
-            print(len(cur_pair & ans_pair) / len(ans_pair))
+            # print(len(kg1), len(cur_pair))
+            # print(len(cur_pair & ans_pair) / len(ans_pair))
             while(len(kg1) > 0):
                 cur_link = {}
                 cur_link_r = {}
-                print(len(cur_pair))
-                print(len(kg1))
+                # print(len(cur_pair))
+                # print(len(kg1))
                 for p in cur_pair:
                     cur_link[int(p[0])] = int(p[1])
                     cur_link_r[int(p[1])] = int(p[0])
@@ -1151,21 +1114,18 @@ class EAExplainer(torch.nn.Module):
                 _, kg1 = self.adjust(kg1, kg2, cur_link, cur_link_r, r1_func, r1_func_r, r2_func, r2_func_r, node_set, cur_pair, 100)
                 if len(kg1) >= last_len:
                     break
-                print(len(cur_pair))
+                # print(len(cur_pair))
                 # print(len(delete_pair & ans_pair), len(delete_pair) )
-                print(len(cur_pair & ans_pair) / len(ans_pair))
+                print('current acc: {}'.format(len(cur_pair & ans_pair) / len(ans_pair)))
 
-
-            
-            
-            # find no rule conflict
+            # find low confidence conflict
             print('start low confidence conflict solving')
             last_len1 = None
             while True:
                 cur_link = {}
                 cur_link_r = {}
                 kg1 = set()
-                print(len(cur_pair & ans_pair) / len(ans_pair))
+                # print(len(cur_pair & ans_pair) / len(ans_pair))
                 for p in cur_pair:
                     cur_link[int(p[0])] = int(p[1])
                     kg1.add(int(p[0]))
@@ -1184,12 +1144,12 @@ class EAExplainer(torch.nn.Module):
                     break
                 else:
                     last_len1 = len(kg1)
-                print(len(cur_pair & ans_pair) / len(ans_pair))
+                # print(len(cur_pair & ans_pair) / len(ans_pair))
                 # while(len(kg1) > 0):
                 cur_link = {}
                 cur_link_r = {}
-                print(len(cur_pair))
-                print(len(kg1))
+                # print(len(cur_pair))
+                # print(len(kg1))
                 cur_kg1 = set()
                 cur_kg2 = set()
                 for p in cur_pair:
@@ -1197,29 +1157,21 @@ class EAExplainer(torch.nn.Module):
                     cur_kg1.add(p[0])
                     cur_kg2.add(p[1])
                     cur_link_r[int(p[1])] = int(p[0])
-                print(len(cur_kg1), len(cur_kg2), len(all_kg1 - cur_kg1), len(kg2 - cur_kg2))
-                # last_len = len(kg1)
-                # _, kg1 = self.adjust_conflict(kg1, kg2, cur_link, cur_link_r, r1_func, r1_func_r, r2_func, r2_func_r, node_set, cur_pair, 100, conflict_link)
                 _, kg1 = self.adjust_no_explain(kg1, kg2, cur_link, cur_link_r, r1_func, r1_func_r, r2_func, r2_func_r, node_set, cur_pair, 100, 1)
-                # if len(kg1) >= last_len:
-                    # break
-                print(len(cur_pair))
-                # print(len(delete_pair & ans_pair), len(delete_pair) )
-                print(len(cur_pair & ans_pair) / len(ans_pair))
-
-            print('repair result :', len(cur_pair & ans_pair) / len(ans_pair))
+                print('current acc: {}'.format(len(cur_pair & ans_pair) / len(ans_pair)))
+            print('After low confidence conflict solving :', len(cur_pair & ans_pair) / len(ans_pair))
             solve_kg1 = set()
             solve_kg2 = set()
             for p in cur_pair:
                 solve_kg1.add(p[0])
                 solve_kg2.add(p[1])
-            print(len(solve_kg1), len(solve_kg2))
+            # print(len(solve_kg1), len(solve_kg2))
             left_kg1 = all_kg1 - solve_kg1
             left_kg2 = kg2 - solve_kg2
-            print(len(left_kg1), len(left_kg2))
+            # print(len(left_kg1), len(left_kg2))
             new_pair, _ = self.re_align(left_kg1, left_kg2)
             cur_pair |= new_pair
-            print('final res: ', len(cur_pair & ans_pair) / len(ans_pair))
+            print('final acc: ', len(cur_pair & ans_pair) / len(ans_pair))
 
             
 
@@ -1267,7 +1219,7 @@ class EAExplainer(torch.nn.Module):
 
         new_kg2 = kg2 - cur_kg2
         
-        print(len(kg1), len(new_kg2), len(cur_kg1), len(cur_kg2), count - count1)
+        # print(len(kg1), len(new_kg2), len(cur_kg1), len(cur_kg2), count - count1)
         return kg1, new_kg2, cur_pair
 
     def candidate_ent(self, e1, cur_link):
@@ -1359,7 +1311,7 @@ class EAExplainer(torch.nn.Module):
                             
                             break
             # new_pair.add((kg1[i], e2))
-        print(len(new_kg1))
+        # print(len(new_kg1))
         # print(new_kg1)
         count = 0
         # for cur in new_kg1:
@@ -1384,8 +1336,8 @@ class EAExplainer(torch.nn.Module):
             ans_pair.add((int(cur), int(self.test_link[str(cur)])))
         for i in range(rank.shape[0]):
             new_pair.add((kg1[i], kg2[rank[i][0]]))
-        print(len(new_pair & set(ans_pair)))
-        print(len(new_pair & set(ans_pair)) / 10500)
+        # print(len(new_pair & set(ans_pair)))
+        # print(len(new_pair & set(ans_pair)) / 10500)
         return new_pair, set(kg2)
 
     def adjust(self, kg1, kg2, cur_link, cur_link_r, r1_func, r1_func_r, r2_func, r2_func_r, node_set, cur_pair, K):
@@ -1429,7 +1381,7 @@ class EAExplainer(torch.nn.Module):
                         
                         break
             # new_pair.add((kg1[i], e2))
-        print(len(new_kg1))
+        # print(len(new_kg1))
         # print(new_kg1)
         count = 0
         # for cur in new_kg1:
@@ -1480,7 +1432,7 @@ class EAExplainer(torch.nn.Module):
                         
                         break
             # new_pair.add((kg1[i], e2))
-        print(len(new_kg1))
+        # print(len(new_kg1))
         # print(new_kg1)
         count = 0
         # for cur in new_kg1:
@@ -1574,13 +1526,13 @@ class EAExplainer(torch.nn.Module):
                             
                             break
                 # new_pair.add((kg1[i], e2))
-        print(len(new_kg1))
+        # print(len(new_kg1))
         # print(new_kg1)
         count = 0
         for cur in new_kg1:
             if self.model_link[str(cur)] != self.test_link[str(cur)]:
                 count += 1
-        print(count)
+        # print(count)
         return new_pair, new_kg1
     
                     
@@ -2520,22 +2472,42 @@ class EAExplainer(torch.nn.Module):
 
     
     def get_r_func(self):
-        if self.lang == 'de':
-            tri1 = read_tri('/data/xbtian/Explain/MTransE/datasets/OpenEA/EN_DE_15K/triples_1')
-            tri2 = read_tri('/data/xbtian/Explain/MTransE/datasets/OpenEA/EN_DE_15K/triples_2')
-            r, _ = read_link('/data/xbtian/Explain/MTransE/datasets/OpenEA/EN_DE_15K/rel_dict')
-        elif self.lang == 'y':
+        if self.lang == 'y':
             tri1 = read_tri('../datasets/D_Y/triples_1')
             tri2 = read_tri('../datasets/D_Y/triples_2')
             r, _ = read_link('../datasets/D_Y/rel_dict')
-        elif self.lang == 'w':
+        elif self.lang == 'w' or self.lang == 'w2':
             tri1 = read_tri('../datasets/D_W/triples_1')
             tri2 = read_tri('../datasets/D_W/triples_2')
             r, _ = read_link('../datasets/D_W/rel_dict')
-        else:
-            tri1 = read_tri('/data/xbtian/ContEA-explain/datasets/' + self.lang + '-en_f/base/triples_1')
-            tri2 = read_tri('/data/xbtian/ContEA-explain/datasets/' + self.lang + '-en_f/base/triples_2')
-            r, _ = read_link('/data/xbtian/ContEA-explain/datasets/' + self.lang + '-en_f/base/rel_dict')
+        elif self.lang == 'zh2':
+            tri1 = read_tri('../datasets/z_e_2/triples_1')
+            tri2 = read_tri('../datasets/z_e_2/triples_2')
+            r, _ = read_link('../datasets/z_e_2/rel_dict')
+        elif self.lang == 'zh_2':
+            tri1 = read_tri('../datasets/dbp_z_e_wrong/triples_1')
+            tri2 = read_tri('../datasets/dbp_z_e_wrong/triples_2')
+            r, _ = read_link('../datasets/dbp_z_e_wrong/rel_dict')
+        elif self.lang == 'ja2':
+            tri1 = read_tri('../datasets/dbp_j_e_wrong/triples_1')
+            tri2 = read_tri('../datasets/dbp_j_e_wrong/triples_2')
+            r, _ = read_link('../datasets/dbp_j_e_wrong/rel_dict')
+        elif self.lang == 'fr2':
+            tri1 = read_tri('../datasets/dbp_f_e_wrong/triples_1')
+            tri2 = read_tri('../datasets/dbp_f_e_wrong/triples_2')
+            r, _ = read_link('../datasets/dbp_f_e_wrong/rel_dict')
+        elif self.lang == 'zh':
+            tri1 = read_tri('../datasets/dbp_z_e/triples_1')
+            tri2 = read_tri('../datasets/dbp_z_e/triples_2')
+            r, _ = read_link('../datasets/dbp_z_e/rel_dict')
+        elif self.lang == 'ja':
+            tri1 = read_tri('../datasets/dbp_j_e/triples_1')
+            tri2 = read_tri('../datasets/dbp_j_e/triples_2')
+            r, _ = read_link('../datasets/dbp_j_e/rel_dict')
+        elif self.lang == 'fr':
+            tri1 = read_tri('../datasets/dbp_f_e/triples_1')
+            tri2 = read_tri('../datasets/dbp_f_e/triples_2')
+            r, _ = read_link('../datasets/dbp_f_e/rel_dict')
         r1 = defaultdict(set)
         r2 = defaultdict(set)
         r1_func = defaultdict(int)
@@ -2627,90 +2599,6 @@ class EAExplainer(torch.nn.Module):
             tri1_list += new_tri1
             tri2_list += new_tri2
         return tri1_list, tri2_list, pair
-
-    def extract_rule2(self, file, file_out):
-        local_rule = {}
-        train = {}
-        test = {}
-        ground = {}
-        align = {}
-        _, r_dict = read_link('/data/xbtian/ContEA-explain/datasets/zh-en_f/base/rel_dict')
-        for i in range(len(self.G_dataset.test_pair)):
-            ground[self.G_dataset.ent_dict[self.G_dataset.test_pair[i][0]]] = self.G_dataset.ent_dict[self.G_dataset.test_pair[i][1]]
-
-        with open(file) as f:
-            lines = f.readlines()
-            align_entities = ''
-            rule = []
-            ent = {}
-            r = {}
-            local_rule = {}
-            begin = 1
-            for i in trange(len(lines)):
-                cur = lines[i].strip().split('\t')
-                # print(len(cur))
-                if len(cur) == 1 and cur[0][0] == '*':
-                    
-                    head = set()
-                    for cur in rule:
-                        # term = 'r' + r_dict[cur[1]]
-                        term = cur[1].split('/')[-1]
-                        head.add((ent[cur[0]],  term , ent[cur[2]]))
-                    local_rule[align_entities] = ((head, body))
-                    rule = []
-                    begin = 1
-                elif len(cur) == 1 and cur[0][0] == '-':
-                    continue
-                elif len(cur) == 2 and begin == 1:
-                    begin = 0
-                    ent = {}
-                    r = {}
-                    count = 0
-                    v = 'A'
-                    '''
-                    judge = 1
-                    if ground[cur[0]] != cur[1]:
-                        judge = 0
-                    
-                    
-                    align_entities = cur[0] + '\t' + cur[1] + '\t' + str(judge)
-                    '''
-                    align_entities = cur[0] + '\t' + cur[1] + '\t' + str(float(self.e_sim[int(self.G_dataset.id_ent[cur[0]]), int(self.G_dataset.id_ent[cur[1]])- self.split] ))
-                    ent[cur[0]] = chr(ord(v) + count)
-                    count += 1 
-                    ent[cur[1]] = chr(ord(v) + count)
-                    count += 1
-                    e1 = cur[0]
-                    e2 = cur[1]
-                    
-                    body = [(ent[cur[0]], 'sameAs', ent[cur[1]])]
-                elif len(cur) == 2 and begin == 0:
-                    ent[cur[0]] = chr(ord(v) + count)
-                    count += 1
-                    ent[cur[1]] = chr(ord(v) + count)
-                    count += 1
-                    rule.append((cur[0], '/sameAs', cur[1]))
-                elif len(cur) == 3:
-                    rule.append((cur[0], cur[1], cur[2]))
-        with open(file_out, 'w') as f:
-            for cur in local_rule:
-                head, body = local_rule[cur]
-                head = list(head)
-                cur = cur.split('\t')
-                
-                '''
-                for i in range(len(head)):
-                    if i != len(head) - 1:
-                        f.write(head[i][1] + '(' + head[i][0] + ',' + head[i][2] + ')' + ' & ')
-                    else:
-                        f.write(head[i][1] + '(' + head[i][0] + ',' + head[i][2] + ')\n')
-                '''
-                for i in range(len(head)):
-                    if i != len(head) - 1:
-                        f.write(head[i][1] + '(' + head[i][0] + ',' + head[i][2] + ')' + ' & ')
-                    else:
-                        f.write(head[i][1] + '(' + head[i][0] + ',' + head[i][2] + ') => ')
-                f.write(body[0][1] + '(' + body[0][0] + ',' + body[0][2] + ')' + cur[2] + '\n')
 
     def pattern_process(self, e, l=2):
         p = []
@@ -2941,374 +2829,6 @@ class EAExplainer(torch.nn.Module):
                 p.append([p1[i], p2[select_index[i][j]]])
         return p, torch.zeros(len(p))
     
-    
-    def std_filter(self, data, thred):
-        mean = np.mean(data)  # 计算数据均值
-        std = np.std(data)    # 计算数据标准差
-        
-        return mean, std
-
-
-    
-            
-
-            
-    def semantic_match_soft(self, p_embed1, p_embed2):
-        global_sim = torch.mm(p_embed1, p_embed2.t()).reshape(1, -1)
-        value, index = torch.sort(global_sim, descending=True)
-        return index[0]
-
-
-
-    def semantic_match(self, p_embed1, p_embed2, p1, p2, model, e_dict, r_dict, e1, e2, base_model='Dual_AMN'):
-        global_sim = torch.mm(p_embed1, p_embed2.t())
-        neigh_pre1 = (-global_sim).argsort()
-        neigh_pre2 = (-(global_sim.t())).argsort()
-        time1 = time.time()
-        # global_res = self.max_weight_match(neigh_pre1, neigh_pre2, list(range(len(p1))), list(range(len(p1), len(p1) + len(p2))), global_sim, 0)
-        global_res = self.bidirect_match(neigh_pre1, neigh_pre2, list(range(len(p1))), list(range(len(p1), len(p1) + len(p2))), global_sim)
-        time2 = time.time()
-        print('max_match time :', time2 - time1)
-
-        pair = []
-        sim_list = []
-
-        for cur in global_res:
-            if cur[0] < len(p1):
-                sim = global_sim[cur[0], cur[1] ]
-                pair.append([(cur[0], cur[1] ), sim])
-            else:
-                sim = global_sim[cur[1], cur[0]]
-                pair.append([(cur[1], cur[0] ), sim])
-            sim_list.append(sim)
-        mean, std = self.std_filter(sim_list, 1)
-        pair.sort(key=lambda x: x[1], reverse=True)
-        # return pair
-        
-        proxy_e1, proxy_e2 = model.all_aggregation()
-        all_suf = F.cosine_similarity(proxy_e1, proxy_e2, dim=0)
-
-
-        print(all_suf)
-        filter_pair = []
-        select_kg1 = set()
-        select_kg2 = set()
-        exp_pair = []
-        all_pair = []
-        # print(pair)
-        for cur in pair:
-            print(cur[1], mean-std, std)
-            if float(cur[1]) <= (mean - std - 0.01):
-                print('jump')
-            else:
-                cur = cur[0]
-                all_pair.append([cur[0], cur[1]])
-                tri1 = [cur[0]]
-                tri2 = [cur[1]]
-                proxy_e1, proxy_e2 = model.aggregation(tri1, tri2)
-                v_suf = F.cosine_similarity(proxy_e1, proxy_e2, dim=0)
-                
-                print(v_suf)
-                if v_suf >= all_suf - 0.2:
-                    filter_pair.append([cur[0], cur[1]])
-                    select_kg1.add(int(cur[0]))
-                    select_kg2.add(int(cur[1]))
-                    exp_pair.append([int(cur[0]), int(cur[1])])
-                # exp_pair.append([cur[0], cur[1]])
-            
-            
-        print(len(exp_pair) / len(pair))
-        if len(exp_pair) / len(pair) == 0:
-            exp_pair = all_pair
-        return filter_pair, exp_pair, list(select_kg1), list(select_kg2),list(set(list(range(len(p1)))) - select_kg1), list(set(list(range(len(p2)))) - select_kg2)
-        
-    def judge(self, e1, e2, model, tri1, tri2, no_tri1, no_tri2, e_dict, r_dict):
-        retain = self.split
-        dec = 0
-        try:
-            if len(tri1) and len(tri2):
-                ent_adj, rel_adj, node_size, rel_size, adj_list, r_index, r_val, triple_size = self.G_dataset.reconstruct_search(e1, e2, tri1, tri2, True, len(e_dict), len(r_dict))
-                proxy_e1, proxy_e2 = model.get_embeddings([e_dict[e1]], [e_dict[e2]], ent_adj, rel_adj, node_size, rel_size, adj_list, r_index, r_val, triple_size, None)
-                _, suf_rank = torch.mm(proxy_e1.cuda(), self.embed[self.split:].t()).sort(descending=True)
-                retain = torch.where(suf_rank[0] == e1)[0][0]
-                print('suf rank:', retain)
-            else:
-                retain = self.split
-
-            if len(no_tri1) and len(no_tri2):
-                ent_adj, rel_adj, node_size, rel_size, adj_list, r_index, r_val, triple_size = self.G_dataset.reconstruct_search(e1, e2, no_tri1, no_tri2, True, len(e_dict), len(r_dict))
-                proxy_e1, proxy_e2 = model.get_embeddings([e_dict[e1]], [e_dict[e2]], ent_adj, rel_adj, node_size, rel_size, adj_list, r_index, r_val, triple_size, None)
-                _, nec_rank = torch.mm(proxy_e1.cuda(), self.embed[self.split:].t()).sort(descending=True)
-                # print(nec_rank.shape)
-                dec = torch.where(nec_rank[0] == e1)[0][0]
-                print('nec rank:', dec)
-            else:
-                dec = self.split
-            
-            if retain < 2 and dec > 0:
-                return True
-        except RuntimeError as exception:
-            if "out of memory" in str(exception):
-                print('WARNING: out of memory')
-                if hasattr(torch.cuda, 'empty_cache'):
-                    torch.cuda.empty_cache()
-                else:
-                    raise exception
-
-    def explain_ours(self, e1, e2):
-        # model, ent_embed, r_embed, e_dict, r_dict, graph = self.get_proxy_model_ori(e1, e2)
-        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
-        # exit(0)
-        soft_match = 1
-        # print(graph.shape[0])
-        mask = []
-        Y = []
-        p1, p_embed1 = self.pattern_process(e1, 1)
-        p2, p_embed2 = self.pattern_process(e2, 1)
-        # print(p1, p2)
-        # print(graph)
-        p_embed1 = p_embed1 / (torch.linalg.norm(p_embed1, dim=-1, keepdim=True) + 1e-5)
-        p_embed2 = p_embed2 / (torch.linalg.norm(p_embed2, dim=-1, keepdim=True) + 1e-5)
-        new_p1 = self.change_pattern_id(p1, e_dict, r_dict)
-        new_p2 = self.change_pattern_id(p2, e_dict, r_dict)
-        candidate_pair, exp_pair, kg1, kg2, f_kg1, f_kg2 = self.semantic_match(p_embed1, p_embed2, new_p1, new_p2, model, e_dict, r_dict, e1, e2)
-        # print(p)
-        tri1 = []
-        tri2 = []
-        exp_tri1 = []
-        exp_tri2 = []
-        no_tri1 = list(range(len(new_p1)))
-        no_tri2 = list(range(len(new_p2)))
-        sample_end = 0
-
-        proxy_e1, proxy_e2 = model.aggregation(kg1, kg2)
-        # print(proxy_e1.unsqueeze(0))
-        _, suf_rank = torch.mm(proxy_e1.unsqueeze(0).cuda(), self.embed[self.split:].t()).sort(descending=True)
-        retain = torch.where(suf_rank[0] == e1)[0][0]
-        proxy_e1, proxy_e2 = model.aggregation(f_kg1, f_kg2)
-        _, nec_rank = torch.mm(proxy_e1.unsqueeze(0).cuda(), self.embed[self.split:].t()).sort(descending=True)
-        dec = torch.where(nec_rank[0] == e1)[0][0]
-        
-        
-        if retain < 2 and dec > 0:
-            sample_end = 1
-        
-        
-        if soft_match == 1 and sample_end == 0:
-            soft_num = 5
-            
-            
-            sort_index = self.semantic_match_soft(p_embed1[f_kg1], p_embed2[f_kg2])
-            add = sort_index[: soft_num]
-            for cur in add:
-                idx1 = int(cur / len(f_kg2))
-                idx2 = int(cur % len(f_kg2))
-                # print(idx1)
-                # print(len(f_kg1))
-                t1 = f_kg1[idx1]
-                t2 = f_kg2[idx2]
-                exp_pair.append([t1, t2])
-                '''
-                cur1 = [e_dict_r[t1[0]], r_dict_r[t1[1]], e_dict_r[t1[2]]]
-                cur2 = [e_dict_r[t2[0]], r_dict_r[t2[1]], e_dict_r[t2[2]]]
-                print(self.G_dataset.ent_dict[cur1[0]], self.G_dataset.r_dict[cur1[1]], self.G_dataset.ent_dict[cur1[2]])
-                print(self.G_dataset.ent_dict[cur2[0]], self.G_dataset.r_dict[cur2[1]], self.G_dataset.ent_dict[cur2[2]])
-                print('----------------------')
-                '''
-        i = 0
-        k = 1
-        mask = []
-        Y = []
-        comb_num = 2
-        p = exp_pair
-        
-        while i < 1000 and k <= min(comb_num, int(len(p) / 2) +1):
-            comb = [list(c)  for c in combinations(list(range(len(p))), k)]
-            
-            for coal in comb:
-                time1 = time.time()
-                tri1 = []
-                tri2 = []
-                no_tri1 = []
-                no_tri2 = []
-                cur_mask1 = [0] * (len(p))
-                cur_mask2 = [1] * (len(p))
-                # cur_mask1 = [0] * (len(new_p1) + len(new_p2))
-                # cur_mask2 = [1] * (len(new_p1) + len(new_p2))
-                cur_p = p.copy()
-                for cur in coal:
-                    tri1.append(p[cur][0])
-                    tri2.append(p[cur][1])
-                    cur_p.remove(p[cur])
-                    cur_mask1[cur] = 1
-                    cur_mask2[cur] = 0
-                for pair in cur_p:
-                    no_tri1.append(p[cur][0])
-                    no_tri2.append(p[cur][1])
-                # print(tri1, tri2)
-                # print(no_tri1, no_tri2)
-                try:
-                    proxy_e1, proxy_e2 = model.aggregation(tri1, tri2)
-                    v_suf = F.cosine_similarity(proxy_e1, proxy_e2, dim=0)
-                
-                    mask.append(cur_mask1)
-                    Y.append(v_suf)
-                    if len(no_tri1) and len(no_tri2):
-                        proxy_e1, proxy_e2 = model.aggregation(no_tri1, no_tri2)
-                        v_nec = F.cosine_similarity(proxy_e1, proxy_e2, dim=0)
-
-                        mask.append(cur_mask2)
-                    
-                        Y.append(v_nec)
-                    i += 1
-                        # time2 = time.time()
-                except RuntimeError as exception:
-                    if "out of memory" in str(exception):
-                        print('WARNING: out of memory')
-                        if hasattr(torch.cuda, 'empty_cache'):
-                            torch.cuda.empty_cache()
-                        else:
-                            raise exception
-                    # print(time2 - time1, v_suf, v_nec)
-            k += 1
-        
-        Z = torch.Tensor(mask)
-        Y = torch.Tensor(Y)
-        I = torch.eye(Z.shape[1])
-        res = torch.mm(torch.inverse(torch.mm(Z.t(),Z) + I), torch.mm(Z.t(), Y.unsqueeze(1)))
-        # print(Z)
-        res = res.squeeze(1)
-        score, indices = res.sort(descending=True)
-        tri1 = set()
-        tri2 = set()
-        cur_tri1 = []
-        cur_tri2 = []
-        no_tri1 = new_p1.copy()
-        no_tri2 = new_p2.copy()
-        mask1 = [0] * (len(p1) + len(p2))
-        mask2 = [1] * (len(p1) + len(p2))
-        print('select pair len: ', len(p))
-        for i in range(len(p)):
-            if i > 11:
-                break
-            if score[i] < 0:
-                continue
-
-            t1 = new_p1[p[indices[i]][0]]
-            t2 = new_p2[p[indices[i]][1]]
-            if mask1[p[indices[i]][0]] == 0:
-                mask1[p[indices[i]][0]] = 1
-                cur_tri1.append(t1)
-            if mask1[p[indices[i]][1]] == 0:
-                mask1[p[indices[i]][1]] = 1
-                cur_tri2.append(t2)
-            if mask2[p[indices[i]][0]] == 1:
-                mask2[p[indices[i]][0]] = 0
-                no_tri1.remove(t1)
-            if mask2[p[indices[i]][1]] == 1:
-                mask2[p[indices[i]][1]] = 0
-                no_tri2.remove(t2)
-        
-            cur1 = [e_dict_r[t1[0]], r_dict_r[t1[1]], e_dict_r[t1[2]]]
-            tri1.add((e_dict_r[t1[0]], r_dict_r[t1[1]], e_dict_r[t1[2]]))
-            tri2.add((e_dict_r[t2[0]], r_dict_r[t2[1]], e_dict_r[t2[2]]))
-            
-            cur2 = [e_dict_r[t2[0]], r_dict_r[t2[1]], e_dict_r[t2[2]]]
-            print(self.G_dataset.ent_dict[cur1[0]], self.G_dataset.r_dict[cur1[1]], self.G_dataset.ent_dict[cur1[2]])
-            print(self.G_dataset.ent_dict[cur2[0]], self.G_dataset.r_dict[cur2[1]], self.G_dataset.ent_dict[cur2[2]])
-            # if self.judge(e1, e2, model, cur_tri1, cur_tri2, no_tri1, no_tri2, e_dict, r_dict) == True:
-                # break
-            print(score[i])
-      
-        print(len(tri1), len(tri2))
-        return self.change_to_list(tri1), self.change_to_list(tri2)
-
-    def realign(self):
-        L = self.L[:15000]
-        R = self.R[:15000]
-        sim = torch.mm(L, R.t())
-        # print(sim.shape)
-        hit1 = 0
-        right_pair = set()
-        for i in range(15000):
-            rank = (-sim[i, :]).argsort()
-            rank_index = torch.where(rank == i)
-            # print(rank_index)
-            # print(rank)
-            if rank[0] == i:
-                hit1 += 1
-                right_pair.add((i, i + 19388))
-
-        print(hit1 / 15000)
-        with open('../datasets/dbp_z_e/mtranse_no_train', 'w') as f:
-            for cur in right_pair:
-                f.write(str(cur[0]) + '\t' + str(cur[1]) + '\n')
-
-    def sim_add(self, gid1, gid2, neigh1, neigh2):
-        e1 = self.embed[int(gid1)]
-        e2 = self.embed[int(gid2)]
-        # neigh1 = []
-        # neigh2 = []
-        # print(self.L.shape)
-        sim = torch.mm(e2.unsqueeze(0), self.L.t())
-        rank = (-sim[0, :]).argsort()
-        l = max(len(neigh1), len(neigh2))
-        for i in range(self.L.shape[0]):
-            # path_len = nx.dijkstra_path_length(self.G_dataset.G, source=int(gid1), target=int(rank[i]))
-            # if path_len <= 2:
-            if int(rank[i]) in self.G_dataset.all_2_hop1[gid1] and int(rank[i]) not in neigh1:
-                neigh1.append(int(rank[i]))
-                if len(neigh1) == 2 * l:
-                    break
-        sim = torch.mm(e1.unsqueeze(0), self.R.t())
-        # l = 3 * len(neigh2)
-        rank = (-sim[0, :]).argsort()
-        for i in range(self.R.shape[0]):
-            # path_len = nx.dijkstra_path_length(self.G_dataset.G, source=int(gid2), target=int(rank[i] + 19388))
-            # if path_len <= 2:
-            # print(rank[i])
-            if int(rank[i] + 19388) in self.G_dataset.all_2_hop2[gid2] and int(rank[i] + 19388) not in neigh2 and int(rank[i] + 19388) != gid2:
-                neigh2.append(int(rank[i] + 19388))
-                if len(neigh2) == 2 * l:
-                    break
-        l_filter = min(len(neigh1), len(neigh2))
-        neigh1 = set(neigh1[:l_filter])
-        neigh2 = set(neigh2[:l_filter])
-        
-        
-        return neigh1, neigh2
-
-
-    def sim_add1(self, gid1, gid2, neigh1, neigh2):
-        e1 = self.embed[int(gid1)]
-        e2 = self.embed[int(gid2)]
-        print(self.L.shape)
-        sim = torch.mm(e2.unsqueeze(0), self.L.t())
-        rank = (-sim[0, :]).argsort()
-        l = len(neigh1)
-        print(l)
-        for i in range(self.L.shape[0]):
-            # path_len = nx.dijkstra_path_length(self.G_dataset.G, source=int(gid1), target=int(rank[i]))
-            # if path_len <= 2:
-            if int(rank[i]) in self.G_dataset.all_2_hop1[gid1]:
-                neigh1.add(int(rank[i]))
-                if len(neigh1) == 2 * l:
-                    break
-        sim = torch.mm(e1.unsqueeze(0), self.R.t())
-        # l = 3 * len(neigh2)
-        rank = (-sim[0, :]).argsort()
-        for i in range(self.R.shape[0]):
-            # path_len = nx.dijkstra_path_length(self.G_dataset.G, source=int(gid2), target=int(rank[i] + 19388))
-            # if path_len <= 2:
-            # print(rank[i])
-            if int(rank[i] + 19388) in self.G_dataset.all_2_hop2[gid2]:
-                neigh2.add(int(rank[i] + 19388))
-                if len(neigh2) == 2 * l:
-                    break
-
-        return neigh1, neigh2
-
-    
     def init_1_hop(self, gid1, gid2):
         neigh1 = set()
         neigh2 = set()
@@ -3324,24 +2844,6 @@ class EAExplainer(torch.nn.Module):
                 neigh2.add(int(cur[2]))
         return neigh1, neigh2
 
-    '''
-    def search_2_hop_tri(self, source ,target):
-        tri = set()
-        for t in self.G_dataset.gid[source]:
-            if t[0] == target or t[2] == target:
-                tri.add((t[0], t[1], t[2]))
-                continue
-            if t[0] != source:
-                for t2 in self.G_dataset.gid[t[0]]:
-                    # print(t[0],target, t2)
-                    if t2[0] == target or t2[2] == target:
-                        tri.add(((t[0], t[1], t[2]),(t2[0], t2[1], t2[2])))
-            else:
-                for t2 in self.G_dataset.gid[t[2]]:
-                    if t2[0] == target or t2[2] == target:
-                        tri.add(((t[0], t[1], t[2]),(t2[0], t2[1], t2[2])))
-        return tri
-    '''
     def search_1_hop_tri(self, source ,target):
         tri = set()
         for t in self.G_dataset.gid[source]:
@@ -3350,63 +2852,6 @@ class EAExplainer(torch.nn.Module):
                 continue
 
         return tri
-    
-    def give_explain_set(self, gid, neigh):
-        tri = set()
-        for cur in neigh:
-            tri |= self.search_2_hop_tri(gid, cur)
-        return tri
-
-
-
-    def show_explain(self, gid1, gid2, neigh1, neigh2):
-        print(neigh1, neigh2)
-        tri_set1 = self.give_explain_set(gid1, neigh1)
-        tri_set2 = self.give_explain_set(gid2, neigh2)
-
-
-        for cur in tri_set1:
-            print('--------------------------------')
-            if len(cur) == 3:
-                print(self.G_dataset.ent_dict[cur[0]], self.G_dataset.r_dict[cur[1]], self.G_dataset.ent_dict[cur[2]])
-            else:
-
-                print(self.G_dataset.ent_dict[cur[0][0]], self.G_dataset.r_dict[cur[0][1]], self.G_dataset.ent_dict[cur[0][2]])
-                print(self.G_dataset.ent_dict[cur[1][0]], self.G_dataset.r_dict[cur[1][1]], self.G_dataset.ent_dict[cur[1][2]])
-        for cur in tri_set2:
-            print('--------------------------------')
-            if len(cur) == 3:
-                print(self.G_dataset.ent_dict[cur[0]], self.G_dataset.r_dict[cur[1]], self.G_dataset.ent_dict[cur[2]])
-            else:
-                print(self.G_dataset.ent_dict[cur[0][0]], self.G_dataset.r_dict[cur[0][1]], self.G_dataset.ent_dict[cur[0][2]])
-                print(self.G_dataset.ent_dict[cur[1][0]], self.G_dataset.r_dict[cur[1][1]], self.G_dataset.ent_dict[cur[1][2]])
-
-
-    def stable_match(self, neigh_pre1, neigh_pre2):
-        l = neigh_pre1.shape[0]
-        is_kg1_finish = [False] * l
-        is_kg2_finish = [False] * l
-        res = [-1] * l 
-        while False in is_kg1_finish:
-            cur1 = is_kg1_finish.index(False)
-            pre = neigh_pre1[cur1]
-            for cur2 in pre:
-                if is_kg2_finish[cur2] == False:
-                    res[cur1] = int(cur2)
-                    is_kg2_finish[cur2] = True
-                    is_kg1_finish[cur1] = True
-                    break
-                else:
-                    cur_pre = res.index(cur2)
-                    # if neigh_pre2[cur2].index(cur_pre) >  neigh_pre2[cur2].index(cur1):
-                    if torch.where(neigh_pre2[cur2] == cur_pre)[0][0] >  torch.where(neigh_pre2[cur2] == cur1)[0][0]:
-                        is_kg1_finish[cur_pre] = False
-                        res[cur_pre] = -1
-                        is_kg1_finish[cur1] = True
-                        res[cur1] = int(cur2)
-                        break
-        return res
-
 
     def max_weight_match(self, neigh_pre1, neigh_pre2, neigh_list1, neigh_list2, sim, thred):
         G = nx.Graph()
@@ -3424,125 +2869,6 @@ class EAExplainer(torch.nn.Module):
         G.add_weighted_edges_from(edges)
         return sorted(nx.max_weight_matching(G))
 
-
-    def explain_pair_mask(self, gid1, gid2, pair):
-        pair = self.change_to_list(pair)
-        explainer = ExplainPair(pair, self.embed)
-        explainer = explainer.cuda()
-        optimizer = torch.optim.Adam( explainer.parameters(), lr=0.01, weight_decay=0)
-        # print(explainer.triple_mask.requires_grad)
-        explainer.train()
-
-        for epoch in range(1000):
-            optimizer.zero_grad()
-            loss= explainer()
-            # print(loss)
-            loss.backward()
-            optimizer.step()
-        res_neigh = set()
-        res = explainer.mask
-        pair = torch.Tensor(pair)
-        res = pair[torch.where(res > 0)]
-        return res
-        # print(neigh_list1, neigh_list2)
-        '''
-        for cur in res:
-            if cur[0] < 19388:
-                res_neigh.add(((cur[0],cur[1]), 1))
-            else:
-                res_neigh.add(((cur[1],cur[0]), 1))
-        
-        return res_neigh
-        '''
-
-    def explain_mask(self, e1, e2):
-        p1, p_embed1 = self.pattern_process(e1, 1)
-        p2, p_embed2 = self.pattern_process(e2, 1)
-        model, e_dict, r_dict, e_dict_r, r_dict_r, graph = self.get_proxy_model_ori(e1, e2)
-
-        explainer = ExplainModelGraph(model, len(p1) + len(p2), list(range(len(p1) + len(p2))), len(p1))
-        explainer = explainer.cuda()
-        optimizer = torch.optim.Adam( explainer.parameters(), lr=0.01, weight_decay=0)
-        # print(explainer.triple_mask.requires_grad)
-        explainer.train()
-
-        for epoch in range(1000):
-            optimizer.zero_grad()
-            loss= explainer()
-            # print(loss)
-            loss.backward()
-            optimizer.step()
-
-        res = torch.Tensor(list(range(len(p1) + len(p2))))[torch.where(explainer.mask > 0)]
-        tri1 = []
-        tri2 = []
-        for cur in res:
-            if cur < len(p1):
-                tri1.append(p1[int(cur)])
-            else:
-                tri2.append(p2[int(cur) - len(p1)])
-        return tri1, tri2
-        
-
-        # print(neigh_list1, neigh_list2)
-        '''
-        for cur in res:
-            if cur[0] < 19388:
-                res_neigh.add(((cur[0],cur[1]), 1))
-            else:
-                res_neigh.add(((cur[1],cur[0]), 1))
-        
-        return res_neigh
-        '''
-
-
-    def explain_rl(self, gid1, gid2):
-        neigh1, neigh2 = self.init_1_hop(gid1, gid2)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[neigh_list1]
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            neigh1_embed = self.embed[neigh_list1]
-        neigh2_embed = self.embed[neigh_list2]
-        act1 = torch.cat((neigh1_embed, torch.zeros(neigh1_embed.shape[0], 1).to(device)) , dim = 1).to(device)
-        act2 = torch.cat((neigh2_embed, torch.ones(neigh2_embed.shape[0], 1).to(device)) , dim = 1).to(device)
-        # act1 = torch.cat((neigh1_embed,  self.embed[gid2].repeat(neigh1_embed.shape[0], 1)), dim = 1).to(device)
-        # act2 = torch.cat((neigh2_embed, self.embed[gid1].repeat(neigh2_embed.shape[0], 1)), dim = 1).to(device)
-        # act = torch.cat((neigh1_embed, neigh2_embed), dim = 0)
-        act = torch.cat((act1, act2), dim = 0)
-        explainer = RL_one_hop(self.embed, gid1, gid2, act, neigh1_embed, neigh2_embed)
-        explainer = explainer.cuda()
-        optimizer = torch.optim.Adam(explainer.parameters(), lr=0.01, weight_decay=0)
-        # print(explainer.triple_mask.requires_grad)
-        explainer.train()
-        # mask1 = torch.zeros(len(neigh_list1)).to(device)
-        # mask2 = torch.zeros(len(neigh_list2)).to(device)
-        for epoch in range(1000):
-            mask1 = torch.zeros(len(neigh_list1)).to(device)
-            mask2 = torch.zeros(len(neigh_list2)).to(device)
-            explainer.reset()
-            for i in range(int((min(len(neigh_list1), len(neigh_list2)) / 2) + 1)):
-                optimizer.zero_grad()
-                loss, mask1, mask2= explainer(mask1, mask2)
-                print(loss, mask1, mask2)
-                loss.backward()
-                optimizer.step()
-        
-        # exit(0)
-        res_neigh = set()
-        res1 = mask1
-        res2 = mask2
-        neigh_list1 = torch.Tensor(neigh_list1)
-        neigh_list2 = torch.Tensor(neigh_list2)
-        # print(res1, res2)
-        res1 = neigh_list1[torch.where(res1 > 0)]
-        res2 = neigh_list2[torch.where(res2 > 0)]
-        return res1, res2
-
     def change_to_list(self, exp):
         exp_list = []
         for cur in exp:
@@ -3550,6 +2876,12 @@ class EAExplainer(torch.nn.Module):
         return exp_list
 
     def get_test_file_mask(self, file, thred, method=''):
+        if 'lime' in file or 'shapley' in file:
+            print('Save ranked triples in {}'.format(file))
+            return
+        elif 'lore' in file or 'anchor' in file:
+            print('Save rules in {}'.format(file))
+            return
         nec_tri = set()
         with open(file) as f:
             lines = f.readlines()
@@ -4029,188 +3361,6 @@ class EAExplainer(torch.nn.Module):
             print(self.G_dataset.ent_dict[cur[0][0]], self.G_dataset.ent_dict[cur[0][1]])
         return new_exp        
 
-
-    def fine_tune_explain(self, neigh1, neigh2, gid1, gid2):
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        print(neigh_list1)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[torch.Tensor(neigh_list1).long()]
-        else:
-            neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-        neigh2_embed = self.embed[torch.Tensor(neigh_list2).long()]
-        # print(neigh1_embed.shape)
-        neigh_sim1 = torch.mm(neigh1_embed, neigh2_embed.t())
-        neigh_sim2 = torch.mm(neigh2_embed, neigh1_embed.t())
-       
-        neigh_pre1 = (-neigh_sim1).argsort()
-        neigh_pre2 = (-neigh_sim2).argsort()
-        res = self.max_weight_match(neigh_pre1, neigh_pre2, neigh_list1, neigh_list2, neigh_sim1, 0)
-        res_neigh = set()
-        for cur in res:
-            if cur[0] < 19388:
-                res_neigh.add((cur[0],cur[1]))
-            else:
-                res_neigh.add((cur[1],cur[0]))
-        return res_neigh
-
-    def explain_match(self, gid1, gid2):
-        neigh1, neigh2 = self.init_1_hop(gid1, gid2)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        # print(neigh2)
-        # neigh1, neigh2 = self.sim_add(gid1, gid2, neigh_list1, neigh_list2)
-        # neigh_list1 = list(neigh1)
-        # neigh_list2 = list(neigh2)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        # print(neigh_list1)
-        # print(neigh_list2)
-        d1 = {}
-        d2 = {}
-        for i in range(len(neigh_list1)):
-            d1[neigh_list1[i]] = i
-        for i in range(len(neigh_list2)):
-            d2[neigh_list2[i]] = i
-        
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[neigh_list1]
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            neigh1_embed = self.embed[neigh_list1]
-        neigh2_embed = self.embed[neigh_list2]
-        # print(neigh1_embed.shape)
-        # neigh_sim1 = torch.mm(neigh1_embed, neigh2_embed.t())
-        # neigh_sim2 = torch.mm(neigh2_embed, neigh1_embed.t())
-        neigh_sim1 = self.cosine_matrix(neigh1_embed, neigh2_embed)
-        neigh_sim2 = self.cosine_matrix(neigh2_embed, neigh1_embed)
-        neigh_pre1 = (-neigh_sim1).argsort()
-        neigh_pre2 = (-neigh_sim2).argsort()
-        res = self.max_weight_match(neigh_pre1, neigh_pre2, neigh_list1, neigh_list2, neigh_sim1, 0.75)
-        sim_list = []
-        # print(neigh_sim1)
-        # print(neigh_sim11)
-        for i in range(len(res)):
-            cur = res[i]
-            if cur[0] < 19388:
-                sim_list.append((i,neigh_sim1[d1[cur[0]]][d2[cur[1]]]))
-                # print(neigh_sim1[d1[cur[0]]][d2[cur[1]]])
-            else:
-                sim_list.append((i,neigh_sim1[d1[cur[1]]][d2[cur[0]]]))
-                # print(neigh_sim1[d1[cur[1]]][d2[cur[0]]])
-        res_neigh = list()
-        # print(res)
-        sim_list.sort(key=lambda x:x[1], reverse=True)
-        for i in range(len(sim_list)):
-            cur = res[sim_list[i][0]]
-            if cur[0] < 19388:
-                res_neigh.append((cur[0],cur[1]))
-                print(neigh_sim1[d1[cur[0]]][d2[cur[1]]])
-            else:
-                res_neigh.append((cur[1],cur[0]))
-                print(neigh_sim1[d1[cur[1]]][d2[cur[0]]])
-        # exit(0)
-        return res_neigh
-        # print(neigh1, neigh2)
-        '''
-        res_neigh = set()
-        print(res)
-        for cur in res:
-            if cur[0] < 19388:
-                res_neigh.add((cur[0],cur[1]))
-            else:
-                res_neigh.add((cur[1],cur[0]))
-        return res_neigh
-        '''
-
-    def explain_base(self, gid1, gid2):
-        neigh1, neigh2 = self.init_1_hop(gid1, gid2)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        # print(neigh2)
-        # neigh1, neigh2 = self.sim_add(gid1, gid2, neigh_list1, neigh_list2)
-        # neigh_list1 = list(neigh1)
-        # neigh_list2 = list(neigh2)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        # print(neigh_list1)
-        # print(neigh_list2)
-        # neigh1_embed = self.embed[neigh_list1]
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[neigh_list1]
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            neigh1_embed = self.embed[neigh_list1]
-        neigh2_embed = self.embed[neigh_list2]
-        # print(neigh1_embed.shape)
-        neigh_sim1 = torch.mm(neigh1_embed, neigh2_embed.t())
-        neigh_sim2 = torch.mm(neigh2_embed, neigh1_embed.t())
-       
-        neigh_pre1 = (-neigh_sim1).argsort()
-        neigh_pre2 = (-neigh_sim2).argsort()
-        # res = self.max_weight_match(neigh_pre1, neigh_pre2, neigh_list1, neigh_list2, neigh_sim1, 0.75)
-        res = []
-        for i in range(neigh_pre1.shape[0]):
-            res.append(((int(neigh_list1[i]),int(neigh_list2[int(neigh_pre1[i][0])])), neigh_sim1[i][neigh_pre1[i][0]]))
-        # print(neigh1, neigh2)
-        res.sort(key=lambda x :x[1], reverse=True)
-        res_neigh = []
-        print(res)
-        for cur in res:
-            if cur[0][0] < 19388:
-                res_neigh.append((cur[0][0],cur[0][1]))
-            else:
-                res_neigh.append((cur[0][1],cur[0][0]))
-        return res_neigh
-
-
-    def explain_stable(self, gid1, gid2):
-        neigh1, neigh2 = self.init_1_hop(gid1, gid2)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        # print(neigh2)
-        neigh1, neigh2 = self.sim_add(gid1, gid2, neigh_list1, neigh_list2)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        # print(neigh_list1)
-        # neigh1_embed = self.embed[neigh_list1]
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[neigh_list1]
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            neigh1_embed = self.embed[neigh_list1]
-        neigh2_embed = self.embed[neigh_list2]
-        # print(neigh1_embed.shape)
-        neigh_sim1 = torch.mm(neigh1_embed, neigh2_embed.t())
-        neigh_sim2 = torch.mm(neigh2_embed, neigh1_embed.t())
-        # print(neigh_sim1)
-        # print(neigh_sim2)
-        '''
-        for cur in neigh_list1:
-            print(self.G_dataset.ent_dict[int(cur)])
-        for cur in neigh_list2:
-            print(self.G_dataset.ent_dict[int(cur)])
-        '''
-        neigh_pre1 = (-neigh_sim1).argsort()
-        neigh_pre2 = (-neigh_sim2).argsort()
-        res = self.stable_match(neigh_pre1, neigh_pre2)
-        
-        # print(res)
-        neigh2 = torch.Tensor(neigh_list2)
-        neigh1 = torch.Tensor(neigh_list1)
-        neigh2 = neigh2[res]
-        neigh_sim = {}
-        for i in range(neigh1.shape[0]):
-            neigh_sim[int(neigh1[i]), int(neigh2[i])] =  neigh_sim1[i][res[i]]
-            # print(self.G_dataset.ent_dict[int(neigh1[i])], self.G_dataset.ent_dict[int(neigh2[i])], neigh_sim1[i][res[i]])
-        # exit(0)
-        res_neigh = sorted(neigh_sim.items(), key = lambda d: d[1], reverse = True)[:int(neigh1.shape[0] / 2)]
-        return res_neigh
-
     def cosine_matrix(self, A, B):
         A_sim = torch.mm(A, B.t())
         a = torch.norm(A, p=2, dim=-1)
@@ -4218,230 +3368,6 @@ class EAExplainer(torch.nn.Module):
         cos_sim = A_sim / a.unsqueeze(-1)
         cos_sim /= b.unsqueeze(-2)
         return cos_sim
-
-    def sim_dist_test(self, gid1, gid2):
-        neigh1 = set()
-        neigh2 = set()
-        for cur in self.G_dataset.gid1[gid1]:
-            if cur[0] != gid1:
-                neigh1.add(cur[0])
-            else:
-                neigh1.add(cur[2])
-        for cur in self.G_dataset.gid2[gid2]:
-            if cur[0] != gid2:
-                neigh2.add(cur[0])
-            else:
-                neigh2.add(cur[2])
-        embed = self.embed
-        x = []
-        y = []
-        tri1 = []
-        # comb1 = list(combinations(list(neigh1), 2))
-        for cur1 in neigh1:
-            for cur2 in neigh2:
-                e11 = embed[int(cur1)] / (torch.linalg.norm(embed[int(cur1)], dim=-1, keepdim=True) + 1e-5)
-                e21 = embed[int(cur2)] / (torch.linalg.norm(embed[int(cur2)], dim=-1, keepdim=True) + 1e-5)
-                neigh_embed1 = embed[list(neigh1 - {cur1})].mean(dim = 0)
-                neigh_embed2 = embed[list(neigh2 - {cur2})].mean(dim = 0)
-                # neigh_embed2 = embed[list(neigh2)].mean(dim = 0)
-                e12 = neigh_embed1 / (torch.linalg.norm(neigh_embed1, dim=-1, keepdim=True) + 1e-5)
-                e22 = neigh_embed2 / (torch.linalg.norm(neigh_embed2, dim=-1, keepdim=True) + 1e-5)
-                # e1 = (e11 + e12) / 2
-                # d1 = float(F.pairwise_distance(e1, e2, p=2))
-                # d2 = float(F.pairwise_distance(e11, e2, p=2))
-                # d3 = float(F.pairwise_distance(e12, e2, p=2))
-                d1 = float(F.cosine_similarity(e11, e21, dim=0))
-                d2 = float(F.cosine_similarity(e12, e22, dim=0))
-                # d3 = float(F.cosine_similarity(e12, e2, dim=0))
-                x.append(d1)
-                y.append(d2)
-                print(self.G_dataset.ent_dict[int(cur1)], self.G_dataset.ent_dict[int(cur2)])
-                print(d1, d2)
-                print(d1 + d2)
-            plt.scatter(x,y)
-            plt.savefig('zh-en/embed_nec_suf_2_' + str(gid1) + '.jpg')
-            plt.show()
-            plt.clf()
-        # exit(0)
-
-            
-    def explain_greedy(self, gid1, gid2):
-        neigh1, neigh2 = self.init_1_hop(gid1, gid2)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        neigh1 = torch.Tensor(neigh_list1)
-        neigh2 = torch.Tensor(neigh_list2)
-        print(neigh_list1)
-        print(neigh_list2)
-        # neigh1_embed = self.embed[neigh_list1]
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[neigh_list1]
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            neigh1_embed = self.embed[neigh_list1]
-        neigh2_embed = self.embed[neigh_list2]
-        neigh_sim1 = torch.mm(neigh1_embed, neigh2_embed.t())
-        print(neigh_sim1)
-        neigh_sim_sort = list((-torch.mm(neigh1_embed, neigh2_embed.mean(dim=0).unsqueeze(0).t()).squeeze(1)).sort().indices)
-        cur_neigh = []
-        for i in range(len(neigh_sim_sort)):
-            if i >= len(neigh_list2):
-                break
-            cur_neigh.append(neigh_list1[neigh_sim_sort[i]])
-            print(neigh_sim_sort[i])
-            print(cur_neigh)
-            nec1 = neigh_sim_sort[i+1:]
-            cur_neigh1 = self.embed[cur_neigh].mean(dim=0).unsqueeze(0)
-            neigh_sim_sort2 = list((-torch.mm(neigh2_embed, cur_neigh1.t()).squeeze(1)).sort().indices)
-            suf2 = neigh_sim_sort2[:len(cur_neigh)]
-            nec2 = neigh_sim_sort2[len(cur_neigh):]
-            # print(suf2)
-            # print(neigh2)
-            # print(neigh2[nec2])
-            cur_neigh2 = self.embed[neigh2[torch.Tensor(suf2).long()].long()].mean(dim=0).unsqueeze(0)
-            se1 = cur_neigh1 
-            se2 = cur_neigh2
-            # se1 = cur_neigh1 / (torch.linalg.norm(cur_neigh1, dim=-1, keepdim=True) + 1e-5)
-            # se2 = cur_neigh2 / (torch.linalg.norm(cur_neigh2, dim=-1, keepdim=True) + 1e-5)
-            
-            cur_neigh_nec1 = self.embed[neigh1[torch.Tensor(nec1).long()].long()].mean(dim=0).unsqueeze(0)
-            cur_neigh_nec2 = self.embed[neigh2[torch.Tensor(nec2).long()].long()].mean(dim=0).unsqueeze(0)
-            # ne1 = cur_neigh_nec1 / (torch.linalg.norm(cur_neigh_nec1, dim=-1, keepdim=True) + 1e-5)
-            # ne2 = cur_neigh_nec2 / (torch.linalg.norm(cur_neigh_nec2, dim=-1, keepdim=True) + 1e-5)
-            ne1 = cur_neigh_nec1
-            ne2 = cur_neigh_nec2 
-            s1 = F.cosine_similarity(se1.squeeze(0), se2.squeeze(0), dim=0)
-            s2 = F.cosine_similarity(ne1.squeeze(0), ne2.squeeze(0), dim=0)
-            if s1 > 0.8 and s2 < 0.9:
-                return cur_neigh, list(neigh2[torch.Tensor(suf2).long()])
-            # print(se1, se2, ne1, ne2)
-            print(s1, s2)
-        # exit(0)
-        return cur_neigh, list(neigh2[torch.Tensor(suf2).long()])
-
-    def f(self, pair, mask):
-        if self.mapping is not None:
-            # neigh1_embed = torch.matmul(self.embed[neigh_list1], self.mapping)
-            me1 = (mask.unsqueeze(1) * self.mapping[pair.T[0,:].long()]).mean(dim = 0)
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            # neigh1_embed = self.embed[neigh_list1]
-            me1 = (mask.unsqueeze(1) * self.embed[pair.T[0,:].long()]).mean(dim = 0)
-        me2 = (mask.unsqueeze(1) * self.embed[pair.T[1,:].long()]).mean(dim = 0)
-        if self.mapping is not None:
-            ume1 = ((1 - mask).unsqueeze(1) *  self.mapping[pair.T[0,:].long()]).mean(dim = 0)
-        else:
-            ume1 = ((1 - mask).unsqueeze(1) * self.embed[pair.T[0,:].long()]).mean(dim = 0)
-        ume2 = ((1 - mask).unsqueeze(1) * self.embed[pair.T[1,:].long()]).mean(dim = 0)
-        me1 = F.normalize(me1, dim = 0)
-        me2 = F.normalize(me2, dim = 0)
-        ume1 = F.normalize(ume1, dim = 0)
-        ume2 = F.normalize(ume2, dim = 0)
-        d1 = F.pairwise_distance(me1, me2, p=2).to(device)  # 让变动跟原本的尽可能近
-        if torch.count_nonzero(mask) == mask.shape[0]:
-            d1 = 2
-        d2 = F.pairwise_distance(ume1, ume2, p=2).to(device) # 让变动后跟原本的尽可能远
-        # print(mask, d1-d2,pair_num / pair.shape[0])
-        # return alpha * (d1 - d2) + (1 - alpha) * (1 - (pair_num / pair.shape[0]))
-        return  (1 + d2 - d1) 
-
-    def compute_margin(self, pair, mask, j):
-        f1 = self.f(pair, mask)
-        new_mask = mask.clone()
-        new_mask[j] = (not new_mask[j])
-        f2 = self.f(pair, new_mask)
-        print(f2 - f1)
-        return f2 - f1
-
-    def explain_greedy_search(self,gid1, gid2, pair, k):
-        pair = self.change_to_list(pair)
-        pair = torch.Tensor(pair)
-        T = torch.zeros(pair.shape[0])
-        mask = torch.zeros(pair.shape[0]).cuda()
-        best_mask = None
-        best_val = -1e10
-        for i in range(2 * k):
-            T += 1
-            delta = torch.zeros(pair.shape[0])
-            judge = torch.zeros(pair.shape[0])
-            for j in range(pair.shape[0]):
-                # mask[j] = (not mask[j])
-                delta[j] = self.compute_margin(pair, mask,j) 
-                judge[j] = 100 * delta[j] + T[j]
-            x = judge.argmax()
-            if delta[x] > 0 or torch.count_nonzero(mask) <= k:
-                mask[x] = (not mask[x])
-                T[x] = 0
-                value = self.compute_margin(pair, mask, x)
-                if value > best_val:
-                    best_mask = mask
-                    best_val = value
-            else:
-                judge = torch.zeros(pair.shape[0])
-                for j in range(pair.shape[0]):
-                    if mask[j] == 1:
-                        judge[j] = 100 * self.compute_margin(pair, mask, j) + T[j]
-                    else:
-                        judge[j] = -1e10
-                x = judge.argmax()
-                mask[x] = (not mask[x])
-        res = pair[torch.where(best_mask > 0)]
-        return res
-                    
-
-    def test_case(self, file, e1, e2):
-        nec_tri = set()
-        nec_ent = set()
-        with open(file) as f:
-            lines = f.readlines()
-            for cur in lines:
-                cur = cur.strip().split('\t')
-                nec_tri.add((int(self.G_dataset.id_ent[cur[0]]), int(self.G_dataset.id_r[cur[1]]), int(self.G_dataset.id_ent[cur[2]])))
-                nec_ent.add(int(self.G_dataset.id_ent[cur[0]]))
-                nec_ent.add(int(self.G_dataset.id_ent[cur[2]]))
-        gid1 = int(self.G_dataset.id_ent[e1])
-        gid2 = int(self.G_dataset.id_ent[e2])
-        print(gid1)
-        neigh1, neigh2 = self.init_1_hop(gid1, gid2)
-        print(neigh1)
-        neigh_list1 = list(neigh1)
-        neigh_list2 = list(neigh2)
-        # print(neigh2)
-        # neigh1, neigh2 = self.sim_add(gid1, gid2, neigh_list1, neigh_list2)
-        # neigh_list1 = list(neigh1)
-        # neigh_list2 = list(neigh2)
-        neigh_list1.sort()
-        neigh_list2.sort()
-        # print(neigh_list1)
-        # print(neigh_list2)
-        # neigh1_embed = self.embed[neigh_list1]
-        if self.mapping is not None:
-            neigh1_embed = self.mapping[neigh_list1]
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            neigh1_embed = self.embed[neigh_list1]
-        neigh2_embed = self.embed[neigh_list2]
-        s1 = self.cosine_matrix(neigh2_embed, neigh1_embed)
-        s2 = self.cosine_matrix(neigh2_embed, neigh2_embed)
-        print(s1, s2)
-        mask1 = torch.zeros(len(neigh1)).to(device) 
-        mask2 = torch.zeros(len(neigh2)).to(device) 
-        for i in range(len(neigh_list1)):
-            if neigh_list1[i] in nec_ent:
-                mask1[i] = 1
-        for i in range(len(neigh_list2)):
-            if neigh_list2[i] in nec_ent:
-                mask2[i] = 1
-        # print(mask1)
-        # print(neigh1_embed)
-        me1 = (mask1.unsqueeze(1) * neigh1_embed).mean(dim = 0)
-        me2 = (mask2.unsqueeze(1) * neigh2_embed).mean(dim = 0)
-        print(F.cosine_similarity(me1, me2, dim=0))
-
-        # print(F.pairwise_distance(me1, me2, p=2))
-
             
     def init_2_hop(self, e1):
         neigh2 = set()
@@ -4451,334 +3377,7 @@ class EAExplainer(torch.nn.Module):
         neigh2.remove(e1)
 
         return neigh2 - neigh1 , neigh1
-
-    def explain_sa(self, gid1, gid2, pair):
-        
-        pair = self.change_to_list(pair)
-        pair = torch.Tensor(pair)
-        
-        sim0 = torch.cosine_similarity(self.embed[pair.T[0,:].long()], self.embed[pair.T[1,:].long()], dim=-1)
-        print(sim0)
-        mask = torch.zeros(pair.shape[0]).to(device)
-        # mask[0] = 1
-        # cur_val = self.compute_cur_val(pair, mask)
-        # pro = F.softmax(sim, dim = 0)
-        # iter_num = 1000
-        # j = 0
-        best_mask = None
-        gold_mask = None
-        cur_best = -1e10
-        gold_best = -1e10
-        l = list(range(pair.shape[0]))
-        for j in range(pair.shape[0]):
-            cur_rel = []
-            for c in combinations(l, j + 1):
-                index = torch.Tensor(list(c)).long()
-                # print(index)
-                cur_rel.append((index, sim0[index].mean(dim=0)))
-            cur_rel.sort(key=lambda x : x[1], reverse=True)
-            for cur in cur_rel:
-                mask[cur[0]] = 1
-                cur_val = self.compute_cur_val(pair, mask)
-                if gold_mask == None:
-                    gold_mask = mask.clone()
-                    gold_best = cur_val
-                else:
-                    if gold_best < cur_val:
-                        gold_mask = mask.clone()
-                        gold_best = cur_val
-                    elif cur_val / gold_best < random.uniform(0,1):
-                        break
-                # print(cur_val, mask)
-                if gold_best > 1.2:
-                    return pair[torch.where(gold_mask > 0)]
-
-        
-        if best_mask == None:
-            best_mask = gold_mask
-        print(best_mask)
-        res = pair[torch.where(best_mask > 0)]
-        return res
     
-
-    def explain_combinations(self, gid1, gid2, pair):
-        pair = self.change_to_list(pair)
-        pair = torch.Tensor(pair)
-        # sim0 = torch.cosine_similarity(self.embed[pair.T[0,:].long()], self.embed[pair.T[1,:].long()], dim=-1)
-
-        mask = torch.zeros(pair.shape[0]).to(device)
-        # mask[0] = 1
-        # cur_val = self.compute_cur_val(pair, mask)
-        # pro = F.softmax(sim, dim = 0)
-        # iter_num = 1000
-        # j = 0
-        best_mask = None
-        gold_mask = None
-        cur_best = -1e10
-        gold_best = -1e10
-        l = list(range(pair.shape[0]))
-        for j in range(pair.shape[0]):
-            for c in combinations(l, j + 1):
-                mask[torch.Tensor(list(c)).long()] = 1
-                cur_val = self.compute_cur_val(pair, mask)
-                if gold_mask == None:
-                    gold_mask = mask.clone()
-                    gold_best = cur_val
-                else:
-                    if gold_best < cur_val:
-                        gold_mask = mask.clone()
-                        gold_best = cur_val
-        
-        if best_mask == None:
-            best_mask = gold_mask
-        print(best_mask)
-        res = pair[torch.where(best_mask > 0)]
-        return res
-
-    def compute_cur_val(self, pair, mask):
-        if self.mapping is not None:
-            # neigh1_embed = torch.matmul(self.embed[neigh_list1], self.mapping)
-            me1 = (mask.unsqueeze(1) * self.mapping[pair.T[0,:].long()]).mean(dim = 0)
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            # neigh1_embed = self.embed[neigh_list1]
-            me1 = (mask.unsqueeze(1) * self.embed[pair.T[0,:].long()]).mean(dim = 0)
-        me2 = (mask.unsqueeze(1) * self.embed[pair.T[1,:].long()]).mean(dim = 0)
-        if self.mapping is not None:
-            ume1 = ((1 - mask).unsqueeze(1) *  self.mapping[pair.T[0,:].long()]).mean(dim = 0)
-        else:
-            ume1 = ((1 - mask).unsqueeze(1) * self.embed[pair.T[0,:].long()]).mean(dim = 0)
-        ume2 = ((1 - mask).unsqueeze(1) * self.embed[pair.T[1,:].long()]).mean(dim = 0)
-        me1 = F.normalize(me1, dim = 0)
-        me2 = F.normalize(me2, dim = 0)
-        ume1 = F.normalize(ume1, dim = 0)
-        ume2 = F.normalize(ume2, dim = 0)
-        d1 = F.pairwise_distance(me1, me2, p=2).to(device)  # 让变动跟原本的尽可能近
-        d2 = F.pairwise_distance(ume1, ume2, p=2).to(device) # 让变动后跟原本的尽可能远
-        pair_num = torch.count_nonzero(mask)
-        alpha = 0.999
-        # print(mask, d1-d2,pair_num / pair.shape[0])
-        # return alpha * (d1 - d2) + (1 - alpha) * (1 - (pair_num / pair.shape[0]))
-        return 1 + alpha * (d2-d1) + (1 - alpha) * (1 - (pair_num / pair.shape[0]))
-
-
-    def explain_random_walk(self, gid1, gid2, pair):
-        pair = self.change_to_list(pair)
-        pair = torch.Tensor(pair)
-        sim0 = torch.cosine_similarity(self.embed[pair.T[0,:].long()], self.embed[pair.T[1,:].long()], dim=-1)
-
-        mask = torch.zeros(pair.shape[0]).to(device)
-        mask[0] = 1
-        cur_val = self.compute_cur_val(pair, mask)
-        # pro = F.softmax(sim, dim = 0)
-        iter_num = 1000
-        j = 0
-        best_mask = None
-        gold_mask = None
-        cur_best = -1e10
-        gold_best = -1e10
-        while(j < iter_num):
-            j += 1
-            sim = sim0.clone()
-            whether_add = random.uniform(0,1)
-            pair_num = torch.count_nonzero(mask)
-            # print(whether_add)
-            if whether_add > pair_num / pair.shape[0]:
-                sim[torch.where(mask > 0)] = -1e10
-                pro = F.softmax(sim, dim = 0)
-                cur_p = 0
-                random_pro = random.uniform(0,1)
-                for i in range(len(pro)):
-                    cur_p += pro[i]
-                    if cur_p >= random_pro:
-                        mask[i] = 1
-                        break
-            else:
-                sim[torch.where(mask == 0)] = 1e10
-                pro = F.softmax(-sim, dim = 0)
-                # print(pro)
-                cur_p = 0
-                random_pro = random.uniform(0,1)
-                for i in range(len(pro)):
-                    cur_p += pro[i]
-                    if cur_p >= random_pro:
-                        mask[i] = 0
-                        break
-            pair_num = torch.count_nonzero(mask)
-            if pair_num == 0:
-                cur_val = -1e10
-            else:
-                cur_val = self.compute_cur_val(pair, mask)
-            # print(gold_best, cur_val,gold_mask,mask)
-            if gold_mask == None:
-                gold_mask = mask.clone()
-            else:
-                if gold_best < cur_val:
-                    gold_mask = mask.clone()
-                    gold_best = cur_val
-
-            # print(pair_num , pair.shape[0])
-            if pair_num / pair.shape[0] <= 0.5 and pair_num != 0:
-                if best_mask == None:
-                    best_mask = mask.clone()
-                else:
-                    if cur_best < cur_val:
-                        best_mask = mask.clone()
-                        cur_best = cur_val
-                # print(mask)
-                # print(cur_val)
-        
-        if best_mask == None:
-            best_mask = gold_mask
-        print(best_mask)
-        res = pair[torch.where(best_mask > 0)]
-        return res
-        # exit(0)
-            
-
-           
-    
-
-
-
-class ExplainPair(torch.nn.Module):
-    def __init__(self, pair, embed, mapping=None):
-        super(ExplainPair, self).__init__()
-        self.pair = torch.Tensor(pair)
-        self.embed = embed
-        self.mask= self.construct_mask()
-        self.mapping = mapping
-
-    def forward(self):
-        mask = self.get_masked_triple()
-        print(mask)
-        # print(mask.shape, self.pair.shape)
-        # print(self.embed[self.pair.T[0:].long()].shape)
-        if self.mapping is not None:
-            # neigh1_embed = torch.matmul(self.embed[neigh_list1], self.mapping)
-            me1 = (mask.unsqueeze(1) * self.mapping[pair.T[0,:].long()]).mean(dim = 0)
-        else:
-            # neigh1_embed = self.embed[torch.Tensor(neigh_list1).long()]
-            # neigh1_embed = self.embed[neigh_list1]
-            me1 = (mask.unsqueeze(1) * self.embed[pair.T[0,:].long()]).mean(dim = 0)
-        me2 = (mask.unsqueeze(1) * self.embed[pair.T[1,:].long()]).mean(dim = 0)
-        if self.mapping is not None:
-            ume1 = ((1 - mask).unsqueeze(1) *  self.mapping[pair.T[0,:].long()]).mean(dim = 0)
-        else:
-            ume1 = ((1 - mask).unsqueeze(1) * self.embed[pair.T[0,:].long()]).mean(dim = 0)
-        ume2 = ((1 - mask).unsqueeze(1) * self.embed[pair.T[1,:].long()]).mean(dim = 0)
-        me1 = F.normalize(me1, dim = 0)
-        me2 = F.normalize(me2, dim = 0)
-        ume1 = F.normalize(ume1, dim = 0)
-        ume2 = F.normalize(ume2, dim = 0)
-        l1 = torch.linalg.norm(mask, ord=1) / mask.shape[0]
-        # l2 = torch.linalg.norm(mask2, ord=1) / mask2.shape[0]
-        d1 = F.pairwise_distance(me1, me2, p=2).to(device)  # 让变动跟原本的尽可能近
-        d2 = F.pairwise_distance(ume1, ume2, p=2).to(device) # 让变动后跟原本的尽可能远
-        relu = torch.nn.ReLU()
-        alpha = 1
-        # print(d2 , d1, l1)
-        # print(l1 + l2, l1, l2)
-        loss = (1 - alpha) * relu(0.5 - d2) + alpha * d1 
-        # print(d2 , d1, l1)
-        # print(mask1, mask2)
-        return loss
-
-
-
-    def construct_mask(self):
-        mask = torch.nn.Parameter(torch.FloatTensor(self.pair.shape[0]), requires_grad=True)
-
-        
-        std1 = torch.nn.init.calculate_gain("relu") * math.sqrt(
-            1 / (self.pair.shape[0])
-        )
-
-        with torch.no_grad():
-            mask.normal_(1.0, std1)
-
-        
-        return mask
-
-    def get_masked_triple(self):
-        
-        mask = torch.sigmoid(self.mask)
-        return mask
-    
-
-
-class ExplainModelGraph(torch.nn.Module):
-    def __init__(self, model, num_players, players, split):
-        super(ExplainModelGraph, self).__init__()
-        self.model = model
-        self.num_players = num_players
-        self.players = players
-        self.split = split
-        self.mask = self.construct_mask()
-
-
-    def early_stop(self, d5, d6, len1, len2):
-        if self.cur_stat == None:
-            self.cur_stat = (d5, d6, len1, len2)
-        else:
-            if len1 < len(self.tri1) /2 and len2 < len(self.tri2) /2:
-                return True
-            self.cur_stat = (d6, len1, len2)
-        return False
-
-
-    def rank(self, e, candidate):
-        #print(e)
-        sim = torch.mm(e, candidate.t()).squeeze(0)
-        # print(sim)
-        rank_index = sim.topk(k =1, dim=0).indices[0]
-        return rank_index, sim
-
-
-    def forward(self):
-        mask = self.get_masked_triple()
-        # print('--------cur mask-------------')
-        # print(mask1,mask2)
-        sim1 = self.model.mask_sim(mask, self.split)
-        sim2 = self.model.mask_sim(1 - mask, self.split)
-        relu = torch.nn.ReLU()
-        alpha = 0.5
-        # loss = sim2
-        # print(l1 + l2, l1, l2)
-        # loss = sim2
-        loss = (1 - alpha) * relu(1 - sim1) + alpha * sim2 
-        # print(d2 , d1)
-        # print(mask1, mask2)
-        return loss
-
-
-
-    def construct_mask(self):
-        mask = torch.nn.Parameter(torch.FloatTensor(self.num_players), requires_grad=True)
-        # mask2 = torch.nn.Parameter(torch.FloatTensor(len(self.neigh2)), requires_grad=True)
-
-        
-        std1 = torch.nn.init.calculate_gain("relu") * math.sqrt(
-            1 / (self.num_players)
-        )
-        with torch.no_grad():
-            mask.normal_(1.0, std1)
-        
-        return mask
-
-    def get_masked_triple(self):
-        
-        mask = torch.sigmoid(self.mask)
-        return mask
-    
-    def get_explain(self):
-        # exp = self.triple_mask - self.rel_fact
-        
-        exp = torch.sigmoid(self.triple_mask)  > self.exp_thred
-        
-        return exp
-    
-
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(f'arguments for Explanation Generation or Entity Alignment Repair')
